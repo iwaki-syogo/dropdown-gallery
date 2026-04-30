@@ -10,11 +10,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 button,input,select{font-family:inherit}
 
 /* Header */
-header{background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 24px;position:sticky;top:0;z-index:300}
-.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.header-left h1{font-size:18px;font-weight:700;color:#111827}
-.header-left p{font-size:12px;color:#6b7280;margin-top:1px}
-.fav-badge{background:#3b82f6;color:#fff;border-radius:20px;padding:4px 14px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+header{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 24px 0;position:sticky;top:0;z-index:300}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:12px;padding-bottom:10px}
+.header-left{flex-shrink:0}
+.header-left h1{font-size:17px;font-weight:700;color:#111827}
+.search-wrap{flex:1;max-width:300px}
+.search-inp{width:100%;padding:7px 12px 7px 30px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:13px;outline:none;background:#f8f9fa;font-family:inherit}
+.search-inp:focus{border-color:#3b82f6;background:#fff}
+.search-wrap{position:relative}
+.search-wrap::before{content:'🔍';position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none}
+.fav-badge{background:#3b82f6;color:#fff;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;border:none;flex-shrink:0;white-space:nowrap}
+.fav-badge.fav-active{background:#ef4444}
+.header-nav-wrap{max-width:1400px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+.header-nav-wrap::-webkit-scrollbar{display:none}
+.header-nav{display:flex;gap:6px;min-width:max-content}
+.cat-btn{flex-shrink:0;padding:5px 14px;border:1.5px solid #e5e7eb;border-radius:999px;background:#fff;font-size:12px;cursor:pointer;white-space:nowrap;color:#374151;font-family:inherit;font-weight:500}
+.cat-btn:hover{border-color:#9ca3af}
+.cat-btn.on{background:#111827;color:#fff;border-color:#111827}
+.fav-only-bar{display:none;background:#fff1f2;border-bottom:1px solid #fca5a5;padding:8px 24px;font-size:13px;color:#ef4444;font-weight:500;position:sticky;top:var(--header-h,108px);z-index:298}
+.fav-only-bar button{background:none;border:none;color:#ef4444;cursor:pointer;font-size:13px;font-weight:600;text-decoration:underline;padding:0;margin-left:8px}
 
 /* Main */
 main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
@@ -402,20 +416,41 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </head>
 <body>
 
-<header>
+<header id="siteHeader">
   <div class="header-inner">
     <div class="header-left">
-      <h1>Dropdown Gallery</h1>
-      <p>iOS風UIパーツ＆ドロップダウン — 70 種類</p>
+      <h1>UI Gallery</h1>
     </div>
-    <button class="fav-badge" id="favBtn">♡ お気に入り <span id="favCount">0</span></button>
+    <div class="search-wrap">
+      <input class="search-inp" id="searchInp" type="text" placeholder="名前・説明で検索…" oninput="searchCards(this.value)">
+    </div>
+    <button class="fav-badge" id="favBtn" onclick="toggleFavMode()">♡ お気に入り <span id="favCount">0</span></button>
+  </div>
+  <div class="header-nav-wrap">
+    <div class="header-nav" id="catNav">
+      <button class="cat-btn on" onclick="filterCat('all',this)">すべて (70)</button>
+      <button class="cat-btn" onclick="filterCat('s1',this)">フォーム選択 (14)</button>
+      <button class="cat-btn" onclick="filterCat('s2',this)">フィルター (8)</button>
+      <button class="cat-btn" onclick="filterCat('s3',this)">タグ・チップ (5)</button>
+      <button class="cat-btn" onclick="filterCat('s4',this)">特殊 (9)</button>
+      <button class="cat-btn" onclick="filterCat('s5',this)">コンテキストメニュー (6)</button>
+      <button class="cat-btn" onclick="filterCat('s6',this)">iOS ボタン (6)</button>
+      <button class="cat-btn" onclick="filterCat('s7',this)">iOS コントロール (6)</button>
+      <button class="cat-btn" onclick="filterCat('s8',this)">iOS セル (6)</button>
+      <button class="cat-btn" onclick="filterCat('s9',this)">iOS 通知 (6)</button>
+      <button class="cat-btn" onclick="filterCat('s10',this)">iOS カード (4)</button>
+    </div>
   </div>
 </header>
+<div class="fav-only-bar" id="favOnlyBar">
+  ♥ お気に入りのみ表示中
+  <button onclick="toggleFavMode()">解除 ×</button>
+</div>
 
 <main>
 
 <!-- ======= S1: フォーム選択 ======= -->
-<section class="section">
+<section class="section" id="s1">
   <div class="section-title"><h2>フォーム選択</h2><span class="cnt">14 種</span></div>
   <div class="grid">
 
@@ -755,7 +790,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S2: フィルター・ソート ======= -->
-<section class="section">
+<section class="section" id="s2">
   <div class="section-title"><h2>フィルター・ソート</h2><span class="cnt">8 種</span></div>
   <div class="grid">
 
@@ -957,7 +992,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S3: タグ・チップ ======= -->
-<section class="section">
+<section class="section" id="s3">
   <div class="section-title"><h2>タグ・チップ</h2><span class="cnt">5 種</span></div>
   <div class="grid">
 
@@ -1074,7 +1109,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S4: 特殊・ユニーク ======= -->
-<section class="section">
+<section class="section" id="s4">
   <div class="section-title"><h2>特殊・ユニーク</h2><span class="cnt">9 種</span></div>
   <div class="grid">
 
@@ -1375,7 +1410,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S5: iOS風コンテキストメニュー ======= -->
-<section class="section">
+<section class="section" id="s5">
   <div class="section-title"><h2>iOS風コンテキストメニュー</h2><span class="cnt">6 種</span></div>
   <div class="grid">
 
@@ -1528,7 +1563,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S6: iOS ボタン ======= -->
-<section class="section">
+<section class="section" id="s6">
   <div class="section-title"><h2>iOS ボタン</h2><span class="cnt">6 種</span></div>
   <div class="grid">
 
@@ -1609,7 +1644,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S7: iOS コントロール ======= -->
-<section class="section">
+<section class="section" id="s7">
   <div class="section-title"><h2>iOS コントロール</h2><span class="cnt">6 種</span></div>
   <div class="grid">
 
@@ -1748,7 +1783,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S8: iOS セル ======= -->
-<section class="section">
+<section class="section" id="s8">
   <div class="section-title"><h2>iOS セル・リスト</h2><span class="cnt">6 種</span></div>
   <div class="grid">
 
@@ -1951,7 +1986,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S9: iOS 通知・アラート ======= -->
-<section class="section">
+<section class="section" id="s9">
   <div class="section-title"><h2>iOS 通知・アラート</h2><span class="cnt">6 種</span></div>
   <div class="grid">
 
@@ -2086,7 +2121,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </section>
 
 <!-- ======= S10: iOS カード ======= -->
-<section class="section">
+<section class="section" id="s10">
   <div class="section-title"><h2>iOS カード</h2><span class="cnt">4 種</span></div>
   <div class="grid">
 
@@ -2442,7 +2477,13 @@ function copyPrompt(id) {
 }
 
 // ── favorites ──
+// ── State ──
 let favs = JSON.parse(localStorage.getItem('dd-favs') || '[]');
+let favMode = false;
+let currentCat = 'all';
+let currentSearch = '';
+
+// ── Favorites render ──
 function renderFavs() {
   document.getElementById('favCount').textContent = favs.length;
   for (let i = 1; i <= 70; i++) {
@@ -2452,6 +2493,7 @@ function renderFavs() {
     if (favs.includes(i)) { card.classList.add('fav'); btn.classList.add('on'); btn.textContent = '♥'; }
     else { card.classList.remove('fav'); btn.classList.remove('on'); btn.textContent = '♡'; }
   }
+  if (favMode) applyFilters();
 }
 function toggleFav(n) {
   const idx = favs.indexOf(n);
@@ -2459,11 +2501,99 @@ function toggleFav(n) {
   localStorage.setItem('dd-favs', JSON.stringify(favs));
   renderFavs();
 }
-document.getElementById('favBtn').addEventListener('click', () => {
-  if (favs.length === 0) return;
-  document.getElementById('c' + favs[0]).scrollIntoView({behavior:'smooth',block:'center'});
-});
+
+// ── Favorites mode toggle ──
+function toggleFavMode() {
+  favMode = !favMode;
+  const btn = document.getElementById('favBtn');
+  const bar = document.getElementById('favOnlyBar');
+  if (favMode) {
+    btn.classList.add('fav-active');
+    btn.innerHTML = '♥ お気に入り <span id="favCount">' + favs.length + '</span>';
+    bar.style.display = 'block';
+    // Exit cat filter when entering fav mode
+    currentCat = 'all';
+    document.querySelectorAll('.cat-btn').forEach((b,i) => b.classList.toggle('on', i === 0));
+  } else {
+    btn.classList.remove('fav-active');
+    btn.innerHTML = '♡ お気に入り <span id="favCount">' + favs.length + '</span>';
+    bar.style.display = 'none';
+  }
+  applyFilters();
+}
+
+// ── Category filter ──
+function filterCat(sec, clickedBtn) {
+  currentCat = sec;
+  // Exit fav mode when navigating categories
+  if (favMode) {
+    favMode = false;
+    document.getElementById('favBtn').classList.remove('fav-active');
+    document.getElementById('favBtn').innerHTML = '♡ お気に入り <span id="favCount">' + favs.length + '</span>';
+    document.getElementById('favOnlyBar').style.display = 'none';
+  }
+  // Update tab highlight
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('on'));
+  if (clickedBtn) clickedBtn.classList.add('on');
+  // Clear search
+  currentSearch = '';
+  document.getElementById('searchInp').value = '';
+  applyFilters();
+}
+
+// ── Search ──
+function searchCards(q) {
+  currentSearch = q.trim().toLowerCase();
+  // When searching, show all sections and exit fav mode
+  if (currentSearch) {
+    currentCat = 'all';
+    favMode = false;
+    document.getElementById('favBtn').classList.remove('fav-active');
+    document.getElementById('favBtn').innerHTML = '♡ お気に入り <span id="favCount">' + favs.length + '</span>';
+    document.getElementById('favOnlyBar').style.display = 'none';
+    document.querySelectorAll('.cat-btn').forEach((b,i) => b.classList.toggle('on', i === 0));
+  }
+  applyFilters();
+}
+
+// ── Apply all filters ──
+function applyFilters() {
+  const sections = document.querySelectorAll('section.section');
+  sections.forEach(sec => {
+    // Section visibility by cat filter
+    const showSec = currentCat === 'all' || sec.id === currentCat;
+    if (!showSec) { sec.style.display = 'none'; return; }
+    sec.style.display = '';
+
+    // Card visibility within section
+    const cards = sec.querySelectorAll('.card');
+    let anyVisible = false;
+    cards.forEach(card => {
+      const n = parseInt(card.id.replace('c', ''));
+      const name = (card.querySelector('.card-name')?.textContent || '').toLowerCase();
+      const desc = (card.querySelector('.card-desc')?.textContent || '').toLowerCase();
+
+      const passSearch = !currentSearch || name.includes(currentSearch) || desc.includes(currentSearch);
+      const passFav = !favMode || favs.includes(n);
+
+      if (passSearch && passFav) { card.style.display = ''; anyVisible = true; }
+      else { card.style.display = 'none'; }
+    });
+
+    // Hide section if all cards are hidden
+    sec.style.display = anyVisible ? '' : 'none';
+  });
+}
+
+// ── Header height CSS var (for fav-only-bar sticky position) ──
+function updateHeaderHeight() {
+  const h = document.getElementById('siteHeader').offsetHeight;
+  document.documentElement.style.setProperty('--header-h', h + 'px');
+}
+window.addEventListener('resize', updateHeaderHeight);
+
 renderFavs();
+updateHeaderHeight();
 
 function noop() {}
 
