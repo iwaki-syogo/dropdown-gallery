@@ -2499,7 +2499,8 @@ const PROMPTS = {
   card1: `以下のFrosted Glassカードを実装してください。\n\n【スタイル名】iOS Frosted Glass Card\n【外観】background:rgba(255,255,255,.15) + backdrop-filter:blur(30px) + -webkit-backdrop-filter:blur(30px) + border:1px solid rgba(255,255,255,.25) + border-radius:16px + padding:20px。テキストは白。小さいラベル + 大きい数値 + サブテキストの縦構成。\n【用途】グラデーション・写真背景の上に重ねる統計カード・ウィジェット。iOSのコントロールセンター風。`,
   card2: `以下のiOSウィジェットカードを実装してください。\n\n【スタイル名】iOS Widget Card\n【外観】background:#fff + border-radius:16px + padding:14px 16px + box-shadow:0 2px 12px rgba(0,0,0,.08)。タイトル(font-size:12px・uppercase・グレー・letter-spacing) + 大きな数値(font-size:28px・font-weight:700) + 変化量(上昇:#34c759・下降:#ff3b30)。\n【用途】ホーム画面ウィジェット・ダッシュボードのKPIカード。`,
   card3: `以下のiOSスタイルのStats Cardを実装してください。\n\n【スタイル名】iOS Stats Card\n【外観】背景#fff。タイトル行(font-weight:700)の下に数値ボックスをflexで横並べ。各ボックス:background:#f2f2f7・border-radius:10px・padding:12px・text-align:center。大きな数値(font-size:22px・font-weight:700) + ラベル(font-size:11px・グレー)。\n【用途】週次サマリー・完了/進行/遅延の集計など複数指標を並列表示するカード。`,
-  card4: `以下のiOSスタイルのInfo Card(App Clip風)を実装してください。\n\n【スタイル名】iOS App Clip / Info Card\n【外観】background:#fff + border-radius:12px + overflow:hidden + box-shadow。上部ヘッダー画像(72-80px高・グラデまたは画像)。本体:padding 12px 16px・タイトル(font-weight:700) + 説明テキスト(font-size:13px・グレー)。下部フッター(border-top:0.5px + flex):「後で」と「始める」を左右に配置、dividerで区切る。\n【用途】アプリ紹介・オンボーディング・プロモーションカード。`
+  card4: `以下のiOSスタイルのInfo Card(App Clip風)を実装してください。\n\n【スタイル名】iOS App Clip / Info Card\n【外観】background:#fff + border-radius:12px + overflow:hidden + box-shadow。上部ヘッダー画像(72-80px高・グラデまたは画像)。本体:padding 12px 16px・タイトル(font-weight:700) + 説明テキスト(font-size:13px・グレー)。下部フッター(border-top:0.5px + flex):「後で」と「始める」を左右に配置、dividerで区切る。\n【用途】アプリ紹介・オンボーディング・プロモーションカード。`,
+  ios7: `以下のiOS風ステータスピッカーを実装してください。\n\n【スタイル名】iOS Status Picker\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px) + -webkit-backdrop-filter:blur(40px)。border-radius:13px。min-width:180px。各オプションは display:flex・align-items:center・padding:11px 16px・min-height:44px・白文字(font-size:15px)・border-bottom:0.5px solid rgba(255,255,255,0.1)。最後の行はborder-bottomなし。\n【チェックマーク列】各行の左端にwidth:18px・flex-shrink:0のspan要素を置く。選択中の行のみ「✓」(font-size:15px・白)を表示し、非選択行は空欄にする。テキストラベルはflex:1でチェックマークの右に配置(gap:10px)。\n【配置】トリガーボタン直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉。外部クリックで閉じる。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット(単一選択・ラジオボタン挙動)。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】ステータス切替・ラベル変更など排他選択が必要な場面。iOS UIMenu の .checkmark アクション属性を再現したWebパターン。`
 };
 
 // ── copy Prompt ──
@@ -2525,7 +2526,7 @@ let currentSearch = '';
 // ── Favorites render ──
 function renderFavs() {
   document.getElementById('favCount').textContent = favs.length;
-  for (let i = 1; i <= 70; i++) {
+  for (let i = 1; i <= 71; i++) {
     const card = document.getElementById('c' + i);
     const btn = card ? card.querySelector('.btn-fav') : null;
     if (!card || !btn) continue;
