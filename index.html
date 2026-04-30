@@ -30,14 +30,14 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 
 /* Card */
 .card{background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;display:flex;flex-direction:column;transition:border-color .1s}
-.card.fav{border-color:#3b82f6}
+.card.fav{border-color:#ef4444;box-shadow:0 0 0 2px rgba(239,68,68,.12)}
 .preview{padding:28px 20px;min-height:130px;display:flex;align-items:flex-start;justify-content:flex-start;position:relative;overflow:visible}
 .card-foot{padding:10px 14px;border-top:1px solid #f3f4f6;display:flex;align-items:flex-start;gap:8px}
 .card-info{flex:1;min-width:0}
 .card-name{font-weight:600;font-size:13px;margin-bottom:2px}
 .card-desc{color:#6b7280;font-size:12px;line-height:1.4}
-.btn-fav{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px;font-size:14px;color:#d1d5db;cursor:pointer;flex-shrink:0}
-.btn-fav.on{color:#ef4444;border-color:#fca5a5}
+.btn-fav{background:none;border:1.5px solid #d1d5db;border-radius:8px;padding:5px 10px;font-size:18px;color:#d1d5db;cursor:pointer;flex-shrink:0;line-height:1}
+.btn-fav.on{color:#ef4444;border-color:#ef4444;background:#fff1f2}
 .btn-copy{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:5px 9px;font-size:11px;color:#6b7280;cursor:pointer;flex-shrink:0}
 .btn-copy:hover{background:#f3f4f6}
 .btn-copy.ok{color:#10b981;border-color:#6ee7b7}
@@ -286,6 +286,118 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 
 /* focus ring */
 [class*="tr-"]:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+
+/* ── iOS Buttons ── */
+.ios-btn{border:none;border-radius:12px;padding:14px 28px;font-size:17px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.ios-btn-fill{background:#007aff;color:#fff}.ios-btn-fill:hover{background:#0066cc}
+.ios-btn-tint{background:rgba(0,122,255,.12);color:#007aff}
+.ios-btn-gray{background:#f2f2f7;color:#3c3c43}
+.ios-btn-dest{background:rgba(255,59,48,.1);color:#ff3b30}
+.ios-btn-plain{background:none;color:#007aff;border:none;padding:12px 4px;font-size:17px;cursor:pointer;font-family:inherit;font-weight:500}
+.ios-btn-sm{padding:10px 20px;font-size:15px;border-radius:10px}
+.ios-btn-loading{opacity:.55;cursor:not-allowed}
+
+/* ── iOS Switch ── */
+.ios-sw{position:relative;display:inline-block;width:51px;height:31px;flex-shrink:0}
+.ios-sw input{opacity:0;width:0;height:0;position:absolute}
+.ios-sw-track{position:absolute;top:0;left:0;right:0;bottom:0;background:#e9e9ea;border-radius:31px;cursor:pointer}
+.ios-sw-track::before{content:'';position:absolute;width:27px;height:27px;left:2px;top:2px;background:#fff;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,.3)}
+.ios-sw input:checked + .ios-sw-track{background:#34c759}
+.ios-sw input:checked + .ios-sw-track::before{left:22px}
+.ios-sw-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px}
+.ios-sw-label{font-size:17px;color:#000}
+
+/* ── iOS Slider ── */
+.ios-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:#e5e5ea;outline:none;cursor:pointer}
+.ios-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3);cursor:pointer}
+.ios-slider-wrap{display:flex;align-items:center;gap:10px;width:220px}
+.ios-slider-icon{font-size:16px}
+
+/* ── iOS Segmented Control ── */
+.ios-seg-ctrl{display:flex;background:#e9e9ea;border-radius:8px;padding:2px;gap:1px}
+.ios-seg-item{flex:1;padding:7px 10px;border:none;background:transparent;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap}
+.ios-seg-item.on{background:#fff;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* ── iOS Stepper ── */
+.ios-stepper{display:inline-flex;border:1.5px solid #d1d5db;border-radius:8px;overflow:hidden}
+.ios-stepper button{background:#fff;border:none;padding:8px 16px;font-size:22px;cursor:pointer;color:#007aff;font-weight:300;line-height:1;font-family:inherit}
+.ios-stepper button:hover{background:#f0f0f0}
+.ios-stepper span{padding:8px 20px;font-size:17px;border-left:1.5px solid #d1d5db;border-right:1.5px solid #d1d5db;min-width:52px;text-align:center;background:#fff;font-family:inherit}
+
+/* ── iOS Page Control ── */
+.ios-page-ctrl{display:flex;gap:6px;align-items:center;justify-content:center}
+.ios-page-dot{width:8px;height:8px;border-radius:50%;background:#c7c7cc;cursor:pointer}
+.ios-page-dot.on{background:#3c3c43;width:10px;height:10px}
+
+/* ── iOS Cells ── */
+.ios-cell-group{background:#fff;border-radius:10px;overflow:hidden}
+.ios-cell{display:flex;align-items:center;gap:12px;padding:11px 16px;min-height:44px;cursor:pointer;background:#fff}
+.ios-cell:hover{background:#f2f2f7}
+.ios-cicon{width:29px;height:29px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;flex-shrink:0}
+.ios-cell-body{flex:1;min-width:0}
+.ios-cell-title{font-size:17px;color:#000}
+.ios-cell-sub{font-size:13px;color:#8e8e93}
+.ios-cell-right{color:#8e8e93;font-size:17px;flex-shrink:0}
+.ios-chev{color:#c7c7cc;font-size:20px;margin-left:2px;flex-shrink:0}
+.ios-cell-sep{height:0.5px;background:#c6c6c8;margin-left:57px}
+.ios-cell-sep-full{height:0.5px;background:#c6c6c8}
+.ios-cell-bdg{background:#ff3b30;color:#fff;font-size:12px;font-weight:600;padding:2px 7px;border-radius:999px;flex-shrink:0}
+.ios-cell-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700;flex-shrink:0}
+
+/* ── iOS Alert ── */
+.ios-alert-box{background:rgba(242,242,247,.98);border-radius:14px;overflow:hidden;min-width:260px;max-width:290px;text-align:center}
+.ios-alert-title{font-size:17px;font-weight:700;padding:20px 20px 4px;color:#000}
+.ios-alert-msg{font-size:13px;color:#3c3c43;padding:0 20px 18px;line-height:1.4}
+.ios-alert-btns{display:flex;border-top:0.5px solid rgba(60,60,67,.36)}
+.ios-alert-btn{flex:1;padding:12px;font-size:17px;background:none;border:none;cursor:pointer;font-family:inherit;color:#007aff}
+.ios-alert-btn:hover{background:rgba(0,0,0,.04)}
+.ios-alert-btn.bold{font-weight:600}
+.ios-alert-btn.red{color:#ff3b30}
+.ios-alert-btn-sep{width:0.5px;background:rgba(60,60,67,.36);flex-shrink:0}
+
+/* ── iOS Banner ── */
+.ios-banner{background:rgba(242,242,247,.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;max-width:340px;box-shadow:0 2px 12px rgba(0,0,0,.15);width:100%}
+.ios-banner-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ios-banner-title{font-size:15px;font-weight:700;color:#000;margin-bottom:1px}
+.ios-banner-msg{font-size:15px;color:#3c3c43;line-height:1.3}
+.ios-banner-time{font-size:12px;color:#8e8e93;margin-left:auto;flex-shrink:0}
+
+/* ── iOS HUD (Toast) ── */
+.ios-hud{background:rgba(28,28,30,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:14px;padding:20px 28px;display:flex;flex-direction:column;align-items:center;gap:6px;color:#fff;min-width:120px}
+.ios-hud-icon{font-size:38px;line-height:1}
+.ios-hud-label{font-size:14px;font-weight:500}
+
+/* ── iOS Progress ── */
+.ios-progress-bar{height:4px;background:#e5e5ea;border-radius:2px;overflow:hidden;width:100%}
+.ios-progress-fill{height:100%;background:#007aff;border-radius:2px}
+.ios-progress-label{display:flex;justify-content:space-between;font-size:13px;color:#8e8e93;margin-top:4px}
+
+/* ── iOS Cards ── */
+.ios-frosted-card{background:rgba(255,255,255,.15);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:20px;color:#fff;min-width:220px}
+.ios-frosted-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:4px;letter-spacing:.3px}
+.ios-frosted-val{font-size:34px;font-weight:700;margin-bottom:2px}
+.ios-frosted-sub{font-size:13px;opacity:.65}
+
+.ios-widget{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,.08);min-width:150px}
+.ios-widget-title{font-size:12px;font-weight:600;color:#8e8e93;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.ios-widget-val{font-size:28px;font-weight:700;color:#000;line-height:1;margin-bottom:4px}
+.ios-widget-change{font-size:13px}
+.ios-widget-change.up{color:#34c759}
+.ios-widget-change.down{color:#ff3b30}
+
+.ios-stats-row{display:flex;gap:10px;width:100%}
+.ios-stat-box{flex:1;background:#f2f2f7;border-radius:10px;padding:12px;text-align:center}
+.ios-stat-num{font-size:22px;font-weight:700;color:#000}
+.ios-stat-label{font-size:11px;color:#8e8e93;margin-top:2px}
+
+.ios-info-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:220px;width:100%}
+.ios-info-card-img{height:72px;display:flex;align-items:center;justify-content:center;font-size:32px}
+.ios-info-card-body{padding:12px 16px}
+.ios-info-card-title{font-size:15px;font-weight:700;color:#000;margin-bottom:3px}
+.ios-info-card-desc{font-size:13px;color:#8e8e93;line-height:1.4}
+.ios-info-card-foot{padding:10px 16px;border-top:0.5px solid #e5e5ea;display:flex;gap:0}
+.ios-info-card-btn{flex:1;text-align:center;color:#007aff;font-size:15px;font-weight:500;cursor:pointer;padding:2px}
+.ios-info-card-btn-sep{width:0.5px;background:#e5e5ea}
 </style>
 </head>
 <body>
@@ -294,7 +406,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
   <div class="header-inner">
     <div class="header-left">
       <h1>Dropdown Gallery</h1>
-      <p>好きなドロップダウンを見つけてください — 36 種類</p>
+      <p>iOS風UIパーツ＆ドロップダウン — 70 種類</p>
     </div>
     <button class="fav-badge" id="favBtn">♡ お気に入り <span id="favCount">0</span></button>
   </div>
@@ -1268,7 +1380,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
   <div class="grid">
 
     <!-- ios1. iOS Context Menu Dark -->
-    <div class="card" id="cios1">
+    <div class="card" id="c37">
       <div class="preview" style="min-height:200px;background:#1a1a2e">
         <div class="dd" id="dios1">
           <button class="ios-trigger" onclick="toggle('dios1')">
@@ -1292,7 +1404,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
     </div>
 
     <!-- ios2. iOS Context Menu Light -->
-    <div class="card" id="cios2">
+    <div class="card" id="c38">
       <div class="preview" style="min-height:200px;background:#f2f2f7">
         <div class="dd" id="dios2">
           <button class="ios-trigger-light" onclick="toggle('dios2')">
@@ -1315,7 +1427,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
     </div>
 
     <!-- ios3. iOS Action Sheet -->
-    <div class="card" id="cios3">
+    <div class="card" id="c39">
       <div class="preview" style="min-height:220px;background:#1a1a2e;flex-direction:column;align-items:center;gap:12px">
         <div class="dd" id="dios3" style="width:100%">
           <button class="ios-trigger" style="width:100%;justify-content:center" onclick="toggle('dios3')">
@@ -1339,7 +1451,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
     </div>
 
     <!-- ios4. iOS Destructive Menu -->
-    <div class="card" id="cios4">
+    <div class="card" id="c40">
       <div class="preview" style="min-height:200px;background:#2c2c2e">
         <div class="dd" id="dios4">
           <button class="ios-trigger" onclick="toggle('dios4')">
@@ -1363,7 +1475,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
     </div>
 
     <!-- ios5. iOS Safari-style Menu -->
-    <div class="card" id="cios5">
+    <div class="card" id="c41">
       <div class="preview" style="min-height:220px;background:#1c1c1e;justify-content:flex-end;align-items:flex-start">
         <div class="dd" id="dios5">
           <button style="background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px" onclick="toggle('dios5')">⋯</button>
@@ -1386,7 +1498,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
     </div>
 
     <!-- ios6. iOS Grid Action Menu -->
-    <div class="card" id="cios6">
+    <div class="card" id="c42">
       <div class="preview" style="min-height:220px;background:#000">
         <div class="dd" id="dios6">
           <button class="ios-trigger" onclick="toggle('dios6')">
@@ -1409,6 +1521,649 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
         <div class="card-info"><div class="card-name">iOS Grid Action Menu</div><div class="card-desc">上部アイコングリッド+下部テキストリスト。iOS共有シートの構成を再現</div></div>
         <button class="btn-fav" onclick="toggleFav(42)">♡</button>
         <button class="btn-copy" onclick="copyPrompt('ios6')">プロンプト</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S6: iOS ボタン ======= -->
+<section class="section">
+  <div class="section-title"><h2>iOS ボタン</h2><span class="cnt">6 種</span></div>
+  <div class="grid">
+
+    <!-- 43. Filled -->
+    <div class="card" id="c43">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center">
+        <button class="ios-btn ios-btn-fill">保存する</button>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Filled Button</div><div class="card-desc">iOS標準のプライマリボタン。#007aff・border-radius 12px・font-weight 600</div></div>
+        <button class="btn-fav" onclick="toggleFav(43)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('btn1')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 44. Tinted -->
+    <div class="card" id="c44">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center">
+        <button class="ios-btn ios-btn-tint">詳細を見る</button>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Tinted Button</div><div class="card-desc">ブランドカラーの薄い背景+濃いテキスト。セカンダリアクションに</div></div>
+        <button class="btn-fav" onclick="toggleFav(44)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('btn2')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 45. Gray -->
+    <div class="card" id="c45">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center">
+        <button class="ios-btn ios-btn-gray">キャンセル</button>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Gray Button</div><div class="card-desc">グレー背景のニュートラルボタン。キャンセルや閉じる操作に</div></div>
+        <button class="btn-fav" onclick="toggleFav(45)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('btn3')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 46. Destructive -->
+    <div class="card" id="c46">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center">
+        <button class="ios-btn ios-btn-dest">削除する</button>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Destructive Button</div><div class="card-desc">赤系デストラクティブボタン。削除・退会など不可逆アクションに</div></div>
+        <button class="btn-fav" onclick="toggleFav(46)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('btn4')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 47. Plain -->
+    <div class="card" id="c47">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center">
+        <button class="ios-btn-plain">スキップ</button>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Plain Button</div><div class="card-desc">背景も枠もなし。テキストのみのリンクライクなボタン</div></div>
+        <button class="btn-fav" onclick="toggleFav(47)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('btn5')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 48. Loading -->
+    <div class="card" id="c48">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center;gap:12px;flex-direction:column">
+        <button class="ios-btn ios-btn-fill ios-btn-loading" disabled>⏳ 送信中…</button>
+        <button class="ios-btn ios-btn-fill ios-btn-sm">送信する</button>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Loading State Button</div><div class="card-desc">送信中の非活性状態(opacity + disabled)と通常状態の比較</div></div>
+        <button class="btn-fav" onclick="toggleFav(48)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('btn6')">プロンプト</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S7: iOS コントロール ======= -->
+<section class="section">
+  <div class="section-title"><h2>iOS コントロール</h2><span class="cnt">6 種</span></div>
+  <div class="grid">
+
+    <!-- 49. Toggle Switch -->
+    <div class="card" id="c49">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:0;padding:16px 20px">
+        <div class="ios-sw-row" style="border-bottom:0.5px solid #c6c6c8">
+          <span class="ios-sw-label">Wi-Fi</span>
+          <label class="ios-sw"><input type="checkbox" checked><span class="ios-sw-track"></span></label>
+        </div>
+        <div class="ios-sw-row" style="border-bottom:0.5px solid #c6c6c8">
+          <span class="ios-sw-label">Bluetooth</span>
+          <label class="ios-sw"><input type="checkbox"><span class="ios-sw-track"></span></label>
+        </div>
+        <div class="ios-sw-row">
+          <span class="ios-sw-label">機内モード</span>
+          <label class="ios-sw"><input type="checkbox" checked><span class="ios-sw-track"></span></label>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Toggle Switch</div><div class="card-desc">Settings.app定番のトグルスイッチ。緑(#34c759)でオン、グレーでオフ</div></div>
+        <button class="btn-fav" onclick="toggleFav(49)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl1')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 50. Slider -->
+    <div class="card" id="c50">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:16px;padding:20px">
+        <div class="ios-slider-wrap">
+          <span class="ios-slider-icon">🔆</span>
+          <input type="range" class="ios-range" min="0" max="100" value="70">
+          <span class="ios-slider-icon">☀️</span>
+        </div>
+        <div class="ios-slider-wrap">
+          <span class="ios-slider-icon">🔕</span>
+          <input type="range" class="ios-range" min="0" max="100" value="40">
+          <span class="ios-slider-icon">🔊</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Slider</div><div class="card-desc">コントロールセンター風スライダー。webkit-appearance:none でカスタムスタイル</div></div>
+        <button class="btn-fav" onclick="toggleFav(50)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl2')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 51. Segmented Control -->
+    <div class="card" id="c51">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:16px;align-items:stretch;padding:20px">
+        <div class="ios-seg-ctrl" id="seg51a">
+          <button class="ios-seg-item on" onclick="iosSeg('seg51a',this)">一覧</button>
+          <button class="ios-seg-item" onclick="iosSeg('seg51a',this)">マップ</button>
+          <button class="ios-seg-item" onclick="iosSeg('seg51a',this)">グラフ</button>
+        </div>
+        <div class="ios-seg-ctrl" id="seg51b">
+          <button class="ios-seg-item" onclick="iosSeg('seg51b',this)">日</button>
+          <button class="ios-seg-item on" onclick="iosSeg('seg51b',this)">週</button>
+          <button class="ios-seg-item" onclick="iosSeg('seg51b',this)">月</button>
+          <button class="ios-seg-item" onclick="iosSeg('seg51b',this)">年</button>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Segmented Control</div><div class="card-desc">グレーのpillコンテナに白の選択ボタン。iOSのビュー切替の定番</div></div>
+        <button class="btn-fav" onclick="toggleFav(51)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl3')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 52. Stepper -->
+    <div class="card" id="c52">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:16px;align-items:center">
+        <div style="display:flex;align-items:center;gap:20px">
+          <span style="font-size:17px;color:#000">数量</span>
+          <div class="ios-stepper">
+            <button onclick="iosStep('step52',-1)">−</button>
+            <span id="step52">3</span>
+            <button onclick="iosStep('step52',1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Stepper</div><div class="card-desc">−/+ボタンで数値を1ずつ増減。カート数量・設定値の調整に</div></div>
+        <button class="btn-fav" onclick="toggleFav(52)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl4')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 53. Page Control -->
+    <div class="card" id="c53">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:16px;align-items:center;justify-content:center">
+        <div style="background:#e5e5ea;border-radius:12px;width:220px;height:80px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#8e8e93">スワイプコンテンツ</div>
+        <div class="ios-page-ctrl" id="pgctrl53">
+          <span class="ios-page-dot on" onclick="iosPage('pgctrl53',0)"></span>
+          <span class="ios-page-dot" onclick="iosPage('pgctrl53',1)"></span>
+          <span class="ios-page-dot" onclick="iosPage('pgctrl53',2)"></span>
+          <span class="ios-page-dot" onclick="iosPage('pgctrl53',3)"></span>
+          <span class="ios-page-dot" onclick="iosPage('pgctrl53',4)"></span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Page Control</div><div class="card-desc">スワイプ式コンテンツのドットインジケーター。現在ページは大きく濃く表示</div></div>
+        <button class="btn-fav" onclick="toggleFav(53)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl5')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 54. Radio Selection -->
+    <div class="card" id="c54">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px">
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell" onclick="iosRadio('radio54',this)">
+            <div class="ios-cell-body"><div class="ios-cell-title">エコノミー</div></div>
+            <span class="ios-radio-check" style="color:#007aff;font-size:20px">✓</span>
+          </div>
+          <div class="ios-cell-sep-full"></div>
+          <div class="ios-cell" onclick="iosRadio('radio54',this)" id="radio54">
+            <div class="ios-cell-body"><div class="ios-cell-title">ビジネス</div></div>
+            <span class="ios-radio-check" style="color:transparent;font-size:20px">✓</span>
+          </div>
+          <div class="ios-cell-sep-full"></div>
+          <div class="ios-cell" onclick="iosRadio('radio54',this)">
+            <div class="ios-cell-body"><div class="ios-cell-title">ファースト</div></div>
+            <span class="ios-radio-check" style="color:transparent;font-size:20px">✓</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Radio Selection</div><div class="card-desc">チェックマーク式単一選択。プラン・座席クラス・配送方法の選択に</div></div>
+        <button class="btn-fav" onclick="toggleFav(54)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl6')">プロンプト</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S8: iOS セル ======= -->
+<section class="section">
+  <div class="section-title"><h2>iOS セル・リスト</h2><span class="cnt">6 種</span></div>
+  <div class="grid">
+
+    <!-- 55. Basic Cell -->
+    <div class="card" id="c55">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px;align-items:stretch">
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#007aff">📶</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">Wi-Fi</div></div>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#30b0c7">🔵</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">Bluetooth</div></div>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#ff9500">✈️</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">機内モード</div></div>
+            <span class="ios-chev">›</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Basic Cell</div><div class="card-desc">Settings.app定番のセルリスト。カラーアイコン+ラベル+シェブロン構成</div></div>
+        <button class="btn-fav" onclick="toggleFav(55)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('cell1')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 56. Cell with Value -->
+    <div class="card" id="c56">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px;align-items:stretch">
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cell-body"><div class="ios-cell-title">言語</div></div>
+            <div class="ios-cell-right">日本語</div>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep-full"></div>
+          <div class="ios-cell">
+            <div class="ios-cell-body"><div class="ios-cell-title">地域</div></div>
+            <div class="ios-cell-right">日本</div>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep-full"></div>
+          <div class="ios-cell">
+            <div class="ios-cell-body"><div class="ios-cell-title">カレンダー</div></div>
+            <div class="ios-cell-right">グレゴリオ暦</div>
+            <span class="ios-chev">›</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Cell with Value</div><div class="card-desc">現在の設定値を右側にグレーテキストで表示。設定項目の一覧表示に</div></div>
+        <button class="btn-fav" onclick="toggleFav(56)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('cell2')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 57. Cell with Toggle -->
+    <div class="card" id="c57">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px;align-items:stretch">
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#ff3b30">🔔</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">通知</div></div>
+            <label class="ios-sw"><input type="checkbox" checked><span class="ios-sw-track"></span></label>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#34c759">🔒</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">Face ID</div></div>
+            <label class="ios-sw"><input type="checkbox" checked><span class="ios-sw-track"></span></label>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#8e8e93">🌙</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">おやすみモード</div></div>
+            <label class="ios-sw"><input type="checkbox"><span class="ios-sw-track"></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Cell with Toggle</div><div class="card-desc">右端にトグルスイッチ付きセル。Settings.appで最も使われるパターン</div></div>
+        <button class="btn-fav" onclick="toggleFav(57)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('cell3')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 58. Cell with Badge -->
+    <div class="card" id="c58">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px;align-items:stretch">
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#007aff">📩</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">メール</div></div>
+            <span class="ios-cell-bdg">12</span>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#34c759">💬</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">メッセージ</div></div>
+            <span class="ios-cell-bdg">3</span>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#ff9500">🔔</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">通知センター</div></div>
+            <span class="ios-cell-bdg">99+</span>
+            <span class="ios-chev">›</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Cell with Badge</div><div class="card-desc">未読件数バッジ(赤pill)付きセル。アプリ設定やメッセージ一覧に</div></div>
+        <button class="btn-fav" onclick="toggleFav(58)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('cell4')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 59. Cell with Avatar + Subtitle -->
+    <div class="card" id="c59">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px;align-items:stretch">
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cell-av" style="background:#6366f1">A</div>
+            <div class="ios-cell-body">
+              <div class="ios-cell-title">Alice</div>
+              <div class="ios-cell-sub">おはよう！今日どう？</div>
+            </div>
+            <div style="font-size:12px;color:#8e8e93;flex-shrink:0">17:32</div>
+          </div>
+          <div class="ios-cell-sep" style="margin-left:62px"></div>
+          <div class="ios-cell">
+            <div class="ios-cell-av" style="background:#f59e0b">B</div>
+            <div class="ios-cell-body">
+              <div class="ios-cell-title">Bob</div>
+              <div class="ios-cell-sub">了解しました 👍</div>
+            </div>
+            <div style="font-size:12px;color:#8e8e93;flex-shrink:0">16:14</div>
+          </div>
+          <div class="ios-cell-sep" style="margin-left:62px"></div>
+          <div class="ios-cell">
+            <div class="ios-cell-av" style="background:#10b981">C</div>
+            <div class="ios-cell-body">
+              <div class="ios-cell-title">Carol</div>
+              <div class="ios-cell-sub">ありがとうございます！</div>
+            </div>
+            <div style="font-size:12px;color:#8e8e93;flex-shrink:0">12:05</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Cell with Avatar</div><div class="card-desc">アバター+タイトル+サブタイトル+タイムスタンプ。メッセージ一覧の定番構成</div></div>
+        <button class="btn-fav" onclick="toggleFav(59)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('cell5')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 60. Settings Group -->
+    <div class="card" id="c60">
+      <div class="preview" style="background:#f2f2f7;padding:12px 16px;flex-direction:column;gap:8px;align-items:stretch">
+        <div style="font-size:13px;color:#6b6b6b;text-transform:uppercase;font-weight:500;letter-spacing:.4px;padding:0 4px">アカウント</div>
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#007aff">👤</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">プロフィール</div></div>
+            <span class="ios-chev">›</span>
+          </div>
+          <div class="ios-cell-sep"></div>
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#ff9500">🔑</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">パスワードとセキュリティ</div></div>
+            <span class="ios-chev">›</span>
+          </div>
+        </div>
+        <div style="font-size:13px;color:#6b6b6b;text-transform:uppercase;font-weight:500;letter-spacing:.4px;padding:0 4px">一般</div>
+        <div class="ios-cell-group" style="width:100%">
+          <div class="ios-cell">
+            <div class="ios-cicon" style="background:#8e8e93">⚙️</div>
+            <div class="ios-cell-body"><div class="ios-cell-title">一般設定</div></div>
+            <span class="ios-chev">›</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Settings Group</div><div class="card-desc">セクションラベル+グループセル。Settings.appの設定画面レイアウト</div></div>
+        <button class="btn-fav" onclick="toggleFav(60)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('cell6')">プロンプト</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S9: iOS 通知・アラート ======= -->
+<section class="section">
+  <div class="section-title"><h2>iOS 通知・アラート</h2><span class="cnt">6 種</span></div>
+  <div class="grid">
+
+    <!-- 61. System Alert -->
+    <div class="card" id="c61">
+      <div class="preview" style="background:rgba(0,0,0,.4);align-items:center;justify-content:center">
+        <div class="ios-alert-box">
+          <div class="ios-alert-title">削除しますか？</div>
+          <div class="ios-alert-msg">この操作は元に戻せません。写真が完全に削除されます。</div>
+          <div class="ios-alert-btns">
+            <button class="ios-alert-btn">キャンセル</button>
+            <div class="ios-alert-btn-sep"></div>
+            <button class="ios-alert-btn red bold">削除</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS System Alert</div><div class="card-desc">半透明黒オーバーレイ+白角丸ダイアログ。ボタンはdividerで区切り、危険操作は赤</div></div>
+        <button class="btn-fav" onclick="toggleFav(61)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('notif1')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 62. Lock Screen Banner -->
+    <div class="card" id="c62">
+      <div class="preview" style="background:linear-gradient(135deg,#1a1a2e,#16213e);flex-direction:column;gap:10px;align-items:stretch;padding:16px">
+        <div style="font-size:11px;color:rgba(255,255,255,.6);text-align:center;margin-bottom:4px">17:00 水曜日 4月30日</div>
+        <div class="ios-banner">
+          <div class="ios-banner-icon" style="background:#007aff">📩</div>
+          <div>
+            <div class="ios-banner-title">メール</div>
+            <div class="ios-banner-msg">新しいメールが届きました</div>
+          </div>
+          <div class="ios-banner-time">今</div>
+        </div>
+        <div class="ios-banner">
+          <div class="ios-banner-icon" style="background:#34c759">💬</div>
+          <div>
+            <div class="ios-banner-title">Alice</div>
+            <div class="ios-banner-msg">おはよう！今日ランチ行く？</div>
+          </div>
+          <div class="ios-banner-time">1分前</div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Lock Screen Banner</div><div class="card-desc">ロック画面のバナー通知。backdrop-filter:blur+アプリアイコン+タイムスタンプ構成</div></div>
+        <button class="btn-fav" onclick="toggleFav(62)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('notif2')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 63. HUD Toast -->
+    <div class="card" id="c63">
+      <div class="preview" style="background:#f2f2f7;gap:16px;flex-wrap:wrap;align-items:center;justify-content:center">
+        <div class="ios-hud">
+          <div class="ios-hud-icon">✅</div>
+          <div class="ios-hud-label">保存しました</div>
+        </div>
+        <div class="ios-hud">
+          <div class="ios-hud-icon">📋</div>
+          <div class="ios-hud-label">コピー完了</div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS HUD Toast</div><div class="card-desc">中央表示の小さなHUD通知。背景ブラー+白アイコン+ラベルで操作完了を伝える</div></div>
+        <button class="btn-fav" onclick="toggleFav(63)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('notif3')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 64. Activity Indicator -->
+    <div class="card" id="c64">
+      <div class="preview" style="background:#f2f2f7;gap:24px;align-items:center;justify-content:center;flex-direction:column">
+        <div style="display:flex;gap:24px;align-items:center">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div class="ios-spinner" style="border-top-color:#007aff"></div>
+            <span style="font-size:12px;color:#8e8e93">読み込み中</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div class="ios-spinner" style="width:24px;height:24px;border-width:2px;border-top-color:#8e8e93"></div>
+            <span style="font-size:12px;color:#8e8e93">小</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div class="ios-spinner" style="width:48px;height:48px;border-width:4px;border-top-color:#007aff"></div>
+            <span style="font-size:12px;color:#8e8e93">大</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Activity Indicator</div><div class="card-desc">iOSスピナー。CSS border + border-top-colorで作るシンプルな読み込みアニメーション</div></div>
+        <button class="btn-fav" onclick="toggleFav(64)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('notif4')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 65. Progress Bar -->
+    <div class="card" id="c65">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:16px;padding:20px 24px;align-items:stretch">
+        <div>
+          <div style="font-size:15px;font-weight:500;margin-bottom:8px;color:#000">ダウンロード中…</div>
+          <div class="ios-progress-bar"><div class="ios-progress-fill" style="width:68%"></div></div>
+          <div class="ios-progress-label"><span>68%</span><span>残り約2分</span></div>
+        </div>
+        <div>
+          <div style="font-size:15px;font-weight:500;margin-bottom:8px;color:#000">ストレージ</div>
+          <div class="ios-progress-bar" style="height:8px;border-radius:4px"><div class="ios-progress-fill" style="width:82%;height:100%;background:linear-gradient(90deg,#007aff,#34c759)"></div></div>
+          <div class="ios-progress-label"><span>82.4 GB 使用中</span><span>100 GB</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Progress Bar</div><div class="card-desc">細い(4px)の進捗バー。ダウンロード・ストレージ・アップロード状況表示に</div></div>
+        <button class="btn-fav" onclick="toggleFav(65)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('notif5')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 66. Empty State -->
+    <div class="card" id="c66">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px">
+        <div style="font-size:52px;line-height:1;filter:grayscale(30%)">📭</div>
+        <div style="font-size:20px;font-weight:700;color:#000">メールなし</div>
+        <div style="font-size:15px;color:#8e8e93;max-width:220px;line-height:1.4">受信トレイは空です。新しいメールが届いたらここに表示されます。</div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Empty State</div><div class="card-desc">データなし時の空状態表示。大きな絵文字+タイトル+説明のiOS標準パターン</div></div>
+        <button class="btn-fav" onclick="toggleFav(66)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('notif6')">プロンプト</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S10: iOS カード ======= -->
+<section class="section">
+  <div class="section-title"><h2>iOS カード</h2><span class="cnt">4 種</span></div>
+  <div class="grid">
+
+    <!-- 67. Frosted Glass Card -->
+    <div class="card" id="c67">
+      <div class="preview" style="background:linear-gradient(135deg,#667eea,#764ba2);align-items:center;justify-content:center">
+        <div class="ios-frosted-card">
+          <div class="ios-frosted-title">今月の支出</div>
+          <div class="ios-frosted-val">¥ 48,200</div>
+          <div class="ios-frosted-sub">先月比 +12.3%</div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Frosted Glass Card</div><div class="card-desc">backdrop-filter:blur(30px)の磨りガラスカード。グラデ背景に重ねて使う</div></div>
+        <button class="btn-fav" onclick="toggleFav(67)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('card1')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 68. Widget Card -->
+    <div class="card" id="c68">
+      <div class="preview" style="background:#f2f2f7;gap:12px;flex-wrap:wrap;align-items:flex-start">
+        <div class="ios-widget">
+          <div class="ios-widget-title">ステップ数</div>
+          <div class="ios-widget-val">8,432</div>
+          <div class="ios-widget-change up">↑ 目標まで1,568</div>
+        </div>
+        <div class="ios-widget">
+          <div class="ios-widget-title">気温</div>
+          <div class="ios-widget-val">24°</div>
+          <div class="ios-widget-change" style="color:#8e8e93">晴れ ☀️</div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Widget Card</div><div class="card-desc">ホーム画面ウィジェット風。白背景+大きな数値+サブテキスト構成</div></div>
+        <button class="btn-fav" onclick="toggleFav(68)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('card2')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 69. Stats Card -->
+    <div class="card" id="c69">
+      <div class="preview" style="background:#f2f2f7;flex-direction:column;gap:10px;padding:16px;align-items:stretch">
+        <div style="font-size:17px;font-weight:700;color:#000">今週のサマリー</div>
+        <div class="ios-stats-row">
+          <div class="ios-stat-box"><div class="ios-stat-num">42</div><div class="ios-stat-label">タスク完了</div></div>
+          <div class="ios-stat-box"><div class="ios-stat-num" style="color:#007aff">8</div><div class="ios-stat-label">進行中</div></div>
+          <div class="ios-stat-box"><div class="ios-stat-num" style="color:#ff3b30">3</div><div class="ios-stat-label">期限超過</div></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Stats Card</div><div class="card-desc">サマリー統計カード。グレー背景の数値ボックスを横並べ。ダッシュボードに</div></div>
+        <button class="btn-fav" onclick="toggleFav(69)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('card3')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 70. App Clip / Info Card -->
+    <div class="card" id="c70">
+      <div class="preview" style="background:#f2f2f7;align-items:center;justify-content:center">
+        <div class="ios-info-card">
+          <div class="ios-info-card-img" style="background:linear-gradient(135deg,#667eea,#764ba2)">🚀</div>
+          <div class="ios-info-card-body">
+            <div class="ios-info-card-title">TaskFlow へようこそ</div>
+            <div class="ios-info-card-desc">チームのタスクを一元管理。無料プランで今すぐ始められます。</div>
+          </div>
+          <div class="ios-info-card-foot">
+            <div class="ios-info-card-btn">後で</div>
+            <div class="ios-info-card-btn-sep"></div>
+            <div class="ios-info-card-btn" style="font-weight:600">始める</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">App Clip / Info Card</div><div class="card-desc">ヘッダー画像+タイトル+説明+アクションボタンのカード。アプリ紹介・オンボーディングに</div></div>
+        <button class="btn-fav" onclick="toggleFav(70)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('card4')">プロンプト</button>
       </div>
     </div>
 
@@ -1642,7 +2397,35 @@ const PROMPTS = {
   ios3: `以下のiOS風アクションシートを実装してください。\n\n【スタイル名】iOS Action Sheet\n【外観】半透明白背景(rgba(242,242,247,0.9)) + backdrop-filter:blur(40px)。border-radius 13px・幅広め(min-width 250px)。各オプションは中央揃えテキスト・高さ44px以上・青字(#007aff)。キャンセルは別ブロックで下部に配置(font-weight 600)。\n【配置】画面下部またはトリガー下にposition:absolute。\n【動作】クリックで開閉。キャンセルクリックで閉じる。\n【用途】iOS共有シート・削除確認など重要な操作の選択肢提示。`,
   ios4: `以下のiOS風デストラクティブアクションメニューを実装してください。\n\n【スタイル名】iOS Destructive Menu\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px)。border-radius 13px。通常オプションは白文字。「削除」などの危険な操作は赤字(#ff453a)。アイコン+テキストの横並び構成。\n【配置】トリガーの近くにposition:absolute。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】写真アプリ・ファイルアプリの長押しメニュー。削除など不可逆操作を含む場合のiOS標準スタイル。`,
   ios5: `以下のiOS風Safariナビゲーションメニューを実装してください。\n\n【スタイル名】iOS Safari Menu\n【外観】半透明ダーク背景 + backdrop-filter:blur(40px)。border-radius 13px。上部セクション(コピー・共有など)と下部セクション(設定・履歴など)をdivider(rgba(255,255,255,0.15))で区切る。各オプションにシステムアイコン相当の絵文字+テキスト。\n【配置】右上に固定的に出現(right:0またはトリガー右上)。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】Safari・ブラウザアプリ風のナビゲーションメニュー。`,
-  ios6: `以下のiOS風グリッドアクションメニューを実装してください。\n\n【スタイル名】iOS Grid Action Menu\n【外観】半透明ダーク背景 + backdrop-filter:blur(40px)。border-radius 13px。上部に3〜4列のアイコングリッド(各アイテムは円形背景アイコン+小さいラベル)。下部にテキストオプション(border-top区切り)。\n【配置】トリガーの下にposition:absolute。\n【動作】クリックで開閉。グリッドアイコンおよびテキストオプションがクリック可能。\n【用途】iOS共有シート上部のアプリアイコン部分を模したアクションメニュー。`
+  ios6: `以下のiOS風グリッドアクションメニューを実装してください。\n\n【スタイル名】iOS Grid Action Menu\n【外観】半透明ダーク背景 + backdrop-filter:blur(40px)。border-radius 13px。上部に3〜4列のアイコングリッド(各アイテムは円形背景アイコン+小さいラベル)。下部にテキストオプション(border-top区切り)。\n【配置】トリガーの下にposition:absolute。\n【動作】クリックで開閉。グリッドアイコンおよびテキストオプションがクリック可能。\n【用途】iOS共有シート上部のアプリアイコン部分を模したアクションメニュー。`,
+  btn1: `以下のiOSスタイルのFilledボタンを実装してください。\n\n【スタイル名】iOS Filled Button\n【外観】background:#007aff、color:#fff、border-radius:12px、padding:14px 28px、font-size:17px、font-weight:600。枠なし。hover時にbackground:#0066cc。\n【動作】クリックでアクション実行。\n【用途】フォーム送信・プライマリアクション。iOSアプリの最も基本的なCTAボタン。`,
+  btn2: `以下のiOSスタイルのTintedボタンを実装してください。\n\n【スタイル名】iOS Tinted Button\n【外観】background:rgba(0,122,255,.12)、color:#007aff、border-radius:12px、padding:14px 28px、font-size:17px、font-weight:600。枠なし。\n【動作】クリックでアクション実行。\n【用途】セカンダリアクション。Filledより控えめだが、ブランドカラーを維持したいとき。`,
+  btn3: `以下のiOSスタイルのGrayボタンを実装してください。\n\n【スタイル名】iOS Gray Button\n【外観】background:#f2f2f7、color:#3c3c43、border-radius:12px、padding:14px 28px、font-size:17px、font-weight:600。枠なし。\n【動作】クリックでアクション実行(主にキャンセル)。\n【用途】キャンセル・閉じるなどニュートラルなアクション。アラートのキャンセルボタンに多用。`,
+  btn4: `以下のiOSスタイルのDestructiveボタンを実装してください。\n\n【スタイル名】iOS Destructive Button\n【外観】background:rgba(255,59,48,.1)、color:#ff3b30、border-radius:12px、padding:14px 28px、font-size:17px、font-weight:600。枠なし。\n【動作】クリックで不可逆アクション実行(要確認ダイアログ推奨)。\n【用途】削除・退会・リセットなど危険な操作。赤色で危険性を視覚的に伝える。`,
+  btn5: `以下のiOSスタイルのPlainボタンを実装してください。\n\n【スタイル名】iOS Plain Button\n【外観】background:none、border:none、color:#007aff、font-size:17px、font-weight:500。枠も背景もなし、テキストのみ。\n【動作】クリックでアクション実行。\n【用途】スキップ・後で・詳細を見るなど補助的なリンクライクなアクション。`,
+  btn6: `以下のiOSスタイルのLoadingボタンを実装してください。\n\n【スタイル名】iOS Loading Button\n【外観】通常状態はFilled Button。ローディング中はopacity:.55 + disabled属性 + cursor:not-allowed + テキストを「送信中…」等に変更。\n【動作】クリックで非同期処理開始→ローディング状態→完了で元に戻る。\n【用途】フォーム送信・ファイルアップロードなど処理中の状態フィードバック。`,
+  ctrl1: `以下のiOSスタイルのToggleSwitchを実装してください。\n\n【スタイル名】iOS Toggle Switch\n【外観】幅51px・高さ31px。チェック未・background:#e9e9ea。チェック済・background:#34c759。ノブは白い円(27px)・box-shadow付き。チェック時にノブがleft:22pxに移動。\n【実装】inputをopacity:0で非表示。labelのtrackとbefore擬似要素でスタイリング。\n【用途】設定のオン/オフ切替。iOS Settings.appで最も使われるUI部品。`,
+  ctrl2: `以下のiOSスタイルのSliderを実装してください。\n\n【スタイル名】iOS Slider\n【外観】type=range input。-webkit-appearance:none。trackは高さ4px・背景#e5e5ea。thumbは直径28px白円・box-shadow付き。\n【実装】::-webkit-slider-thumb擬似要素でthumbをカスタマイズ。進捗部分の色はCSS custom property + JS input eventで実現。\n【用途】音量・輝度・速度など連続値の調整。コントロールセンター風。`,
+  ctrl3: `以下のiOSスタイルのSegmented Controlを実装してください。\n\n【スタイル名】iOS Segmented Control\n【外観】グレーコンテナ(background:#e9e9ea、border-radius:8px、padding:2px)。各ボタンflex:1。選択ボタンは白背景・font-weight:600・box-shadow。\n【動作】ボタンクリックで.onクラスを移動(単一選択)。\n【用途】ビュー切替・期間選択・モード切替。iOSアプリで最も見るUIコントロールの1つ。`,
+  ctrl4: `以下のiOSスタイルのStepperを実装してください。\n\n【スタイル名】iOS Stepper\n【外観】−と+ボタンをborderで連結(border-radius:8px、左右が半分ずつ)。中央に現在値表示エリア(border-left+border-right)。文字色:#007aff。\n【動作】−ボタン:値を1減算(最小値でdisable推奨)。+ボタン:値を1加算(最大値でdisable推奨)。\n【用途】数量・人数・評価値など整数の増減入力。`,
+  ctrl5: `以下のiOSスタイルのPage Controlを実装してください。\n\n【スタイル名】iOS Page Control\n【外観】ドット群を横一列に配置(gap:6px)。非選択:8px円・background:#c7c7cc。選択中:10px円・background:#3c3c43。\n【動作】ドットクリックで対応するコンテンツページに移動。スワイプと連動するのが理想。\n【用途】ウォークスルー・写真ギャラリー・カルーセルのページインジケーター。`,
+  ctrl6: `以下のiOSスタイルのRadio Selection(単一選択セルリスト)を実装してください。\n\n【スタイル名】iOS Radio Selection\n【外観】白背景セルリスト(border-radius:10px)。選択中の行右端に青いチェックマーク(color:#007aff)。非選択はcolor:transparent。\n【動作】セルクリックで選択を移動(チェックマーク表示切替)。\n【用途】プラン選択・配送方法・座席クラスなど単一選択が必要な場面。`,
+  cell1: `以下のiOSスタイルのBasic Cellを実装してください。\n\n【スタイル名】iOS Basic Cell\n【外観】白背景・border-radius:10px・overflow:hidden。各セル:padding 11px 16px・min-height:44px。カラー付き角丸アイコン(29px)・ラベル・シェブロン(›)。セル間はdivider(0.5px線・margin-left:57px)。\n【動作】ホバーでbackground:#f2f2f7。クリックで遷移。\n【用途】Settings.appのメイン設定リスト。iOSアプリのナビゲーションリストの基本形。`,
+  cell2: `以下のiOSスタイルのCell with Valueを実装してください。\n\n【スタイル名】iOS Cell with Value\n【外観】Basic Cellのラベル右に現在値テキスト(color:#8e8e93・font-size:17px)を追加。その右にシェブロン。\n【動作】クリックで設定画面へ遷移し値を変更できる想定。\n【用途】言語・地域・テーマなど現在の設定値を一覧で確認できるリスト。`,
+  cell3: `以下のiOSスタイルのCell with Toggleを実装してください。\n\n【スタイル名】iOS Cell with Toggle\n【外観】Basic Cellのシェブロンの代わりにiOS Toggleスイッチ(51x31px)を配置。\n【動作】トグルのon/off切替。セルの他の部分クリックでもトグルが反応するとより良い。\n【用途】通知・機能のon/off・プッシュ許可など設定スイッチの定番配置。`,
+  cell4: `以下のiOSスタイルのCell with Badgeを実装してください。\n\n【スタイル名】iOS Cell with Badge\n【外観】Basic Cellのシェブロン左に赤いバッジ(background:#ff3b30・color:white・font-size:12px・border-radius:999px・padding:2px 7px)を配置。\n【動作】バッジは未読数・通知数を表示。クリックで詳細画面に遷移。\n【用途】メール・メッセージ・通知設定一覧での未読件数表示。`,
+  cell5: `以下のiOSスタイルのCell with Avatar & Subtitleを実装してください。\n\n【スタイル名】iOS Message Cell\n【外観】左に円形アバター(34px・カラー背景・イニシャル)。中央にタイトル(font-size:17px)+サブテキスト(font-size:13px・#8e8e93)の縦並び。右にタイムスタンプ(font-size:12px・#8e8e93)。\n【用途】メッセージ・チャット・連絡先一覧。iOSのメッセージappと同じ構成。`,
+  cell6: `以下のiOSスタイルのSettings Group Layoutを実装してください。\n\n【スタイル名】iOS Settings Group\n【外観】セクションラベル(font-size:13px・uppercase・letter-spacing:.4px・グレー・margin-left:16px)の下にCellグループ(白背景・border-radius:10px)。複数グループを縦に積む。全体のbackground:#f2f2f7。\n【用途】設定画面のフルレイアウト。iOS Settings.appのそのままの構成。`,
+  notif1: `以下のiOSスタイルのSystem Alertを実装してください。\n\n【スタイル名】iOS System Alert\n【外観】半透明黒オーバーレイ(background:rgba(0,0,0,.4))の中央にダイアログ(background:rgba(242,242,247,.98)・border-radius:14px・min-width:270px)。タイトル(font-weight:700)・本文(font-size:13px)・ボタンエリア(border-top:0.5px区切り・flex)。ボタン間は0.5px divider。危険操作は赤(#ff3b30)。\n【動作】ボタンクリックでoverlay非表示。\n【用途】削除確認・権限許可・エラー通知などの重要な確認ダイアログ。`,
+  notif2: `以下のiOSスタイルのLock Screen Bannerを実装してください。\n\n【スタイル名】iOS Lock Screen Banner\n【外観】background:rgba(242,242,247,.95) + backdrop-filter:blur(30px) + border-radius:14px + box-shadow。左にアプリアイコン(38px角丸正方形)。中央にアプリ名(font-weight:700)+メッセージ。右にタイムスタンプ(font-size:12px・グレー)。\n【用途】プッシュ通知バナー・ロック画面通知・アプリ内バナー通知。`,
+  notif3: `以下のiOSスタイルのHUD Toast通知を実装してください。\n\n【スタイル名】iOS HUD Toast\n【外観】background:rgba(28,28,30,.85) + backdrop-filter:blur(20px) + border-radius:14px + padding:20px 28px。縦並びで大きいアイコン(36-40px) + ラベルテキスト(font-size:14px・白・font-weight:500)。\n【動作】操作完了後に中央付近に表示し、1〜2秒後に自動非表示(setTimeout + opacity/visibility)。\n【用途】コピー完了・保存完了・ミュートなど操作フィードバック。iOS標準のHUD。`,
+  notif4: `以下のiOSスタイルのActivity Indicator(スピナー)を実装してください。\n\n【スタイル名】iOS Activity Indicator\n【外観】width/height 36px。border: 3px solid rgba(0,0,0,.1)。border-top: 3px solid #8e8e93(または#007aff)。border-radius:50%。CSSアニメーションでrotate(360deg)を0.8sで繰り返し。\n【サイズ】small(24px)・medium(36px)・large(48px)の3サイズ対応推奨。\n【用途】コンテンツ読み込み中・API待機中などの処理中表示。`,
+  notif5: `以下のiOSスタイルのProgress Barを実装してください。\n\n【スタイル名】iOS Progress Bar\n【外観】height:4px・background:#e5e5ea・border-radius:2px。内側のfillはheight:100%・background:#007aff・border-radius:2px。width%でJS制御。ラベルは上部にタイトル、下部に進捗数値と残量を左右に配置。\n【動作】JS側でfillのwidthを%指定で更新。\n【用途】ダウンロード・アップロード・インストール・ストレージ使用量の視覚化。`,
+  notif6: `以下のiOSスタイルのEmpty State画面を実装してください。\n\n【スタイル名】iOS Empty State\n【外観】縦中央揃え。大きな絵文字またはSF Symbol的なアイコン(48-64px)。その下にタイトル(font-size:20px・font-weight:700)。その下に説明テキスト(font-size:15px・color:#8e8e93・max-width:240px・text-align:center・line-height:1.4)。必要に応じてCTAボタンをさらに下に。\n【用途】リストが空・検索結果ゼロ・未接続状態などのフォールバック表示。`,
+  card1: `以下のFrosted Glassカードを実装してください。\n\n【スタイル名】iOS Frosted Glass Card\n【外観】background:rgba(255,255,255,.15) + backdrop-filter:blur(30px) + -webkit-backdrop-filter:blur(30px) + border:1px solid rgba(255,255,255,.25) + border-radius:16px + padding:20px。テキストは白。小さいラベル + 大きい数値 + サブテキストの縦構成。\n【用途】グラデーション・写真背景の上に重ねる統計カード・ウィジェット。iOSのコントロールセンター風。`,
+  card2: `以下のiOSウィジェットカードを実装してください。\n\n【スタイル名】iOS Widget Card\n【外観】background:#fff + border-radius:16px + padding:14px 16px + box-shadow:0 2px 12px rgba(0,0,0,.08)。タイトル(font-size:12px・uppercase・グレー・letter-spacing) + 大きな数値(font-size:28px・font-weight:700) + 変化量(上昇:#34c759・下降:#ff3b30)。\n【用途】ホーム画面ウィジェット・ダッシュボードのKPIカード。`,
+  card3: `以下のiOSスタイルのStats Cardを実装してください。\n\n【スタイル名】iOS Stats Card\n【外観】背景#fff。タイトル行(font-weight:700)の下に数値ボックスをflexで横並べ。各ボックス:background:#f2f2f7・border-radius:10px・padding:12px・text-align:center。大きな数値(font-size:22px・font-weight:700) + ラベル(font-size:11px・グレー)。\n【用途】週次サマリー・完了/進行/遅延の集計など複数指標を並列表示するカード。`,
+  card4: `以下のiOSスタイルのInfo Card(App Clip風)を実装してください。\n\n【スタイル名】iOS App Clip / Info Card\n【外観】background:#fff + border-radius:12px + overflow:hidden + box-shadow。上部ヘッダー画像(72-80px高・グラデまたは画像)。本体:padding 12px 16px・タイトル(font-weight:700) + 説明テキスト(font-size:13px・グレー)。下部フッター(border-top:0.5px + flex):「後で」と「始める」を左右に配置、dividerで区切る。\n【用途】アプリ紹介・オンボーディング・プロモーションカード。`
 };
 
 // ── copy Prompt ──
@@ -1662,7 +2445,7 @@ function copyPrompt(id) {
 let favs = JSON.parse(localStorage.getItem('dd-favs') || '[]');
 function renderFavs() {
   document.getElementById('favCount').textContent = favs.length;
-  for (let i = 1; i <= 42; i++) {
+  for (let i = 1; i <= 70; i++) {
     const card = document.getElementById('c' + i);
     const btn = card ? card.querySelector('.btn-fav') : null;
     if (!card || !btn) continue;
@@ -1683,6 +2466,37 @@ document.getElementById('favBtn').addEventListener('click', () => {
 renderFavs();
 
 function noop() {}
+
+// ── iOS Segmented Control ──
+function iosSeg(id, btn) {
+  document.querySelectorAll('#' + id + ' .ios-seg-item').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+// ── iOS Stepper ──
+function iosStep(id, delta) {
+  const el = document.getElementById(id);
+  const v = parseInt(el.textContent) + delta;
+  el.textContent = Math.max(0, Math.min(99, v));
+}
+
+// ── iOS Page Control ──
+function iosPage(id, idx) {
+  document.querySelectorAll('#' + id + ' .ios-page-dot').forEach((d, i) => {
+    d.classList.toggle('on', i === idx);
+  });
+}
+
+// ── iOS Radio ──
+function iosRadio(groupId, clickedCell) {
+  const cells = clickedCell.parentElement.querySelectorAll('.ios-cell');
+  cells.forEach(cell => {
+    const chk = cell.querySelector('.ios-radio-check');
+    if (chk) chk.style.color = 'transparent';
+  });
+  const chk = clickedCell.querySelector('.ios-radio-check');
+  if (chk) chk.style.color = '#007aff';
+}
 </script>
 </body>
 </html>
