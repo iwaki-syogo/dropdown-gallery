@@ -433,12 +433,12 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
   </div>
   <div class="header-nav-wrap">
     <div class="header-nav" id="catNav">
-      <button class="cat-btn on" onclick="filterCat('all',this)">すべて (71)</button>
+      <button class="cat-btn on" onclick="filterCat('all',this)">すべて (72)</button>
       <button class="cat-btn" onclick="filterCat('s1',this)">フォーム選択 (14)</button>
       <button class="cat-btn" onclick="filterCat('s2',this)">フィルター (8)</button>
       <button class="cat-btn" onclick="filterCat('s3',this)">タグ・チップ (5)</button>
       <button class="cat-btn" onclick="filterCat('s4',this)">特殊 (9)</button>
-      <button class="cat-btn" onclick="filterCat('s5',this)">コンテキストメニュー (7)</button>
+      <button class="cat-btn" onclick="filterCat('s5',this)">コンテキストメニュー (8)</button>
       <button class="cat-btn" onclick="filterCat('s6',this)">iOS ボタン (6)</button>
       <button class="cat-btn" onclick="filterCat('s7',this)">iOS コントロール (6)</button>
       <button class="cat-btn" onclick="filterCat('s8',this)">iOS セル (6)</button>
@@ -1416,7 +1416,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 
 <!-- ======= S5: iOS風コンテキストメニュー ======= -->
 <section class="section" id="s5">
-  <div class="section-title"><h2>iOS風コンテキストメニュー</h2><span class="cnt">7 種</span></div>
+  <div class="section-title"><h2>iOS風コンテキストメニュー</h2><span class="cnt">8 種</span></div>
   <div class="grid">
 
     <!-- ios1. iOS Context Menu Dark -->
@@ -1591,6 +1591,39 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
         <div class="card-info"><div class="card-name">iOS Status Picker</div><div class="card-desc">チェックマーク付き単一選択メニュー。ステータス切替など排他選択に使うiOS UIMenuパターン</div></div>
         <button class="btn-fav" onclick="toggleFav(71)">♡</button>
         <button class="btn-copy" onclick="copyPrompt('ios7')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- ios8. iOS Scrollable Form Select -->
+    <div class="card" id="c72">
+      <div class="preview" style="min-height:200px;background:#1c1c1e">
+        <div class="dd" id="dios8" style="width:230px">
+          <div onclick="toggle('dios8')" style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid rgba(255,255,255,.2);border-radius:10px;cursor:pointer;background:rgba(255,255,255,.06)">
+            <span id="ios8-selected" style="font-size:15px;color:rgba(255,255,255,.45)">発送方法を選択</span>
+            <span style="color:rgba(255,255,255,.35);font-size:11px">▾</span>
+          </div>
+          <div class="ios-menu" style="top:calc(100% + 8px);left:0;width:100%;max-height:210px;overflow-y:auto">
+            <div class="ios-pick" onclick="pickIos8(this,'')"><span class="ios-pick-check">✓</span><span class="ios-pick-label" style="color:rgba(255,255,255,.4)">選択してください</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'自社 IP')"><span class="ios-pick-check"></span><span class="ios-pick-label">自社 IP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'自社 CP')"><span class="ios-pick-check"></span><span class="ios-pick-label">自社 CP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'EU IP')"><span class="ios-pick-check"></span><span class="ios-pick-label">EU IP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'EU CP')"><span class="ios-pick-check"></span><span class="ios-pick-label">EU CP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'ReAll IP')"><span class="ios-pick-check"></span><span class="ios-pick-label">ReAll IP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'ReAll CP')"><span class="ios-pick-check"></span><span class="ios-pick-label">ReAll CP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'混雑 ReAll IP')"><span class="ios-pick-check"></span><span class="ios-pick-label">混雑 ReAll IP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'混雑 ReAll CP')"><span class="ios-pick-check"></span><span class="ios-pick-label">混雑 ReAll CP</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'自社 IP Freight')"><span class="ios-pick-check"></span><span class="ios-pick-label">自社 IP Freight</span></div>
+            <div class="ios-pick" onclick="pickIos8(this,'EU IP Freight')"><span class="ios-pick-check"></span><span class="ios-pick-label">EU IP Freight</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info">
+          <div class="card-name">iOS Scrollable Form Select</div>
+          <div class="card-desc">フォームフィールドをトリガーとする長リストSelect。max-height+overflowでスクロール、選択後トリガーテキスト更新</div>
+        </div>
+        <button class="btn-fav" onclick="toggleFav(72)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios8')">プロンプト</button>
       </div>
     </div>
 
@@ -2254,6 +2287,13 @@ function pickIos7(el) {
   el.closest('.ios-menu').querySelectorAll('.ios-pick-check').forEach(c => c.textContent = '');
   el.querySelector('.ios-pick-check').textContent = '✓';
 }
+function pickIos8(el, val) {
+  el.closest('.ios-menu').querySelectorAll('.ios-pick-check').forEach(c => c.textContent = '');
+  el.querySelector('.ios-pick-check').textContent = '✓';
+  const sel = document.getElementById('ios8-selected');
+  if (sel) { sel.textContent = val || '選択してください'; sel.style.color = val ? '#fff' : 'rgba(255,255,255,.45)'; }
+  el.closest('.dd').classList.remove('open');
+}
 function closeAll() {
   document.querySelectorAll('.dd.open').forEach(el => el.classList.remove('open'));
   document.querySelectorAll('.sub-par.subopen').forEach(el => el.classList.remove('subopen'));
@@ -2500,7 +2540,8 @@ const PROMPTS = {
   card2: `以下のiOSウィジェットカードを実装してください。\n\n【スタイル名】iOS Widget Card\n【外観】background:#fff + border-radius:16px + padding:14px 16px + box-shadow:0 2px 12px rgba(0,0,0,.08)。タイトル(font-size:12px・uppercase・グレー・letter-spacing) + 大きな数値(font-size:28px・font-weight:700) + 変化量(上昇:#34c759・下降:#ff3b30)。\n【用途】ホーム画面ウィジェット・ダッシュボードのKPIカード。`,
   card3: `以下のiOSスタイルのStats Cardを実装してください。\n\n【スタイル名】iOS Stats Card\n【外観】背景#fff。タイトル行(font-weight:700)の下に数値ボックスをflexで横並べ。各ボックス:background:#f2f2f7・border-radius:10px・padding:12px・text-align:center。大きな数値(font-size:22px・font-weight:700) + ラベル(font-size:11px・グレー)。\n【用途】週次サマリー・完了/進行/遅延の集計など複数指標を並列表示するカード。`,
   card4: `以下のiOSスタイルのInfo Card(App Clip風)を実装してください。\n\n【スタイル名】iOS App Clip / Info Card\n【外観】background:#fff + border-radius:12px + overflow:hidden + box-shadow。上部ヘッダー画像(72-80px高・グラデまたは画像)。本体:padding 12px 16px・タイトル(font-weight:700) + 説明テキスト(font-size:13px・グレー)。下部フッター(border-top:0.5px + flex):「後で」と「始める」を左右に配置、dividerで区切る。\n【用途】アプリ紹介・オンボーディング・プロモーションカード。`,
-  ios7: `以下のiOS風ステータスピッカーを実装してください。\n\n【スタイル名】iOS Status Picker\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px) + -webkit-backdrop-filter:blur(40px)。border-radius:13px。min-width:180px。各オプションは display:flex・align-items:center・padding:11px 16px・min-height:44px・白文字(font-size:15px)・border-bottom:0.5px solid rgba(255,255,255,0.1)。最後の行はborder-bottomなし。\n【チェックマーク列】各行の左端にwidth:18px・flex-shrink:0のspan要素を置く。選択中の行のみ「✓」(font-size:15px・白)を表示し、非選択行は空欄にする。テキストラベルはflex:1でチェックマークの右に配置(gap:10px)。\n【配置】トリガーボタン直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉。外部クリックで閉じる。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット(単一選択・ラジオボタン挙動)。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】ステータス切替・ラベル変更など排他選択が必要な場面。iOS UIMenu の .checkmark アクション属性を再現したWebパターン。`
+  ios7: `以下のiOS風ステータスピッカーを実装してください。\n\n【スタイル名】iOS Status Picker\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px) + -webkit-backdrop-filter:blur(40px)。border-radius:13px。min-width:180px。各オプションは display:flex・align-items:center・padding:11px 16px・min-height:44px・白文字(font-size:15px)・border-bottom:0.5px solid rgba(255,255,255,0.1)。最後の行はborder-bottomなし。\n【チェックマーク列】各行の左端にwidth:18px・flex-shrink:0のspan要素を置く。選択中の行のみ「✓」(font-size:15px・白)を表示し、非選択行は空欄にする。テキストラベルはflex:1でチェックマークの右に配置(gap:10px)。\n【配置】トリガーボタン直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉。外部クリックで閉じる。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット(単一選択・ラジオボタン挙動)。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】ステータス切替・ラベル変更など排他選択が必要な場面。iOS UIMenu の .checkmark アクション属性を再現したWebパターン。`,
+  ios8: `以下のiOS風スクロール可能フォームセレクトを実装してください。\n\n【スタイル名】iOS Scrollable Form Select\n【外観】\n- ページ背景: #1c1c1e（iOS ダークモード基調）\n- トリガー: background:rgba(255,255,255,0.06)・border:1px solid rgba(255,255,255,0.2)・border-radius:10px・padding:12px 14px・display:flex・align-items:center・justify-content:space-between・cursor:pointer・width:230px\n- トリガー内テキスト（未選択時）: font-size:15px・color:rgba(255,255,255,0.45)、選択後は color:#fff\n- 右端に▾アイコン: color:rgba(255,255,255,0.35)・font-size:11px\n- ドロップダウンメニュー: 半透明黒背景 rgba(28,28,30,0.85)・backdrop-filter:blur(40px)・-webkit-backdrop-filter:blur(40px)・border-radius:13px・max-height:210px・overflow-y:auto・width:100%（トリガーと同幅）\n- 各オプション行: display:flex・align-items:center・padding:11px 16px・min-height:44px・border-bottom:0.5px solid rgba(255,255,255,0.1)。最終行はborder-bottomなし\n- チェックマーク列: 左端 width:18px・flex-shrink:0 の span。選択行のみ「✓」(font-size:15px・白)、非選択行は空欄\n- テキストラベル: flex:1・font-size:15px・color:#fff、プレースホルダー行は color:rgba(255,255,255,0.4)\n【配置】トリガー直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉(toggle)。外部クリックで閉じる(closeAll)。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット → トリガーのテキストspanを選択値に更新(color:#fff)・空欄選択時はプレースホルダーテキストに戻し color:rgba(255,255,255,0.45) → メニューを閉じる。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】フォームの発送方法・カテゴリなど10件超の選択肢がある排他セレクト。iOS UIPickerView のリスト表示を Web で再現したパターン。スクロールバーは細め(scrollbar-width:thin / ::-webkit-scrollbar width:4px)が望ましい。`
 };
 
 // ── copy Prompt ──
@@ -2526,7 +2567,7 @@ let currentSearch = '';
 // ── Favorites render ──
 function renderFavs() {
   document.getElementById('favCount').textContent = favs.length;
-  for (let i = 1; i <= 71; i++) {
+  for (let i = 1; i <= 72; i++) {
     const card = document.getElementById('c' + i);
     const btn = card ? card.querySelector('.btn-fav') : null;
     if (!card || !btn) continue;
