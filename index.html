@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropdown Gallery</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f9fa;color:#111827;font-size:14px;line-height:1.5}
+button,input,select{font-family:inherit}
+
+/* Header */
+header{background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 24px;position:sticky;top:0;z-index:300}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header-left h1{font-size:18px;font-weight:700;color:#111827}
+.header-left p{font-size:12px;color:#6b7280;margin-top:1px}
+.fav-badge{background:#3b82f6;color:#fff;border-radius:20px;padding:4px 14px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+
+/* Main */
+main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
+
+/* Section */
+.section{margin-bottom:52px}
+.section-title{display:flex;align-items:baseline;gap:8px;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #e5e7eb}
+.section-title h2{font-size:18px;font-weight:700}
+.section-title .cnt{color:#9ca3af;font-size:13px}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+
+/* Card */
+.card{background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;display:flex;flex-direction:column;transition:border-color .1s}
+.card.fav{border-color:#3b82f6}
+.preview{padding:28px 20px;min-height:130px;display:flex;align-items:flex-start;justify-content:flex-start;position:relative;overflow:visible}
+.card-foot{padding:10px 14px;border-top:1px solid #f3f4f6;display:flex;align-items:flex-start;gap:8px}
+.card-info{flex:1;min-width:0}
+.card-name{font-weight:600;font-size:13px;margin-bottom:2px}
+.card-desc{color:#6b7280;font-size:12px;line-height:1.4}
+.btn-fav{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px;font-size:14px;color:#d1d5db;cursor:pointer;flex-shrink:0}
+.btn-fav.on{color:#ef4444;border-color:#fca5a5}
+.btn-copy{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:5px 9px;font-size:11px;color:#6b7280;cursor:pointer;flex-shrink:0}
+.btn-copy:hover{background:#f3f4f6}
+.btn-copy.ok{color:#10b981;border-color:#6ee7b7}
+
+/* Dropdown base */
+.dd{position:relative;display:inline-block}
+.dd-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.08);min-width:200px;z-index:200;overflow:hidden}
+.dd.open>.dd-menu{display:block}
+.dd-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;white-space:nowrap;font-size:13px}
+.dd-opt:hover{background:#f3f4f6}
+.dd-opt.sel{background:#eff6ff;color:#3b82f6}
+.dd-divider{height:1px;background:#f3f4f6;margin:4px 0}
+.dd-group-label{padding:6px 12px 2px;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── S1 triggers ── */
+.tr-classic{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:180px}
+.tr-underline{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 4px;border:none;border-bottom:2px solid #d1d5db;background:transparent;cursor:pointer;font-size:14px;min-width:180px}
+.dd.open .tr-underline{border-bottom-color:#3b82f6}
+.float-wrap{position:relative;display:inline-block;margin-top:14px}
+.float-label{position:absolute;top:-11px;left:9px;background:#fff;padding:0 4px;font-size:11px;color:#6b7280;font-weight:500;pointer-events:none}
+.dd.open .float-label{color:#3b82f6}
+.tr-float{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:14px 12px 6px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:180px}
+.dd.open .tr-float,.dd.open .tr-classic{border-color:#3b82f6}
+.tr-filled{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:none;border-radius:6px;background:#f3f4f6;cursor:pointer;font-size:14px;min-width:180px}
+.dd.open .tr-filled{background:#e5e7eb}
+.tr-outlined{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:2px solid #3b82f6;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:180px;color:#3b82f6;font-weight:600}
+.tr-pill{display:flex;align-items:center;gap:6px;padding:7px 16px;border:1.5px solid #d1d5db;border-radius:999px;background:#fff;cursor:pointer;font-size:14px}
+.dd.open .tr-pill{border-color:#3b82f6;background:#eff6ff;color:#3b82f6}
+.dd-pill-menu{border-radius:12px!important}
+.tr-ghost{display:flex;align-items:center;gap:4px;padding:6px 8px;border:none;border-radius:6px;background:transparent;cursor:pointer;font-size:14px;color:#374151;font-weight:500}
+.tr-ghost:hover,.dd.open .tr-ghost{background:#f3f4f6}
+.tr-search{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:200px}
+.dd-search-box{padding:8px 12px;border-bottom:1px solid #e5e7eb}
+.dd-search-box input{width:100%;border:1px solid #e5e7eb;border-radius:4px;padding:5px 8px;font-size:13px;outline:none}
+.dd-search-box input:focus{border-color:#3b82f6}
+
+/* multi-checkbox */
+.tr-multi{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:200px}
+.dd-menu input[type=checkbox]{accent-color:#3b82f6}
+.dd-apply-row{padding:8px 12px;border-top:1px solid #f3f4f6;display:flex;justify-content:flex-end}
+.btn-apply{background:#3b82f6;color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:12px;cursor:pointer}
+
+/* avatar */
+.av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;flex-shrink:0}
+
+/* badge */
+.bdg{background:#dbeafe;color:#1d4ed8;font-size:10px;padding:1px 6px;border-radius:999px;font-weight:600}
+.bdg-r{background:#fee2e2;color:#dc2626}
+.bdg-g{background:#d1fae5;color:#065f46}
+
+/* desc */
+.opt-title{font-weight:500;font-size:13px}
+.opt-sub{font-size:11px;color:#9ca3af}
+
+/* country */
+.fl{font-size:18px;line-height:1}
+
+/* ── S2 triggers ── */
+.tr-sort{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:13px}
+.chip-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 12px;border:1.5px solid #d1d5db;border-radius:999px;background:#fff;cursor:pointer;font-size:12px;user-select:none}
+.chip.on{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.btn-grp{display:flex;border:1.5px solid #d1d5db;border-radius:6px;overflow:hidden}
+.btn-grp button{background:#fff;border:none;border-right:1px solid #d1d5db;padding:7px 14px;font-size:13px;cursor:pointer}
+.btn-grp button:last-child{border-right:none}
+.btn-grp button.on{background:#3b82f6;color:#fff}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sdot-g{background:#10b981}
+.sdot-y{background:#f59e0b}
+.sdot-r{background:#ef4444}
+.sdot-gr{background:#9ca3af}
+.stars{color:#f59e0b;letter-spacing:-1px}
+
+/* date */
+.tr-date{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px}
+.cal-panel{padding:12px;min-width:240px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-head span{font-weight:600;font-size:13px}
+.cal-nav{background:none;border:none;cursor:pointer;color:#6b7280;font-size:15px;padding:2px 6px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-wd{text-align:center;font-size:10px;color:#9ca3af;font-weight:600;padding-bottom:4px}
+.cal-d{text-align:center;padding:5px 2px;font-size:12px;border-radius:4px;cursor:pointer}
+.cal-d:hover{background:#f3f4f6}
+.cal-d.today{background:#3b82f6;color:#fff}
+.cal-d.other{color:#d1d5db}
+
+/* col filter */
+.col-list{padding:6px}
+.col-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;cursor:pointer;font-size:13px}
+.col-item:hover{background:#f3f4f6}
+
+/* ── S3 Tag/Chip ── */
+.tag-input-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:6px 8px;border:1.5px solid #d1d5db;border-radius:6px;min-width:220px;min-height:38px;cursor:text;background:#fff}
+.tag-item{display:flex;align-items:center;gap:3px;background:#dbeafe;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-size:12px}
+.tag-del{background:none;border:none;color:#93c5fd;cursor:pointer;font-size:12px;padding:0;line-height:1}
+.tag-inp{border:none;outline:none;font-size:13px;min-width:70px;background:transparent}
+.tr-chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:6px 8px;border:1.5px solid #d1d5db;border-radius:6px;min-width:220px;min-height:38px;cursor:pointer;background:#fff}
+.chip-tag{background:#f3f4f6;padding:2px 8px;border-radius:4px;font-size:12px;display:flex;align-items:center;gap:3px}
+.cdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.skill-tag{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:500}
+.tr-auto{width:100%;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;font-size:14px;outline:none;min-width:200px}
+.tr-auto:focus{border-color:#3b82f6}
+.dd-auto{width:100%}
+.dd-auto .dd-menu{width:100%}
+
+/* ── S4 Special ── */
+.tr-cmd{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;color:#6b7280;min-width:200px}
+.cmd-kbd{margin-left:auto;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;padding:2px 6px;font-size:11px;color:#374151}
+.cmd-panel{min-width:260px}
+.cmd-srch{width:100%;border:none;border-bottom:1px solid #e5e7eb;padding:10px 14px;font-size:14px;outline:none}
+.cmd-list{padding:4px}
+.cmd-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:13px}
+.cmd-item:hover{background:#f3f4f6}
+.cmd-icon{font-size:15px;width:24px;text-align:center}
+.cmd-sc{font-size:11px;color:#9ca3af;margin-left:auto}
+
+/* split */
+.split-wrap{display:flex}
+.split-main{padding:8px 14px;background:#3b82f6;color:#fff;border:none;border-radius:6px 0 0 6px;font-size:14px;font-weight:500;cursor:pointer}
+.split-arr{padding:8px 9px;background:#2563eb;color:#fff;border:none;border-left:1px solid rgba(255,255,255,.3);border-radius:0 6px 6px 0;cursor:pointer;font-size:11px}
+.dd-split{position:relative;display:flex}
+.dd-split>.dd-menu{left:auto;right:0;min-width:160px}
+
+/* cascade */
+.tr-casc{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:180px}
+.sub-par{position:relative}
+.sub-par>.dd-opt{justify-content:space-between}
+.sub-menu{display:none;position:absolute;left:100%;top:-4px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.08);min-width:140px;z-index:201;overflow:hidden}
+.sub-par.subopen>.sub-menu{display:block}
+
+/* accordion */
+.tr-acc{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:200px}
+.acc-item{}
+.acc-head{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;cursor:pointer;font-weight:500;font-size:13px}
+.acc-head:hover{background:#f9fafb}
+.acc-body{display:none;padding:0 12px 8px}
+.acc-body p{font-size:12px;color:#6b7280;line-height:1.5}
+.acc-item.open .acc-body{display:block}
+.acc-arr{font-size:10px;color:#9ca3af;display:inline-block}
+.acc-item.open .acc-arr{transform:rotate(180deg)}
+
+/* segment */
+.tr-seg{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px;min-width:200px}
+.seg-panel{padding:12px;min-width:240px}
+.seg-lbl{font-size:12px;color:#6b7280;margin-bottom:5px}
+.seg-grp{display:flex;background:#f3f4f6;border-radius:6px;padding:2px;gap:2px}
+.seg-btn{flex:1;padding:6px 10px;border:none;background:transparent;border-radius:4px;font-size:12px;cursor:pointer}
+.seg-btn.on{background:#fff;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+/* action menu */
+.tr-action{width:32px;height:32px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:#374151}
+.tr-action:hover{background:#f3f4f6}
+.dd-action .dd-menu{min-width:180px}
+.opt-del{color:#ef4444}
+.opt-del:hover{background:#fef2f2!important}
+
+/* phone */
+.phone-outer{display:flex}
+.tr-phone{display:flex;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid #d1d5db;border-right:none;border-radius:6px 0 0 6px;background:#fff;cursor:pointer;font-size:14px}
+.phone-inp{padding:8px 12px;border:1.5px solid #d1d5db;border-radius:0 6px 6px 0;font-size:14px;outline:none;width:130px}
+.phone-inp:focus{border-color:#3b82f6}
+.dd-phone .dd-menu{min-width:200px}
+
+/* emoji */
+.tr-emoji{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px}
+.emoji-panel{padding:8px;display:grid;grid-template-columns:repeat(7,1fr);gap:2px;min-width:200px}
+.emoji-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:4px;border-radius:4px;text-align:center}
+.emoji-btn:hover{background:#f3f4f6}
+
+/* color picker */
+.tr-color{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:14px}
+.color-prev{width:18px;height:18px;border-radius:4px;border:1px solid rgba(0,0,0,.12);flex-shrink:0}
+.color-panel{padding:12px;min-width:200px}
+.swatches{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.sw{width:24px;height:24px;border-radius:4px;cursor:pointer;border:2px solid transparent}
+.sw:hover{border-color:rgba(0,0,0,.2)}
+.sw.on{border-color:#111827}
+.hex-row{display:flex;gap:6px;align-items:center}
+.hex-row label{font-size:11px;color:#6b7280}
+.hex-inp{border:1px solid #d1d5db;border-radius:4px;padding:4px 8px;font-size:12px;width:80px;font-family:monospace;outline:none}
+
+/* icon */
+.ic{color:#9ca3af;font-size:11px}
+
+/* focus ring */
+[class*="tr-"]:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <h1>Dropdown Gallery</h1>
+      <p>好きなドロップダウンを見つけてください — 36 種類</p>
+    </div>
+    <button class="fav-badge" id="favBtn">♡ お気に入り <span id="favCount">0</span></button>
+  </div>
+</header>
+
+<main>
+
+<!-- ======= S1: フォーム選択 ======= -->
+<section class="section">
+  <div class="section-title"><h2>フォーム選択</h2><span class="cnt">14 種</span></div>
+  <div class="grid">
+
+    <!-- 1. Classic Border -->
+    <div class="card" id="c1">
+      <div class="preview">
+        <div class="dd" id="d1">
+          <button class="tr-classic" onclick="toggle('d1')">
+            <span id="d1-val">選択してください</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d1','デザイン')">デザイン</div>
+            <div class="dd-opt" onclick="pick('d1','エンジニア')">エンジニア</div>
+            <div class="dd-opt" onclick="pick('d1','マーケティング')">マーケティング</div>
+            <div class="dd-opt" onclick="pick('d1','プロダクト')">プロダクト</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Classic Border</div><div class="card-desc">最もオーソドックスなボーダー付きドロップダウン</div></div>
+        <button class="btn-fav" onclick="toggleFav(1)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d1')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 2. Underline Only -->
+    <div class="card" id="c2">
+      <div class="preview">
+        <div class="dd" id="d2">
+          <button class="tr-underline" onclick="toggle('d2')">
+            <span id="d2-val">カテゴリ</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d2','フロントエンド')">フロントエンド</div>
+            <div class="dd-opt" onclick="pick('d2','バックエンド')">バックエンド</div>
+            <div class="dd-opt" onclick="pick('d2','インフラ')">インフラ</div>
+            <div class="dd-opt" onclick="pick('d2','モバイル')">モバイル</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Underline Only</div><div class="card-desc">アンダーラインのみ。フォームに溶け込むミニマルなスタイル</div></div>
+        <button class="btn-fav" onclick="toggleFav(2)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d2')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 3. Floating Label -->
+    <div class="card" id="c3">
+      <div class="preview">
+        <div class="float-wrap">
+          <div class="dd" id="d3">
+            <span class="float-label">役職</span>
+            <button class="tr-float" onclick="toggle('d3')">
+              <span id="d3-val">選択</span><span class="ic">▾</span>
+            </button>
+            <div class="dd-menu">
+              <div class="dd-opt" onclick="pick('d3','デザイナー')">デザイナー</div>
+              <div class="dd-opt" onclick="pick('d3','エンジニア')">エンジニア</div>
+              <div class="dd-opt" onclick="pick('d3','PM')">PM</div>
+              <div class="dd-opt" onclick="pick('d3','マネージャー')">マネージャー</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Floating Label</div><div class="card-desc">ラベルがトリガー上部に常駐するマテリアル風スタイル</div></div>
+        <button class="btn-fav" onclick="toggleFav(3)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d3')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 4. Filled -->
+    <div class="card" id="c4">
+      <div class="preview">
+        <div class="dd" id="d4">
+          <button class="tr-filled" onclick="toggle('d4')">
+            <span id="d4-val">優先度</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d4','高')">🔴 高</div>
+            <div class="dd-opt" onclick="pick('d4','中')">🟡 中</div>
+            <div class="dd-opt" onclick="pick('d4','低')">🟢 低</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Filled</div><div class="card-desc">グレー背景塗りつぶし。GoogleフォームやMaterial UIスタイル</div></div>
+        <button class="btn-fav" onclick="toggleFav(4)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d4')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 5. Outlined -->
+    <div class="card" id="c5">
+      <div class="preview">
+        <div class="dd" id="d5">
+          <button class="tr-outlined" onclick="toggle('d5')">
+            <span id="d5-val">プラン</span><span>▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d5','Free')">Free</div>
+            <div class="dd-opt" onclick="pick('d5','Pro')">Pro</div>
+            <div class="dd-opt" onclick="pick('d5','Enterprise')">Enterprise</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Outlined</div><div class="card-desc">ブランドカラーのアウトライン。CTAを兼ねた選択要素に</div></div>
+        <button class="btn-fav" onclick="toggleFav(5)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d5')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 6. Pill -->
+    <div class="card" id="c6">
+      <div class="preview">
+        <div class="dd" id="d6">
+          <button class="tr-pill" onclick="toggle('d6')">
+            <span id="d6-val">期間</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu dd-pill-menu">
+            <div class="dd-opt" onclick="pick('d6','今日')">今日</div>
+            <div class="dd-opt" onclick="pick('d6','今週')">今週</div>
+            <div class="dd-opt" onclick="pick('d6','今月')">今月</div>
+            <div class="dd-opt" onclick="pick('d6','カスタム')">カスタム</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Pill</div><div class="card-desc">角丸ピル型。ダッシュボードのフィルター等に最適</div></div>
+        <button class="btn-fav" onclick="toggleFav(6)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d6')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 7. Ghost -->
+    <div class="card" id="c7">
+      <div class="preview">
+        <div class="dd" id="d7">
+          <button class="tr-ghost" onclick="toggle('d7')">
+            <span id="d7-val">並び替え</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d7','新しい順')">新しい順</div>
+            <div class="dd-opt" onclick="pick('d7','古い順')">古い順</div>
+            <div class="dd-opt" onclick="pick('d7','名前順')">名前順</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Ghost</div><div class="card-desc">枠なし・テキストのみ。ナビゲーションや軽量な操作に</div></div>
+        <button class="btn-fav" onclick="toggleFav(7)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d7')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 8. Search Inside -->
+    <div class="card" id="c8">
+      <div class="preview">
+        <div class="dd" id="d8">
+          <button class="tr-search" onclick="toggle('d8')">
+            <span id="d8-val">🔍 検索して選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-search-box"><input type="text" placeholder="キーワードを入力…" oninput="filterOpts('d8',this.value)" onclick="event.stopPropagation()"></div>
+            <div id="d8-opts">
+              <div class="dd-opt" onclick="pick('d8','Apple')">Apple</div>
+              <div class="dd-opt" onclick="pick('d8','Google')">Google</div>
+              <div class="dd-opt" onclick="pick('d8','Microsoft')">Microsoft</div>
+              <div class="dd-opt" onclick="pick('d8','Amazon')">Amazon</div>
+              <div class="dd-opt" onclick="pick('d8','Netflix')">Netflix</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Search Inside</div><div class="card-desc">パネル内に検索ボックス。選択肢が多いときに有効</div></div>
+        <button class="btn-fav" onclick="toggleFav(8)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d8')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 9. Multi Checkbox -->
+    <div class="card" id="c9">
+      <div class="preview">
+        <div class="dd" id="d9">
+          <button class="tr-multi" onclick="toggle('d9')">
+            <span id="d9-val">タグを選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d9')"> デザイン</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d9')"> 開発</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d9')"> マーケ</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d9')"> 営業</label>
+            <div class="dd-apply-row"><button class="btn-apply" onclick="closeAll()">適用</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Multi Checkbox</div><div class="card-desc">複数選択チェックボックス。適用ボタンで確定</div></div>
+        <button class="btn-fav" onclick="toggleFav(9)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d9')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 10. With Avatar -->
+    <div class="card" id="c10">
+      <div class="preview">
+        <div class="dd" id="d10">
+          <button class="tr-classic" onclick="toggle('d10')" style="min-width:200px">
+            <span style="display:flex;align-items:center;gap:8px">
+              <span class="av" style="background:#6366f1">A</span>
+              <span id="d10-val">担当者を選択</span>
+            </span>
+            <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d10','Alice')"><span class="av" style="background:#6366f1">A</span> Alice</div>
+            <div class="dd-opt" onclick="pick('d10','Bob')"><span class="av" style="background:#f59e0b">B</span> Bob</div>
+            <div class="dd-opt" onclick="pick('d10','Carol')"><span class="av" style="background:#10b981">C</span> Carol</div>
+            <div class="dd-opt" onclick="pick('d10','Dave')"><span class="av" style="background:#ef4444">D</span> Dave</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">With Avatar</div><div class="card-desc">ユーザーアバター付き。担当者・メンバー選択に</div></div>
+        <button class="btn-fav" onclick="toggleFav(10)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d10')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 11. With Badge -->
+    <div class="card" id="c11">
+      <div class="preview">
+        <div class="dd" id="d11">
+          <button class="tr-classic" onclick="toggle('d11')" style="min-width:200px">
+            <span id="d11-val">ステータスを選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d11','全て')">全て <span class="bdg" style="margin-left:auto">128</span></div>
+            <div class="dd-opt" onclick="pick('d11','未対応')">未対応 <span class="bdg bdg-r" style="margin-left:auto">12</span></div>
+            <div class="dd-opt" onclick="pick('d11','進行中')">進行中 <span class="bdg" style="margin-left:auto">34</span></div>
+            <div class="dd-opt" onclick="pick('d11','完了')">完了 <span class="bdg bdg-g" style="margin-left:auto">82</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">With Badge</div><div class="card-desc">バッジ（件数）付き。カテゴリの規模感を一目で伝える</div></div>
+        <button class="btn-fav" onclick="toggleFav(11)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d11')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 12. With Description -->
+    <div class="card" id="c12">
+      <div class="preview">
+        <div class="dd" id="d12">
+          <button class="tr-classic" onclick="toggle('d12')" style="min-width:220px">
+            <span id="d12-val">プランを選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu" style="min-width:240px">
+            <div class="dd-opt" style="flex-direction:column;align-items:flex-start" onclick="pick('d12','Starter')">
+              <span class="opt-title">Starter</span><span class="opt-sub">個人利用・月 ¥0</span>
+            </div>
+            <div class="dd-opt" style="flex-direction:column;align-items:flex-start" onclick="pick('d12','Pro')">
+              <span class="opt-title">Pro</span><span class="opt-sub">小チーム向け・月 ¥2,980</span>
+            </div>
+            <div class="dd-opt" style="flex-direction:column;align-items:flex-start" onclick="pick('d12','Enterprise')">
+              <span class="opt-title">Enterprise</span><span class="opt-sub">大企業向け・要見積</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">With Description</div><div class="card-desc">サブテキスト付き。プラン選択や機能比較に有効</div></div>
+        <button class="btn-fav" onclick="toggleFav(12)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d12')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 13. Grouped -->
+    <div class="card" id="c13">
+      <div class="preview">
+        <div class="dd" id="d13">
+          <button class="tr-classic" onclick="toggle('d13')" style="min-width:200px">
+            <span id="d13-val">カテゴリを選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-group-label">フロントエンド</div>
+            <div class="dd-opt" onclick="pick('d13','React')">React</div>
+            <div class="dd-opt" onclick="pick('d13','Vue')">Vue</div>
+            <div class="dd-divider"></div>
+            <div class="dd-group-label">バックエンド</div>
+            <div class="dd-opt" onclick="pick('d13','Node.js')">Node.js</div>
+            <div class="dd-opt" onclick="pick('d13','Go')">Go</div>
+            <div class="dd-opt" onclick="pick('d13','Python')">Python</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Grouped</div><div class="card-desc">グループラベルで選択肢を分類。技術スタックや部門一覧に</div></div>
+        <button class="btn-fav" onclick="toggleFav(13)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d13')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 14. Country Selector -->
+    <div class="card" id="c14">
+      <div class="preview">
+        <div class="dd" id="d14">
+          <button class="tr-classic" onclick="toggle('d14')" style="min-width:190px">
+            <span style="display:flex;align-items:center;gap:8px">
+              <span class="fl" id="d14-flag">🌏</span>
+              <span id="d14-val">国を選択</span>
+            </span>
+            <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pickCountry('d14','🇯🇵','日本')"><span class="fl">🇯🇵</span> 日本</div>
+            <div class="dd-opt" onclick="pickCountry('d14','🇺🇸','アメリカ')"><span class="fl">🇺🇸</span> アメリカ</div>
+            <div class="dd-opt" onclick="pickCountry('d14','🇬🇧','イギリス')"><span class="fl">🇬🇧</span> イギリス</div>
+            <div class="dd-opt" onclick="pickCountry('d14','🇩🇪','ドイツ')"><span class="fl">🇩🇪</span> ドイツ</div>
+            <div class="dd-opt" onclick="pickCountry('d14','🇫🇷','フランス')"><span class="fl">🇫🇷</span> フランス</div>
+            <div class="dd-opt" onclick="pickCountry('d14','🇨🇳','中国')"><span class="fl">🇨🇳</span> 中国</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Country Selector</div><div class="card-desc">国旗絵文字付き国選択。国際対応フォームに</div></div>
+        <button class="btn-fav" onclick="toggleFav(14)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d14')">コピー</button>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+</section>
+
+<!-- ======= S2: フィルター・ソート ======= -->
+<section class="section">
+  <div class="section-title"><h2>フィルター・ソート</h2><span class="cnt">8 種</span></div>
+  <div class="grid">
+
+    <!-- 15. Sort by -->
+    <div class="card" id="c15">
+      <div class="preview">
+        <div class="dd" id="d15">
+          <button class="tr-sort" onclick="toggle('d15')">
+            ↕ <span id="d15-val">並び替え</span><span class="ic" style="margin-left:4px">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d15','最新順')">↓ 最新順</div>
+            <div class="dd-opt" onclick="pick('d15','古い順')">↑ 古い順</div>
+            <div class="dd-divider"></div>
+            <div class="dd-opt" onclick="pick('d15','名前 A→Z')">A→Z 名前昇順</div>
+            <div class="dd-opt" onclick="pick('d15','名前 Z→A')">Z→A 名前降順</div>
+            <div class="dd-opt" onclick="pick('d15','金額が高い順')">$ 金額が高い順</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Sort By</div><div class="card-desc">ソート方向アイコン付き。テーブルやリスト上部に定番</div></div>
+        <button class="btn-fav" onclick="toggleFav(15)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d15')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 16. Filter Checkboxes -->
+    <div class="card" id="c16">
+      <div class="preview">
+        <div class="dd" id="d16">
+          <button class="tr-classic" onclick="toggle('d16')" style="min-width:180px">
+            🔽 <span id="d16-val">フィルター</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-group-label">タイプ</div>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d16')"> バグ</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d16')"> 機能追加</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d16')"> 改善</label>
+            <div class="dd-divider"></div>
+            <div class="dd-group-label">優先度</div>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d16')"> 高</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d16')"> 中</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateMulti('d16')"> 低</label>
+            <div class="dd-apply-row"><button class="btn-apply" onclick="closeAll()">絞り込む</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Filter Checkboxes</div><div class="card-desc">グループ分けチェックボックスフィルター。複数軸の絞り込みに</div></div>
+        <button class="btn-fav" onclick="toggleFav(16)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d16')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 17. Toggle Buttons -->
+    <div class="card" id="c17">
+      <div class="preview" style="flex-direction:column;gap:12px;align-items:flex-start">
+        <div class="btn-grp" id="bg17">
+          <button onclick="btnGrp('bg17',this)">全て</button>
+          <button class="on" onclick="btnGrp('bg17',this)">進行中</button>
+          <button onclick="btnGrp('bg17',this)">完了</button>
+          <button onclick="btnGrp('bg17',this)">保留</button>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Toggle Buttons</div><div class="card-desc">ボタングループ型フィルター。ドロップダウンが不要な少数選択肢に</div></div>
+        <button class="btn-fav" onclick="toggleFav(17)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('bg17')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 18. Status Filter -->
+    <div class="card" id="c18">
+      <div class="preview">
+        <div class="dd" id="d18">
+          <button class="tr-classic" onclick="toggle('d18')" style="min-width:180px">
+            <span style="display:flex;align-items:center;gap:6px"><span class="sdot sdot-g"></span><span id="d18-val">ステータス</span></span>
+            <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d18','オンライン')"><span class="sdot sdot-g"></span> オンライン</div>
+            <div class="dd-opt" onclick="pick('d18','離席中')"><span class="sdot sdot-y"></span> 離席中</div>
+            <div class="dd-opt" onclick="pick('d18','取り込み中')"><span class="sdot sdot-r"></span> 取り込み中</div>
+            <div class="dd-opt" onclick="pick('d18','オフライン')"><span class="sdot sdot-gr"></span> オフライン</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Status Filter</div><div class="card-desc">カラードット付きステータス選択。在席状況やフェーズ管理に</div></div>
+        <button class="btn-fav" onclick="toggleFav(18)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d18')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 19. Rating Filter -->
+    <div class="card" id="c19">
+      <div class="preview">
+        <div class="dd" id="d19">
+          <button class="tr-classic" onclick="toggle('d19')" style="min-width:180px">
+            <span id="d19-val">評価で絞り込み</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pick('d19','★★★★★ 5つ星')"><span class="stars">★★★★★</span>&nbsp; 5つ星</div>
+            <div class="dd-opt" onclick="pick('d19','★★★★☆ 4つ星以上')"><span class="stars">★★★★☆</span>&nbsp; 4つ星以上</div>
+            <div class="dd-opt" onclick="pick('d19','★★★☆☆ 3つ星以上')"><span class="stars">★★★☆☆</span>&nbsp; 3つ星以上</div>
+            <div class="dd-opt" onclick="pick('d19','★★☆☆☆ 2つ星以上')"><span class="stars">★★☆☆☆</span>&nbsp; 2つ星以上</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Rating Filter</div><div class="card-desc">星評価フィルター。ECサイトやレビューシステムに</div></div>
+        <button class="btn-fav" onclick="toggleFav(19)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d19')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 20. Quick Filters (chips) -->
+    <div class="card" id="c20">
+      <div class="preview" style="flex-direction:column;gap:8px;align-items:flex-start">
+        <div style="font-size:12px;color:#6b7280">タグで絞り込み</div>
+        <div class="chip-wrap" id="cg20">
+          <div class="chip on" onclick="chipToggle(this)">全て</div>
+          <div class="chip" onclick="chipToggle(this)">React</div>
+          <div class="chip" onclick="chipToggle(this)">Vue</div>
+          <div class="chip" onclick="chipToggle(this)">TypeScript</div>
+          <div class="chip" onclick="chipToggle(this)">Node.js</div>
+          <div class="chip" onclick="chipToggle(this)">Python</div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Quick Filters</div><div class="card-desc">チップ型クイックフィルター。ドロップダウン不要でタグを切替</div></div>
+        <button class="btn-fav" onclick="toggleFav(20)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('cg20')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 21. Column Filter -->
+    <div class="card" id="c21">
+      <div class="preview">
+        <div class="dd" id="d21">
+          <button class="tr-classic" onclick="toggle('d21')" style="min-width:160px">
+            ⊞ 列の表示<span class="ic">▾</span>
+          </button>
+          <div class="dd-menu" style="min-width:180px">
+            <div class="col-list">
+              <label class="col-item"><input type="checkbox" checked onchange="noop()"> 名前</label>
+              <label class="col-item"><input type="checkbox" checked onchange="noop()"> メール</label>
+              <label class="col-item"><input type="checkbox" onchange="noop()"> 電話番号</label>
+              <label class="col-item"><input type="checkbox" checked onchange="noop()"> 作成日</label>
+              <label class="col-item"><input type="checkbox" onchange="noop()"> 最終ログイン</label>
+              <label class="col-item"><input type="checkbox" checked onchange="noop()"> ステータス</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Column Filter</div><div class="card-desc">テーブルの列表示切替。管理画面やデータビューに定番</div></div>
+        <button class="btn-fav" onclick="toggleFav(21)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d21')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 22. Date Picker Panel -->
+    <div class="card" id="c22">
+      <div class="preview">
+        <div class="dd" id="d22">
+          <button class="tr-date" onclick="toggle('d22')">
+            📅 <span id="d22-val">日付を選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu" style="min-width:240px">
+            <div class="cal-panel">
+              <div class="cal-head">
+                <button class="cal-nav" onclick="event.stopPropagation()">‹</button>
+                <span>2026年 4月</span>
+                <button class="cal-nav" onclick="event.stopPropagation()">›</button>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-wd">日</div><div class="cal-wd">月</div><div class="cal-wd">火</div><div class="cal-wd">水</div><div class="cal-wd">木</div><div class="cal-wd">金</div><div class="cal-wd">土</div>
+                <div class="cal-d other">30</div><div class="cal-d other">31</div>
+                <div class="cal-d" onclick="pickDate('d22','4/1')">1</div><div class="cal-d" onclick="pickDate('d22','4/2')">2</div><div class="cal-d" onclick="pickDate('d22','4/3')">3</div><div class="cal-d" onclick="pickDate('d22','4/4')">4</div><div class="cal-d" onclick="pickDate('d22','4/5')">5</div>
+                <div class="cal-d" onclick="pickDate('d22','4/6')">6</div><div class="cal-d" onclick="pickDate('d22','4/7')">7</div><div class="cal-d" onclick="pickDate('d22','4/8')">8</div><div class="cal-d" onclick="pickDate('d22','4/9')">9</div><div class="cal-d" onclick="pickDate('d22','4/10')">10</div><div class="cal-d" onclick="pickDate('d22','4/11')">11</div><div class="cal-d" onclick="pickDate('d22','4/12')">12</div>
+                <div class="cal-d" onclick="pickDate('d22','4/13')">13</div><div class="cal-d" onclick="pickDate('d22','4/14')">14</div><div class="cal-d" onclick="pickDate('d22','4/15')">15</div><div class="cal-d" onclick="pickDate('d22','4/16')">16</div><div class="cal-d" onclick="pickDate('d22','4/17')">17</div><div class="cal-d" onclick="pickDate('d22','4/18')">18</div><div class="cal-d" onclick="pickDate('d22','4/19')">19</div>
+                <div class="cal-d" onclick="pickDate('d22','4/20')">20</div><div class="cal-d" onclick="pickDate('d22','4/21')">21</div><div class="cal-d" onclick="pickDate('d22','4/22')">22</div><div class="cal-d" onclick="pickDate('d22','4/23')">23</div><div class="cal-d" onclick="pickDate('d22','4/24')">24</div><div class="cal-d" onclick="pickDate('d22','4/25')">25</div><div class="cal-d" onclick="pickDate('d22','4/26')">26</div>
+                <div class="cal-d" onclick="pickDate('d22','4/27')">27</div><div class="cal-d" onclick="pickDate('d22','4/28')">28</div><div class="cal-d" onclick="pickDate('d22','4/29')">29</div><div class="cal-d today" onclick="pickDate('d22','4/30')">30</div><div class="cal-d other">1</div><div class="cal-d other">2</div><div class="cal-d other">3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Date Picker Panel</div><div class="card-desc">カレンダーパネル型日付選択。日付入力フォームの標準UI</div></div>
+        <button class="btn-fav" onclick="toggleFav(22)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d22')">コピー</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S3: タグ・チップ ======= -->
+<section class="section">
+  <div class="section-title"><h2>タグ・チップ</h2><span class="cnt">5 種</span></div>
+  <div class="grid">
+
+    <!-- 23. Tag Input -->
+    <div class="card" id="c23">
+      <div class="preview">
+        <div class="tag-input-wrap" id="tiw23" onclick="document.getElementById('ti23').focus()">
+          <span class="tag-item">React <button class="tag-del" onclick="removeTag(this)">×</button></span>
+          <span class="tag-item">TypeScript <button class="tag-del" onclick="removeTag(this)">×</button></span>
+          <input class="tag-inp" id="ti23" placeholder="タグを追加…" onkeydown="addTag(event,'tiw23')">
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Tag Input</div><div class="card-desc">Enterで追加、×で削除できるタグ入力。スキルや検索タグに</div></div>
+        <button class="btn-fav" onclick="toggleFav(23)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('tiw23')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 24. Multi with Chips in Trigger -->
+    <div class="card" id="c24">
+      <div class="preview">
+        <div class="dd" id="d24">
+          <div class="tr-chips" onclick="toggle('d24')" id="d24-chips">
+            <span style="color:#9ca3af;font-size:13px">フレームワーク…</span>
+          </div>
+          <div class="dd-menu" style="min-width:220px">
+            <label class="dd-opt"><input type="checkbox" onchange="updateChips('d24',this,'React')"> React</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateChips('d24',this,'Vue')"> Vue</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateChips('d24',this,'Angular')"> Angular</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateChips('d24',this,'Svelte')"> Svelte</label>
+            <label class="dd-opt"><input type="checkbox" onchange="updateChips('d24',this,'Next.js')"> Next.js</label>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Multi with Chips</div><div class="card-desc">選択済みをトリガー内にチップ表示。選択状態が一目でわかる</div></div>
+        <button class="btn-fav" onclick="toggleFav(24)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d24')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 25. Color Tag -->
+    <div class="card" id="c25">
+      <div class="preview">
+        <div class="dd" id="d25">
+          <button class="tr-classic" onclick="toggle('d25')" style="min-width:180px">
+            <span style="display:flex;align-items:center;gap:6px"><span class="cdot" id="d25-dot" style="background:#6b7280"></span><span id="d25-val">ラベルカラー</span></span>
+            <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="dd-opt" onclick="pickColor25('d25','#ef4444','赤')"><span class="cdot" style="background:#ef4444"></span> 赤 — 緊急</div>
+            <div class="dd-opt" onclick="pickColor25('d25','#f59e0b','オレンジ')"><span class="cdot" style="background:#f59e0b"></span> オレンジ — 注意</div>
+            <div class="dd-opt" onclick="pickColor25('d25','#10b981','緑')"><span class="cdot" style="background:#10b981"></span> 緑 — 完了</div>
+            <div class="dd-opt" onclick="pickColor25('d25','#3b82f6','青')"><span class="cdot" style="background:#3b82f6"></span> 青 — 進行中</div>
+            <div class="dd-opt" onclick="pickColor25('d25','#8b5cf6','紫')"><span class="cdot" style="background:#8b5cf6"></span> 紫 — レビュー</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Color Tag</div><div class="card-desc">カラードット付きラベル選択。課題管理やカテゴリ色分けに</div></div>
+        <button class="btn-fav" onclick="toggleFav(25)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d25')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 26. Skill Tags -->
+    <div class="card" id="c26">
+      <div class="preview">
+        <div class="dd" id="d26">
+          <button class="tr-classic" onclick="toggle('d26')" style="min-width:180px">
+            スキルを追加 <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu" style="padding:8px;min-width:200px">
+            <div style="display:flex;flex-wrap:wrap;gap:6px;padding:4px">
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">React</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">TypeScript</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">Node.js</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">Python</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">Go</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">Docker</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">AWS</span>
+              <span class="skill-tag" style="cursor:pointer" onclick="addSkill(this)">Figma</span>
+            </div>
+          </div>
+        </div>
+        <div id="d26-selected" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"></div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Skill Tags</div><div class="card-desc">技術スキルタグ選択。プロフィール・採用・プロジェクト管理に</div></div>
+        <button class="btn-fav" onclick="toggleFav(26)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d26')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 27. Autocomplete Tags -->
+    <div class="card" id="c27">
+      <div class="preview" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="dd dd-auto" id="d27">
+          <input class="tr-auto" type="text" placeholder="都市名を入力…" oninput="autoComplete('d27',this.value)" onclick="event.stopPropagation()">
+          <div class="dd-menu" style="min-width:220px">
+            <div id="d27-results"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Autocomplete</div><div class="card-desc">入力候補をリアルタイム表示。住所・人名・商品検索に</div></div>
+        <button class="btn-fav" onclick="toggleFav(27)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d27')">コピー</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S4: 特殊・ユニーク ======= -->
+<section class="section">
+  <div class="section-title"><h2>特殊・ユニーク</h2><span class="cnt">9 種</span></div>
+  <div class="grid">
+
+    <!-- 28. Command Palette -->
+    <div class="card" id="c28">
+      <div class="preview">
+        <div class="dd" id="d28">
+          <button class="tr-cmd" onclick="toggle('d28')">
+            🔍 コマンドを実行…<span class="cmd-kbd">⌘K</span>
+          </button>
+          <div class="dd-menu cmd-panel">
+            <input class="cmd-srch" type="text" placeholder="コマンド検索…" onclick="event.stopPropagation()">
+            <div class="cmd-list">
+              <div class="cmd-item"><span class="cmd-icon">📄</span><span>新規ドキュメント</span><span class="cmd-sc">⌘N</span></div>
+              <div class="cmd-item"><span class="cmd-icon">🔍</span><span>検索</span><span class="cmd-sc">⌘F</span></div>
+              <div class="cmd-item"><span class="cmd-icon">⚙️</span><span>設定を開く</span><span class="cmd-sc">⌘,</span></div>
+              <div class="cmd-item"><span class="cmd-icon">🚀</span><span>デプロイ</span><span class="cmd-sc">⇧⌘D</span></div>
+              <div class="cmd-item"><span class="cmd-icon">👤</span><span>プロフィール</span><span class="cmd-sc"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Command Palette</div><div class="card-desc">検索ファーストのコマンドメニュー。⌘Kランチャーの代表型</div></div>
+        <button class="btn-fav" onclick="toggleFav(28)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d28')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 29. Split Button -->
+    <div class="card" id="c29">
+      <div class="preview">
+        <div class="dd-split dd" id="d29">
+          <button class="split-main">保存する</button>
+          <button class="split-arr" onclick="toggle('d29')">▾</button>
+          <div class="dd-menu" style="min-width:160px">
+            <div class="dd-opt">下書き保存</div>
+            <div class="dd-opt">テンプレートとして保存</div>
+            <div class="dd-divider"></div>
+            <div class="dd-opt">エクスポート</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Split Button</div><div class="card-desc">プライマリアクション＋追加オプション。GitHubのPRマージボタン等</div></div>
+        <button class="btn-fav" onclick="toggleFav(29)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d29')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 30. Cascading -->
+    <div class="card" id="c30">
+      <div class="preview">
+        <div class="dd" id="d30">
+          <button class="tr-casc" onclick="toggle('d30')">
+            <span id="d30-val">地域を選択</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu" style="min-width:160px">
+            <div class="dd-opt sub-par" onclick="toggleSub(this)">
+              アジア ›
+              <div class="sub-menu">
+                <div class="dd-opt" onclick="pick('d30','日本');event.stopPropagation()">日本</div>
+                <div class="dd-opt" onclick="pick('d30','韓国');event.stopPropagation()">韓国</div>
+                <div class="dd-opt" onclick="pick('d30','中国');event.stopPropagation()">中国</div>
+              </div>
+            </div>
+            <div class="dd-opt sub-par" onclick="toggleSub(this)">
+              ヨーロッパ ›
+              <div class="sub-menu">
+                <div class="dd-opt" onclick="pick('d30','ドイツ');event.stopPropagation()">ドイツ</div>
+                <div class="dd-opt" onclick="pick('d30','フランス');event.stopPropagation()">フランス</div>
+                <div class="dd-opt" onclick="pick('d30','イギリス');event.stopPropagation()">イギリス</div>
+              </div>
+            </div>
+            <div class="dd-opt sub-par" onclick="toggleSub(this)">
+              北米 ›
+              <div class="sub-menu">
+                <div class="dd-opt" onclick="pick('d30','アメリカ');event.stopPropagation()">アメリカ</div>
+                <div class="dd-opt" onclick="pick('d30','カナダ');event.stopPropagation()">カナダ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Cascading</div><div class="card-desc">サブメニュー展開型。カテゴリ階層が深い場合に</div></div>
+        <button class="btn-fav" onclick="toggleFav(30)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d30')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 31. Accordion in Dropdown -->
+    <div class="card" id="c31">
+      <div class="preview">
+        <div class="dd" id="d31">
+          <button class="tr-acc" onclick="toggle('d31')">
+            <span id="d31-val">詳細設定</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu" style="min-width:220px">
+            <div class="acc-item">
+              <div class="acc-head" onclick="toggleAcc(this)">表示設定 <span class="acc-arr">▾</span></div>
+              <div class="acc-body">
+                <p>フォント、カラーテーマ、表示密度などの設定を変更できます。</p>
+              </div>
+            </div>
+            <div class="dd-divider" style="margin:0"></div>
+            <div class="acc-item">
+              <div class="acc-head" onclick="toggleAcc(this)">通知設定 <span class="acc-arr">▾</span></div>
+              <div class="acc-body">
+                <p>メール通知・プッシュ通知のオン・オフを切り替えられます。</p>
+              </div>
+            </div>
+            <div class="dd-divider" style="margin:0"></div>
+            <div class="acc-item">
+              <div class="acc-head" onclick="toggleAcc(this)">プライバシー <span class="acc-arr">▾</span></div>
+              <div class="acc-body">
+                <p>プロフィールの公開範囲やデータ収集の設定です。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Accordion</div><div class="card-desc">ドロップダウン内アコーディオン。設定パネルや詳細情報表示に</div></div>
+        <button class="btn-fav" onclick="toggleFav(31)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d31')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 32. Segment Control in Dropdown -->
+    <div class="card" id="c32">
+      <div class="preview">
+        <div class="dd" id="d32">
+          <button class="tr-seg" onclick="toggle('d32')">
+            <span id="d32-val">表示オプション</span><span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="seg-panel">
+              <div class="seg-lbl">表示レイアウト</div>
+              <div class="seg-grp" id="seg32a">
+                <button class="seg-btn on" onclick="segPick('seg32a',this)">グリッド</button>
+                <button class="seg-btn" onclick="segPick('seg32a',this)">リスト</button>
+                <button class="seg-btn" onclick="segPick('seg32a',this)">ボード</button>
+              </div>
+              <div class="seg-lbl" style="margin-top:10px">密度</div>
+              <div class="seg-grp" id="seg32b">
+                <button class="seg-btn" onclick="segPick('seg32b',this)">コンパクト</button>
+                <button class="seg-btn on" onclick="segPick('seg32b',this)">標準</button>
+                <button class="seg-btn" onclick="segPick('seg32b',this)">広め</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Segment Control</div><div class="card-desc">ドロップダウン内セグメントコントロール。複数軸の設定をまとめて</div></div>
+        <button class="btn-fav" onclick="toggleFav(32)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d32')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 33. Action Menu (⋯) -->
+    <div class="card" id="c33">
+      <div class="preview">
+        <div style="display:flex;align-items:center;gap:8px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;min-width:220px">
+          <div class="av" style="background:#6366f1">T</div>
+          <div style="flex:1"><div style="font-weight:500;font-size:13px">タスク名</div><div style="font-size:11px;color:#9ca3af">進行中</div></div>
+          <div class="dd dd-action" id="d33">
+            <button class="tr-action" onclick="toggle('d33')">⋯</button>
+            <div class="dd-menu" style="right:0;left:auto">
+              <div class="dd-opt">✏️ 編集</div>
+              <div class="dd-opt">📋 複製</div>
+              <div class="dd-opt">🔗 リンクをコピー</div>
+              <div class="dd-divider"></div>
+              <div class="dd-opt opt-del">🗑 削除</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Action Menu (⋯)</div><div class="card-desc">リスト行末の三点メニュー。CRUD操作の定番パターン</div></div>
+        <button class="btn-fav" onclick="toggleFav(33)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d33')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 34. Phone Code -->
+    <div class="card" id="c34">
+      <div class="preview">
+        <div class="phone-outer">
+          <div class="dd dd-phone" id="d34">
+            <button class="tr-phone" onclick="toggle('d34')">
+              <span class="fl">🇯🇵</span><span id="d34-val">+81</span><span class="ic">▾</span>
+            </button>
+            <div class="dd-menu" style="min-width:200px">
+              <div class="dd-opt" onclick="pickPhone('d34','🇯🇵','+81')"><span class="fl">🇯🇵</span> 日本 +81</div>
+              <div class="dd-opt" onclick="pickPhone('d34','🇺🇸','+1')"><span class="fl">🇺🇸</span> アメリカ +1</div>
+              <div class="dd-opt" onclick="pickPhone('d34','🇬🇧','+44')"><span class="fl">🇬🇧</span> イギリス +44</div>
+              <div class="dd-opt" onclick="pickPhone('d34','🇰🇷','+82')"><span class="fl">🇰🇷</span> 韓国 +82</div>
+              <div class="dd-opt" onclick="pickPhone('d34','🇨🇳','+86')"><span class="fl">🇨🇳</span> 中国 +86</div>
+              <div class="dd-opt" onclick="pickPhone('d34','🇩🇪','+49')"><span class="fl">🇩🇪</span> ドイツ +49</div>
+            </div>
+          </div>
+          <input class="phone-inp" type="tel" placeholder="090-0000-0000">
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Phone Code</div><div class="card-desc">国コード選択＋電話番号入力。国際対応フォームの定番</div></div>
+        <button class="btn-fav" onclick="toggleFav(34)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d34')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 35. Emoji Picker -->
+    <div class="card" id="c35">
+      <div class="preview">
+        <div class="dd dd-emoji" id="d35">
+          <button class="tr-emoji" onclick="toggle('d35')">
+            <span id="d35-val">😀</span> 絵文字を選ぶ <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="emoji-panel">
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">😀</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">😂</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🥰</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">😎</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🤔</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">😅</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🎉</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🔥</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">💯</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">✅</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">❌</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">💡</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🚀</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">👍</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">👎</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">❤️</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">⭐</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🌟</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">💬</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">📌</button>
+              <button class="emoji-btn" onclick="pickEmoji('d35',this)">🏷️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Emoji Lite</div><div class="card-desc">シンプルな絵文字ピッカー。リアクション・アイコン選択に</div></div>
+        <button class="btn-fav" onclick="toggleFav(35)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d35')">コピー</button>
+      </div>
+    </div>
+
+    <!-- 36. Color Picker -->
+    <div class="card" id="c36">
+      <div class="preview">
+        <div class="dd" id="d36">
+          <button class="tr-color" onclick="toggle('d36')">
+            <span class="color-prev" id="d36-prev" style="background:#3b82f6"></span>
+            <span id="d36-val">#3b82f6</span>
+            <span class="ic">▾</span>
+          </button>
+          <div class="dd-menu">
+            <div class="color-panel">
+              <div class="swatches">
+                <div class="sw" style="background:#ef4444" onclick="pickSwatch('d36','#ef4444')"></div>
+                <div class="sw" style="background:#f97316" onclick="pickSwatch('d36','#f97316')"></div>
+                <div class="sw" style="background:#f59e0b" onclick="pickSwatch('d36','#f59e0b')"></div>
+                <div class="sw" style="background:#84cc16" onclick="pickSwatch('d36','#84cc16')"></div>
+                <div class="sw" style="background:#10b981" onclick="pickSwatch('d36','#10b981')"></div>
+                <div class="sw" style="background:#06b6d4" onclick="pickSwatch('d36','#06b6d4')"></div>
+                <div class="sw on" style="background:#3b82f6" onclick="pickSwatch('d36','#3b82f6')"></div>
+                <div class="sw" style="background:#6366f1" onclick="pickSwatch('d36','#6366f1')"></div>
+                <div class="sw" style="background:#8b5cf6" onclick="pickSwatch('d36','#8b5cf6')"></div>
+                <div class="sw" style="background:#ec4899" onclick="pickSwatch('d36','#ec4899')"></div>
+                <div class="sw" style="background:#111827" onclick="pickSwatch('d36','#111827')"></div>
+                <div class="sw" style="background:#6b7280" onclick="pickSwatch('d36','#6b7280')"></div>
+                <div class="sw" style="background:#d1d5db" onclick="pickSwatch('d36','#d1d5db')"></div>
+                <div class="sw" style="background:#ffffff;border:1px solid #e5e7eb" onclick="pickSwatch('d36','#ffffff')"></div>
+              </div>
+              <div class="hex-row">
+                <label>HEX</label>
+                <input class="hex-inp" id="d36-hex" value="#3b82f6" oninput="pickHex('d36',this.value)" onclick="event.stopPropagation()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">Color Picker</div><div class="card-desc">スウォッチ＋HEX入力カラーピッカー。テーマ設定やラベル色選択に</div></div>
+        <button class="btn-fav" onclick="toggleFav(36)">♡</button>
+        <button class="btn-copy" onclick="copyHTML('d36')">コピー</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<script>
+// ── Core toggle ──
+function toggle(id) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.contains('open');
+  closeAll();
+  if (!isOpen) el.classList.add('open');
+}
+function closeAll() {
+  document.querySelectorAll('.dd.open').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('.sub-par.subopen').forEach(el => el.classList.remove('subopen'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dd') && !e.target.closest('.phone-outer') && !e.target.closest('.tag-input-wrap')) {
+    closeAll();
+  }
+});
+
+// ── pick ──
+function pick(ddId, val) {
+  const el = document.getElementById(ddId + '-val');
+  if (el) el.textContent = val;
+  document.getElementById(ddId).classList.remove('open');
+}
+
+function pickCountry(ddId, flag, name) {
+  document.getElementById(ddId + '-flag').textContent = flag;
+  document.getElementById(ddId + '-val').textContent = name;
+  document.getElementById(ddId).classList.remove('open');
+}
+
+function pickDate(ddId, val) {
+  document.getElementById(ddId + '-val').textContent = '2026/' + val;
+  document.getElementById(ddId).classList.remove('open');
+}
+
+function pickColor25(ddId, color, name) {
+  document.getElementById(ddId + '-dot').style.background = color;
+  document.getElementById(ddId + '-val').textContent = name;
+  document.getElementById(ddId).classList.remove('open');
+}
+
+function pickPhone(ddId, flag, code) {
+  const tr = document.querySelector('#' + ddId + ' .tr-phone');
+  tr.querySelector('.fl').textContent = flag;
+  document.getElementById(ddId + '-val').textContent = code;
+  document.getElementById(ddId).classList.remove('open');
+}
+
+function pickEmoji(ddId, btn) {
+  document.getElementById(ddId + '-val').textContent = btn.textContent;
+  document.getElementById(ddId).classList.remove('open');
+}
+
+function pickSwatch(ddId, hex) {
+  document.getElementById(ddId + '-prev').style.background = hex;
+  document.getElementById(ddId + '-val').textContent = hex;
+  document.getElementById(ddId + '-hex').value = hex;
+  document.querySelectorAll('#' + ddId + ' .sw').forEach(s => s.classList.remove('on'));
+  event.target.classList.add('on');
+}
+
+function pickHex(ddId, val) {
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    document.getElementById(ddId + '-prev').style.background = val;
+    document.getElementById(ddId + '-val').textContent = val;
+  }
+}
+
+// ── multi checkbox ──
+function updateMulti(ddId) {
+  const dd = document.getElementById(ddId);
+  const checked = dd.querySelectorAll('input[type=checkbox]:checked');
+  const val = document.getElementById(ddId + '-val');
+  if (!val) return;
+  val.textContent = checked.length > 0 ? checked.length + '件選択中' : 'タグを選択';
+}
+
+// ── btn group ──
+function btnGrp(id, btn) {
+  document.querySelectorAll('#' + id + ' button').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+// ── chip toggle ──
+function chipToggle(chip) { chip.classList.toggle('on'); }
+
+// ── segment ──
+function segPick(id, btn) {
+  document.querySelectorAll('#' + id + ' .seg-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+// ── cascade sub ──
+function toggleSub(el) {
+  event.stopPropagation();
+  const isOpen = el.classList.contains('subopen');
+  document.querySelectorAll('.sub-par.subopen').forEach(e => e.classList.remove('subopen'));
+  if (!isOpen) el.classList.add('subopen');
+}
+
+// ── accordion ──
+function toggleAcc(head) {
+  event.stopPropagation();
+  const item = head.parentElement;
+  item.classList.toggle('open');
+}
+
+// ── search filter ──
+function filterOpts(ddId, q) {
+  const opts = document.querySelectorAll('#' + ddId + '-opts .dd-opt');
+  opts.forEach(opt => {
+    opt.style.display = opt.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// ── tag input ──
+function addTag(e, wrapId) {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const inp = e.target;
+  const val = inp.value.trim();
+  if (!val) return;
+  const wrap = document.getElementById(wrapId);
+  const tag = document.createElement('span');
+  tag.className = 'tag-item';
+  tag.innerHTML = val + ' <button class="tag-del" onclick="removeTag(this)">×</button>';
+  wrap.insertBefore(tag, inp);
+  inp.value = '';
+}
+function removeTag(btn) {
+  btn.parentElement.remove();
+}
+
+// ── multi chips in trigger ──
+const chipsData = {};
+function updateChips(ddId, cb, label) {
+  if (!chipsData[ddId]) chipsData[ddId] = new Set();
+  if (cb.checked) chipsData[ddId].add(label);
+  else chipsData[ddId].delete(label);
+  const trigger = document.getElementById(ddId + '-chips');
+  trigger.innerHTML = '';
+  if (chipsData[ddId].size === 0) {
+    trigger.innerHTML = '<span style="color:#9ca3af;font-size:13px">フレームワーク…</span>';
+  } else {
+    chipsData[ddId].forEach(l => {
+      const c = document.createElement('span');
+      c.className = 'chip-tag';
+      c.textContent = l;
+      trigger.appendChild(c);
+    });
+  }
+}
+
+// ── skill tags ──
+function addSkill(tag) {
+  event.stopPropagation();
+  const sel = document.getElementById('d26-selected');
+  const already = [...sel.querySelectorAll('span')].some(s => s.textContent.replace('×','').trim() === tag.textContent);
+  if (already) return;
+  const t = document.createElement('span');
+  t.className = 'skill-tag';
+  t.style.cursor = 'pointer';
+  t.textContent = tag.textContent;
+  t.onclick = () => t.remove();
+  sel.appendChild(t);
+}
+
+// ── autocomplete ──
+const cities = ['東京','大阪','名古屋','福岡','札幌','仙台','京都','神戸','横浜','広島','那覇','金沢'];
+function autoComplete(ddId, q) {
+  const dd = document.getElementById(ddId);
+  const res = document.getElementById(ddId + '-results');
+  if (!q) { dd.classList.remove('open'); return; }
+  const matches = cities.filter(c => c.includes(q));
+  if (matches.length === 0) { dd.classList.remove('open'); return; }
+  res.innerHTML = matches.map(c =>
+    `<div class="dd-opt" onclick="document.querySelector('#${ddId} input').value='${c}';document.getElementById('${ddId}').classList.remove('open')">${c}</div>`
+  ).join('');
+  dd.classList.add('open');
+}
+
+// ── copy HTML ──
+function copyHTML(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.outerHTML).then(() => {
+    const btns = document.querySelectorAll('.btn-copy');
+    btns.forEach(b => { if (b.getAttribute('onclick').includes(id)) {
+      b.textContent = '✓ コピー済み'; b.classList.add('ok');
+      setTimeout(() => { b.textContent = 'コピー'; b.classList.remove('ok'); }, 1500);
+    }});
+  });
+}
+
+// ── favorites ──
+let favs = JSON.parse(localStorage.getItem('dd-favs') || '[]');
+function renderFavs() {
+  document.getElementById('favCount').textContent = favs.length;
+  for (let i = 1; i <= 36; i++) {
+    const card = document.getElementById('c' + i);
+    const btn = card ? card.querySelector('.btn-fav') : null;
+    if (!card || !btn) continue;
+    if (favs.includes(i)) { card.classList.add('fav'); btn.classList.add('on'); btn.textContent = '♥'; }
+    else { card.classList.remove('fav'); btn.classList.remove('on'); btn.textContent = '♡'; }
+  }
+}
+function toggleFav(n) {
+  const idx = favs.indexOf(n);
+  if (idx >= 0) favs.splice(idx, 1); else favs.push(n);
+  localStorage.setItem('dd-favs', JSON.stringify(favs));
+  renderFavs();
+}
+document.getElementById('favBtn').addEventListener('click', () => {
+  if (favs.length === 0) return;
+  document.getElementById('c' + favs[0]).scrollIntoView({behavior:'smooth',block:'center'});
+});
+renderFavs();
+
+function noop() {}
+</script>
+</body>
+</html>
