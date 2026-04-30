@@ -222,6 +222,68 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 /* icon */
 .ic{color:#9ca3af;font-size:11px}
 
+/* ── iOS Style ── */
+.ios-menu {
+  display:none;position:absolute;z-index:200;
+  background:rgba(28,28,30,0.85);
+  backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
+  border-radius:13px;overflow:hidden;min-width:210px;
+}
+.dd.open>.ios-menu{display:block}
+.ios-opt {
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:13px 16px;color:#fff;font-size:16px;cursor:pointer;
+  border-bottom:0.5px solid rgba(255,255,255,0.15);
+  -webkit-tap-highlight-color:transparent;
+}
+.ios-opt:last-child{border-bottom:none}
+.ios-opt:hover{background:rgba(255,255,255,0.08)}
+.ios-opt-icon{font-size:17px;width:24px;text-align:center;flex-shrink:0}
+.ios-opt-label{flex:1}
+.ios-opt-badge{font-size:12px;color:rgba(255,255,255,0.5)}
+.ios-opt.danger{color:#ff453a}
+.ios-opt.danger:hover{background:rgba(255,69,58,0.12)}
+.ios-sep{height:0.5px;background:rgba(255,255,255,0.18);margin:0}
+
+/* iOS Light */
+.ios-menu-light{
+  display:none;position:absolute;z-index:200;
+  background:rgba(242,242,247,0.92);
+  backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
+  border-radius:13px;overflow:hidden;min-width:210px;
+}
+.dd.open>.ios-menu-light{display:block}
+.ios-opt-light{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px;color:#000;font-size:16px;cursor:pointer;
+  border-bottom:0.5px solid rgba(0,0,0,0.1);
+}
+.ios-opt-light:last-child{border-bottom:none}
+.ios-opt-light:hover{background:rgba(0,0,0,0.04)}
+.ios-opt-light.blue{color:#007aff}
+.ios-opt-light.center{justify-content:center;font-weight:500}
+.ios-opt-light.bold{font-weight:700}
+.ios-sep-light{height:0.5px;background:rgba(0,0,0,0.12);margin:0}
+
+/* iOS trigger */
+.ios-trigger {
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;background:#1c1c1e;color:#fff;
+  border:none;border-radius:10px;cursor:pointer;font-size:14px;
+}
+.ios-trigger-light {
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;background:#f2f2f7;color:#000;
+  border:1px solid rgba(0,0,0,0.1);border-radius:10px;cursor:pointer;font-size:14px;
+}
+
+/* iOS grid */
+.ios-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:12px}
+.ios-grid-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;cursor:pointer;border-radius:8px}
+.ios-grid-item:hover{background:rgba(255,255,255,0.08)}
+.ios-grid-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.ios-grid-label{font-size:10px;color:rgba(255,255,255,0.7);text-align:center}
+
 /* focus ring */
 [class*="tr-"]:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
 </style>
@@ -263,7 +325,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Classic Border</div><div class="card-desc">最もオーソドックスなボーダー付きドロップダウン</div></div>
         <button class="btn-fav" onclick="toggleFav(1)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d1')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d1')">プロンプト</button>
       </div>
     </div>
 
@@ -285,7 +347,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Underline Only</div><div class="card-desc">アンダーラインのみ。フォームに溶け込むミニマルなスタイル</div></div>
         <button class="btn-fav" onclick="toggleFav(2)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d2')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d2')">プロンプト</button>
       </div>
     </div>
 
@@ -310,7 +372,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Floating Label</div><div class="card-desc">ラベルがトリガー上部に常駐するマテリアル風スタイル</div></div>
         <button class="btn-fav" onclick="toggleFav(3)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d3')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d3')">プロンプト</button>
       </div>
     </div>
 
@@ -331,7 +393,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Filled</div><div class="card-desc">グレー背景塗りつぶし。GoogleフォームやMaterial UIスタイル</div></div>
         <button class="btn-fav" onclick="toggleFav(4)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d4')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d4')">プロンプト</button>
       </div>
     </div>
 
@@ -352,7 +414,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Outlined</div><div class="card-desc">ブランドカラーのアウトライン。CTAを兼ねた選択要素に</div></div>
         <button class="btn-fav" onclick="toggleFav(5)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d5')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d5')">プロンプト</button>
       </div>
     </div>
 
@@ -374,7 +436,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Pill</div><div class="card-desc">角丸ピル型。ダッシュボードのフィルター等に最適</div></div>
         <button class="btn-fav" onclick="toggleFav(6)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d6')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d6')">プロンプト</button>
       </div>
     </div>
 
@@ -395,7 +457,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Ghost</div><div class="card-desc">枠なし・テキストのみ。ナビゲーションや軽量な操作に</div></div>
         <button class="btn-fav" onclick="toggleFav(7)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d7')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d7')">プロンプト</button>
       </div>
     </div>
 
@@ -421,7 +483,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Search Inside</div><div class="card-desc">パネル内に検索ボックス。選択肢が多いときに有効</div></div>
         <button class="btn-fav" onclick="toggleFav(8)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d8')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d8')">プロンプト</button>
       </div>
     </div>
 
@@ -444,7 +506,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Multi Checkbox</div><div class="card-desc">複数選択チェックボックス。適用ボタンで確定</div></div>
         <button class="btn-fav" onclick="toggleFav(9)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d9')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d9')">プロンプト</button>
       </div>
     </div>
 
@@ -470,7 +532,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">With Avatar</div><div class="card-desc">ユーザーアバター付き。担当者・メンバー選択に</div></div>
         <button class="btn-fav" onclick="toggleFav(10)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d10')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d10')">プロンプト</button>
       </div>
     </div>
 
@@ -492,7 +554,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">With Badge</div><div class="card-desc">バッジ（件数）付き。カテゴリの規模感を一目で伝える</div></div>
         <button class="btn-fav" onclick="toggleFav(11)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d11')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d11')">プロンプト</button>
       </div>
     </div>
 
@@ -519,7 +581,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">With Description</div><div class="card-desc">サブテキスト付き。プラン選択や機能比較に有効</div></div>
         <button class="btn-fav" onclick="toggleFav(12)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d12')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d12')">プロンプト</button>
       </div>
     </div>
 
@@ -545,7 +607,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Grouped</div><div class="card-desc">グループラベルで選択肢を分類。技術スタックや部門一覧に</div></div>
         <button class="btn-fav" onclick="toggleFav(13)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d13')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d13')">プロンプト</button>
       </div>
     </div>
 
@@ -573,7 +635,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Country Selector</div><div class="card-desc">国旗絵文字付き国選択。国際対応フォームに</div></div>
         <button class="btn-fav" onclick="toggleFav(14)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d14')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d14')">プロンプト</button>
       </div>
     </div>
 
@@ -605,7 +667,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Sort By</div><div class="card-desc">ソート方向アイコン付き。テーブルやリスト上部に定番</div></div>
         <button class="btn-fav" onclick="toggleFav(15)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d15')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d15')">プロンプト</button>
       </div>
     </div>
 
@@ -633,7 +695,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Filter Checkboxes</div><div class="card-desc">グループ分けチェックボックスフィルター。複数軸の絞り込みに</div></div>
         <button class="btn-fav" onclick="toggleFav(16)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d16')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d16')">プロンプト</button>
       </div>
     </div>
 
@@ -650,7 +712,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Toggle Buttons</div><div class="card-desc">ボタングループ型フィルター。ドロップダウンが不要な少数選択肢に</div></div>
         <button class="btn-fav" onclick="toggleFav(17)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('bg17')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('bg17')">プロンプト</button>
       </div>
     </div>
 
@@ -673,7 +735,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Status Filter</div><div class="card-desc">カラードット付きステータス選択。在席状況やフェーズ管理に</div></div>
         <button class="btn-fav" onclick="toggleFav(18)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d18')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d18')">プロンプト</button>
       </div>
     </div>
 
@@ -695,7 +757,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Rating Filter</div><div class="card-desc">星評価フィルター。ECサイトやレビューシステムに</div></div>
         <button class="btn-fav" onclick="toggleFav(19)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d19')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d19')">プロンプト</button>
       </div>
     </div>
 
@@ -715,7 +777,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Quick Filters</div><div class="card-desc">チップ型クイックフィルター。ドロップダウン不要でタグを切替</div></div>
         <button class="btn-fav" onclick="toggleFav(20)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('cg20')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('cg20')">プロンプト</button>
       </div>
     </div>
 
@@ -741,7 +803,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Column Filter</div><div class="card-desc">テーブルの列表示切替。管理画面やデータビューに定番</div></div>
         <button class="btn-fav" onclick="toggleFav(21)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d21')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d21')">プロンプト</button>
       </div>
     </div>
 
@@ -775,7 +837,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Date Picker Panel</div><div class="card-desc">カレンダーパネル型日付選択。日付入力フォームの標準UI</div></div>
         <button class="btn-fav" onclick="toggleFav(22)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d22')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d22')">プロンプト</button>
       </div>
     </div>
 
@@ -799,7 +861,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Tag Input</div><div class="card-desc">Enterで追加、×で削除できるタグ入力。スキルや検索タグに</div></div>
         <button class="btn-fav" onclick="toggleFav(23)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('tiw23')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('tiw23')">プロンプト</button>
       </div>
     </div>
 
@@ -822,7 +884,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Multi with Chips</div><div class="card-desc">選択済みをトリガー内にチップ表示。選択状態が一目でわかる</div></div>
         <button class="btn-fav" onclick="toggleFav(24)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d24')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d24')">プロンプト</button>
       </div>
     </div>
 
@@ -846,7 +908,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Color Tag</div><div class="card-desc">カラードット付きラベル選択。課題管理やカテゴリ色分けに</div></div>
         <button class="btn-fav" onclick="toggleFav(25)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d25')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d25')">プロンプト</button>
       </div>
     </div>
 
@@ -875,7 +937,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Skill Tags</div><div class="card-desc">技術スキルタグ選択。プロフィール・採用・プロジェクト管理に</div></div>
         <button class="btn-fav" onclick="toggleFav(26)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d26')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d26')">プロンプト</button>
       </div>
     </div>
 
@@ -892,7 +954,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Autocomplete</div><div class="card-desc">入力候補をリアルタイム表示。住所・人名・商品検索に</div></div>
         <button class="btn-fav" onclick="toggleFav(27)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d27')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d27')">プロンプト</button>
       </div>
     </div>
 
@@ -926,7 +988,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Command Palette</div><div class="card-desc">検索ファーストのコマンドメニュー。⌘Kランチャーの代表型</div></div>
         <button class="btn-fav" onclick="toggleFav(28)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d28')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d28')">プロンプト</button>
       </div>
     </div>
 
@@ -947,7 +1009,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Split Button</div><div class="card-desc">プライマリアクション＋追加オプション。GitHubのPRマージボタン等</div></div>
         <button class="btn-fav" onclick="toggleFav(29)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d29')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d29')">プロンプト</button>
       </div>
     </div>
 
@@ -988,7 +1050,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Cascading</div><div class="card-desc">サブメニュー展開型。カテゴリ階層が深い場合に</div></div>
         <button class="btn-fav" onclick="toggleFav(30)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d30')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d30')">プロンプト</button>
       </div>
     </div>
 
@@ -1026,7 +1088,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Accordion</div><div class="card-desc">ドロップダウン内アコーディオン。設定パネルや詳細情報表示に</div></div>
         <button class="btn-fav" onclick="toggleFav(31)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d31')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d31')">プロンプト</button>
       </div>
     </div>
 
@@ -1058,7 +1120,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Segment Control</div><div class="card-desc">ドロップダウン内セグメントコントロール。複数軸の設定をまとめて</div></div>
         <button class="btn-fav" onclick="toggleFav(32)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d32')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d32')">プロンプト</button>
       </div>
     </div>
 
@@ -1083,7 +1145,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Action Menu (⋯)</div><div class="card-desc">リスト行末の三点メニュー。CRUD操作の定番パターン</div></div>
         <button class="btn-fav" onclick="toggleFav(33)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d33')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d33')">プロンプト</button>
       </div>
     </div>
 
@@ -1110,7 +1172,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Phone Code</div><div class="card-desc">国コード選択＋電話番号入力。国際対応フォームの定番</div></div>
         <button class="btn-fav" onclick="toggleFav(34)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d34')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d34')">プロンプト</button>
       </div>
     </div>
 
@@ -1151,7 +1213,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Emoji Lite</div><div class="card-desc">シンプルな絵文字ピッカー。リアクション・アイコン選択に</div></div>
         <button class="btn-fav" onclick="toggleFav(35)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d35')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d35')">プロンプト</button>
       </div>
     </div>
 
@@ -1193,7 +1255,160 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <div class="card-foot">
         <div class="card-info"><div class="card-name">Color Picker</div><div class="card-desc">スウォッチ＋HEX入力カラーピッカー。テーマ設定やラベル色選択に</div></div>
         <button class="btn-fav" onclick="toggleFav(36)">♡</button>
-        <button class="btn-copy" onclick="copyHTML('d36')">コピー</button>
+        <button class="btn-copy" onclick="copyPrompt('d36')">プロンプト</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======= S5: iOS風コンテキストメニュー ======= -->
+<section class="section">
+  <div class="section-title"><h2>iOS風コンテキストメニュー</h2><span class="cnt">6 種</span></div>
+  <div class="grid">
+
+    <!-- ios1. iOS Context Menu Dark -->
+    <div class="card" id="cios1">
+      <div class="preview" style="min-height:200px;background:#1a1a2e">
+        <div class="dd" id="dios1">
+          <button class="ios-trigger" onclick="toggle('dios1')">
+            ⋯ オプション
+          </button>
+          <div class="ios-menu" style="top:calc(100% + 8px);left:0">
+            <div class="ios-opt"><span class="ios-opt-icon">✏️</span><span class="ios-opt-label">編集</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">📋</span><span class="ios-opt-label">コピー</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">🔗</span><span class="ios-opt-label">共有</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">⭐</span><span class="ios-opt-label">お気に入りに追加</span></div>
+            <div class="ios-sep"></div>
+            <div class="ios-opt danger"><span class="ios-opt-icon">🗑</span><span class="ios-opt-label">削除</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Context Menu Dark</div><div class="card-desc">iOSアプリの長押しで出るダーク半透明ブラーメニュー。backdrop-filter: blur(40px)が肝</div></div>
+        <button class="btn-fav" onclick="toggleFav(37)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios1')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- ios2. iOS Context Menu Light -->
+    <div class="card" id="cios2">
+      <div class="preview" style="min-height:200px;background:#f2f2f7">
+        <div class="dd" id="dios2">
+          <button class="ios-trigger-light" onclick="toggle('dios2')">
+            ··· メニュー
+          </button>
+          <div class="ios-menu-light" style="top:calc(100% + 8px);left:0">
+            <div class="ios-opt-light blue"><span>🔍</span> 検索</div>
+            <div class="ios-opt-light blue"><span>🔖</span> ブックマーク</div>
+            <div class="ios-opt-light blue"><span>📤</span> 共有</div>
+            <div class="ios-sep-light"></div>
+            <div class="ios-opt-light blue"><span>➕</span> ホーム画面に追加</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Context Menu Light</div><div class="card-desc">Safari・ライトモードアプリのメニュー。半透明白背景+ブルーテキストが特徴</div></div>
+        <button class="btn-fav" onclick="toggleFav(38)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios2')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- ios3. iOS Action Sheet -->
+    <div class="card" id="cios3">
+      <div class="preview" style="min-height:220px;background:#1a1a2e;flex-direction:column;align-items:center;gap:12px">
+        <div class="dd" id="dios3" style="width:100%">
+          <button class="ios-trigger" style="width:100%;justify-content:center" onclick="toggle('dios3')">
+            共有する
+          </button>
+          <div class="ios-menu-light" style="top:calc(100% + 8px);left:0;right:0;min-width:auto">
+            <div class="ios-opt-light blue center">AirDrop</div>
+            <div class="ios-opt-light blue center">メッセージで送る</div>
+            <div class="ios-opt-light blue center">メールで送る</div>
+            <div class="ios-opt-light blue center">リンクをコピー</div>
+            <div class="ios-sep-light"></div>
+            <div class="ios-opt-light center bold" onclick="closeAll()">キャンセル</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Action Sheet</div><div class="card-desc">中央揃え・幅広のアクションシート。共有・削除確認などの選択肢提示に</div></div>
+        <button class="btn-fav" onclick="toggleFav(39)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios3')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- ios4. iOS Destructive Menu -->
+    <div class="card" id="cios4">
+      <div class="preview" style="min-height:200px;background:#2c2c2e">
+        <div class="dd" id="dios4">
+          <button class="ios-trigger" onclick="toggle('dios4')">
+            長押しメニュー ▾
+          </button>
+          <div class="ios-menu" style="top:calc(100% + 8px);left:0">
+            <div class="ios-opt"><span class="ios-opt-icon">👁</span><span class="ios-opt-label">プレビュー</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">📌</span><span class="ios-opt-label">ピン留め</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">📤</span><span class="ios-opt-label">共有</span></div>
+            <div class="ios-sep"></div>
+            <div class="ios-opt danger"><span class="ios-opt-icon">⛔</span><span class="ios-opt-label">ブロック</span></div>
+            <div class="ios-opt danger"><span class="ios-opt-icon">🗑</span><span class="ios-opt-label">完全に削除</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Destructive Menu</div><div class="card-desc">危険な操作(削除・ブロック)を赤字で分離。不可逆操作を含むコンテキストメニューの定石</div></div>
+        <button class="btn-fav" onclick="toggleFav(40)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios4')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- ios5. iOS Safari-style Menu -->
+    <div class="card" id="cios5">
+      <div class="preview" style="min-height:220px;background:#1c1c1e;justify-content:flex-end;align-items:flex-start">
+        <div class="dd" id="dios5">
+          <button style="background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px" onclick="toggle('dios5')">⋯</button>
+          <div class="ios-menu" style="top:calc(100% + 4px);right:0;left:auto;min-width:230px">
+            <div class="ios-opt"><span class="ios-opt-icon">📋</span><span class="ios-opt-label">URLをコピー</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">📤</span><span class="ios-opt-label">共有</span></div>
+            <div class="ios-sep"></div>
+            <div class="ios-opt"><span class="ios-opt-icon">🔖</span><span class="ios-opt-label">ブックマークに追加</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">📱</span><span class="ios-opt-label">ホーム画面に追加</span></div>
+            <div class="ios-sep"></div>
+            <div class="ios-opt"><span class="ios-opt-icon">⚙️</span><span class="ios-opt-label">設定</span><span class="ios-opt-badge">›</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Safari Menu</div><div class="card-desc">右上の「…」から出るSafariナビメニュー。right:0 で右揃え配置するのがポイント</div></div>
+        <button class="btn-fav" onclick="toggleFav(41)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios5')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- ios6. iOS Grid Action Menu -->
+    <div class="card" id="cios6">
+      <div class="preview" style="min-height:220px;background:#000">
+        <div class="dd" id="dios6">
+          <button class="ios-trigger" onclick="toggle('dios6')">
+            📤 共有
+          </button>
+          <div class="ios-menu" style="top:calc(100% + 8px);left:0;min-width:260px">
+            <div class="ios-grid">
+              <div class="ios-grid-item"><div class="ios-grid-icon" style="background:#1d7af3">💬</div><div class="ios-grid-label">メッセージ</div></div>
+              <div class="ios-grid-item"><div class="ios-grid-icon" style="background:#34c759">📞</div><div class="ios-grid-label">電話</div></div>
+              <div class="ios-grid-item"><div class="ios-grid-icon" style="background:#ff9500">📧</div><div class="ios-grid-label">メール</div></div>
+              <div class="ios-grid-item"><div class="ios-grid-icon" style="background:#5856d6">📋</div><div class="ios-grid-label">コピー</div></div>
+            </div>
+            <div class="ios-sep"></div>
+            <div class="ios-opt"><span class="ios-opt-icon">💾</span><span class="ios-opt-label">保存</span></div>
+            <div class="ios-opt"><span class="ios-opt-icon">🖨</span><span class="ios-opt-label">プリント</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Grid Action Menu</div><div class="card-desc">上部アイコングリッド+下部テキストリスト。iOS共有シートの構成を再現</div></div>
+        <button class="btn-fav" onclick="toggleFav(42)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ios6')">プロンプト</button>
       </div>
     </div>
 
@@ -1384,16 +1599,62 @@ function autoComplete(ddId, q) {
   dd.classList.add('open');
 }
 
-// ── copy HTML ──
-function copyHTML(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  navigator.clipboard.writeText(el.outerHTML).then(() => {
-    const btns = document.querySelectorAll('.btn-copy');
-    btns.forEach(b => { if (b.getAttribute('onclick').includes(id)) {
-      b.textContent = '✓ コピー済み'; b.classList.add('ok');
-      setTimeout(() => { b.textContent = 'コピー'; b.classList.remove('ok'); }, 1500);
-    }});
+// ── Prompts ──
+const PROMPTS = {
+  d1: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Classic Border\n【外観】白背景・1.5px グレーボーダー(#d1d5db)・border-radius 6px・min-width 180px。右端に▾アイコン。フォーカス/開いた状態でボーダーが#3b82f6に変化。\n【メニュー】白背景・1pxボーダー・border-radius 8px・box-shadow付き。各オプション padding 8px 12px、ホバーで#f3f4f6。\n【動作】クリックで開閉。外部クリックで閉じる。選択した値をトリガーに反映。\n【用途】フォームの汎用セレクト。最もスタンダードなドロップダウン。`,
+  d2: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Underline Only\n【外観】枠なし・下線のみ(2px #d1d5db)・背景透明。開いた状態で下線が#3b82f6に変化。\n【メニュー】白背景・1pxボーダー・border-radius 8px・影付き。\n【動作】クリックで開閉。外部クリックで閉じる。選択値をトリガーに反映。\n【用途】フォームに溶け込むミニマルな選択欄。登録フォームや設定画面に。`,
+  d3: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Floating Label\n【外観】1.5pxボーダー・border-radius 6px。ラベルがトリガー上部に常駐(position:absolute、top:-10px、font-size 11px)。開いた状態でボーダーとラベルが青(#3b82f6)に変化。\n【メニュー】白背景・標準ドロップメニュー。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】マテリアルデザイン風フォーム。ラベルが常に見えるので入力中も何の項目か分かる。`,
+  d4: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Filled\n【外観】枠なし・背景#f3f4f6・border-radius 6px。開いた状態で背景が#e5e7ebに変化。\n【メニュー】白背景・1pxボーダー・影付き。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】Googleフォーム・Material UI風。フォーム全体を統一感のあるフィルスタイルにしたい場合に。`,
+  d5: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Outlined\n【外観】2pxボーダーをブランドカラー(#3b82f6)で常時表示・文字色も青・font-weight 600。\n【メニュー】白背景・1pxボーダー・影付き。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】プラン選択や重要な選択肢。アクションを促す強調型セレクト。`,
+  d6: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Pill\n【外観】1.5pxボーダー・border-radius 999px(完全丸角)。開いた状態でボーダー・文字・背景が青系に変化。\n【メニュー】border-radius 12px の丸みのあるメニュー。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】ダッシュボードのフィルター・期間選択。カジュアルでモダンな印象。`,
+  d7: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Ghost\n【外観】枠なし・背景透明。ホバーと開いた状態で背景が#f3f4f6になる。テキスト+▾のみ。\n【メニュー】白背景・1pxボーダー・影付き。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】ナビゲーションバー・ヘッダー内のソート/フィルター。UIを邪魔しない軽量スタイル。`,
+  d8: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Search Inside\n【外観】標準ボーダートリガー。メニュー上部に検索ボックス(inputタグ・1pxボーダー・border-radius 4px)。\n【動作】クリックで開閉。検索ボックス入力でリアルタイムにオプションを絞り込む(テキスト部分一致)。選択で閉じる。\n【用途】選択肢が多いリスト(国・会社・商品など)。`,
+  d9: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Multi Checkbox\n【外観】標準ボーダートリガー。メニュー内の各オプションはチェックボックス+ラベル。下部に「適用」ボタン(青・border-radius 5px)。\n【動作】クリックで開閉。チェック数をトリガーテキストに反映(例:「2件選択中」)。適用ボタンで閉じる。\n【用途】タグ・カテゴリ・属性の複数選択。`,
+  d10: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】With Avatar\n【外観】トリガー内に丸いアバター(24px、カラー背景、イニシャル文字)とユーザー名。メニューの各オプションにも同様のアバター。\n【動作】クリックで開閉。外部クリックで閉じる。選択したユーザーをトリガーに反映。\n【用途】担当者アサイン・メンバー選択。`,
+  d11: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】With Badge\n【外観】トリガーは標準スタイル。各オプションの右端に件数バッジ(pill形状、カテゴリ別カラー: 青/赤/緑)。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】フィルター選択時に各カテゴリの件数を表示。管理画面・課題トラッカーに。`,
+  d12: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】With Description\n【外観】各オプションが2行構成: タイトル(font-weight 500・13px)と説明テキスト(#9ca3af・11px)。オプション間にdivider。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】プラン選択・機能選択など、オプションに補足説明が必要な場面。`,
+  d13: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Grouped\n【外観】オプションをグループラベル(11px・大文字・グレー)で区切る。グループ間にdivider線。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】技術スタック・部門・カテゴリなど階層のある選択肢。`,
+  d14: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Country Selector\n【外観】トリガーに国旗絵文字(font-size 18px)+国名。各オプションにも国旗絵文字。\n【動作】クリックで開閉。選択した国の旗と名前をトリガーに反映。\n【用途】国際対応フォームの国選択。`,
+  d15: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Sort By\n【外観】トリガーに「↕」アイコン+ラベル。各オプションに昇順/降順を示す矢印アイコン(↓↑)またはプレフィックス記号。グループをdividerで区切る。\n【動作】クリックで開閉。選択した並び順をトリガーに反映。\n【用途】テーブル・リスト上部のソートコントロール。`,
+  d16: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Filter Checkboxes (Grouped)\n【外観】グループラベルで分類されたチェックボックス群。下部に「絞り込む」ボタン。\n【動作】クリックで開閉。チェック数をトリガーに反映。ボタンクリックで閉じる。\n【用途】複数軸(タイプ・優先度・担当者など)の複合フィルター。`,
+  bg17: `以下のトグルボタングループを実装してください。\n\n【スタイル名】Toggle Buttons\n【外観】複数のボタンをborderでグループ化(連結形状)。アクティブ状態は背景#3b82f6・文字白。非アクティブは白背景。\n【動作】ボタンをクリックするとそのボタンだけがアクティブになる(単一選択)。\n【用途】ビュー切替・ステータスフィルターなど、ドロップダウン不要な少数の選択肢に。`,
+  d18: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Status Filter\n【外観】トリガー内にカラードット(8px丸・緑/黄/赤/グレー)+ステータス名。各オプションにも同様のドット。\n【動作】クリックで開閉。選択したステータスのドットと名前をトリガーに反映。\n【用途】在席ステータス・タスク状態・注文状況など色で区別するカテゴリ選択。`,
+  d19: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Rating Filter\n【外観】各オプションに星評価(★☆)を表示(color #f59e0b)。「N つ星以上」という形式。\n【動作】クリックで開閉。選択した評価をトリガーに反映。\n【用途】ECサイト・レビューサイトの評価フィルター。`,
+  cg20: `以下のクイックフィルターを実装してください。\n\n【スタイル名】Quick Filters (Chip)\n【外観】pill形状のチップ群(border-radius 999px)。アクティブ状態は背景#3b82f6・文字白・ボーダー青。非アクティブは白背景。\n【動作】チップをクリックするとon/offをトグル。複数同時選択可。\n【用途】タグ・テクノロジー・カテゴリなどの絞り込み。コンパクトで視認性が高い。`,
+  d21: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Column Filter\n【外観】トリガーに「⊞ 列の表示」テキスト。メニュー内はチェックボックス付きの列名リスト。各行はホバー背景。\n【動作】クリックで開閉。チェックのオン/オフで列の表示/非表示を切り替える想定。\n【用途】データテーブルの列表示コントロール。管理画面に定番。`,
+  d22: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Date Picker Panel\n【外観】トリガーにカレンダーアイコン+日付テキスト。メニューはミニカレンダー: 月ナビ(‹ ›)+曜日ヘッダー+日付グリッド(7列)。今日は#3b82f6背景。\n【動作】クリックで開閉。日付クリックでトリガーに反映・閉じる。\n【用途】期間指定・予約・スケジュール入力。`,
+  tiw23: `以下のタグ入力UIを実装してください。\n\n【スタイル名】Tag Input\n【外観】タグ(青系pill)+テキスト入力が同一コンテナ内に並ぶ。コンテナは1.5pxボーダー・border-radius 6px。タグに×ボタン。\n【動作】Enterキーで入力値をタグとして追加。×ボタンでタグ削除。コンテナクリックでinputにフォーカス。\n【用途】スキル入力・検索タグ・複数メールアドレス入力。`,
+  d24: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Multi with Chips\n【外観】トリガー自体がチップ表示エリア(flex-wrap)。未選択時はプレースホルダーテキスト。チェックボックス付きメニューから選択するとトリガー内にchip-tagとして追加表示。\n【動作】クリックで開閉。チェックのオン/オフで選択チップを追加/削除。\n【用途】フレームワーク・スキル・カテゴリの複数選択で選択済みを即視認できるUI。`,
+  d25: `以下のドロップダウンUIを実装してください。\n\n【スタイル名】Color Tag\n【外観】トリガーにカラードット(9px丸)+ラベル名。各オプションにも同様のカラードット。ドットはラベルの意味を示す色(赤=緊急、緑=完了など)。\n【動作】クリックで開閉。選択したカラーのドットと名前をトリガーに反映。\n【用途】課題管理のラベル・カテゴリ色選択。Notionのセレクトプロパティ風。`,
+  d26: `以下のスキルタグ選択UIを実装してください。\n\n【スタイル名】Skill Tags\n【外観】トリガーは標準ドロップダウン。メニュー内にスキルタグ群(緑系pill・flex-wrap)。クリックで選択済みエリア(メニュー外)にタグが追加される。\n【動作】タグをクリックで選択エリアに追加。追加済みタグをクリックで削除。\n【用途】プロフィール・採用要件・プロジェクト管理のスキル選択。`,
+  d27: `以下のオートコンプリートUIを実装してください。\n\n【スタイル名】Autocomplete\n【外観】通常のtextinputスタイル(1.5pxボーダー・border-radius 6px・フォーカスで青ボーダー)。入力中に候補リストが下に表示(白背景・影・1pxボーダー)。\n【動作】入力値に部分一致する候補をフィルタリング表示。候補クリックでinputに反映・リスト非表示。外部クリックで候補を閉じる。\n【用途】住所・都市名・商品名・人名検索。`,
+  d28: `以下のコマンドパレットUIを実装してください。\n\n【スタイル名】Command Palette\n【外観】グレーっぽいトリガーボタン(検索アイコン+テキスト+⌘Kショートカットバッジ)。メニューは上部に検索input、下部にコマンド一覧(アイコン+ラベル+ショートカット)。\n【動作】クリックで開閉。検索inputで絞り込み。各コマンドはクリックで実行(またはハンドラ呼び出し)。\n【用途】アプリ内のクイックアクション。エンジニア向けツール・管理画面に。⌘Kキーバインドと連動が理想。`,
+  d29: `以下のスプリットボタンを実装してください。\n\n【スタイル名】Split Button\n【外観】左側がプライマリアクションボタン(青・border-radius 6px 0 0 6px)、右側が▾付きドロップダウントリガー(濃い青・左ボーダーで区切り・border-radius 0 6px 6px 0)。\n【動作】左ボタン: メインアクション実行。右▾: ドロップダウンで追加オプション表示。メニューは右揃え。\n【用途】保存+追加オプション、送信+バリエーションなど。GitHubのマージボタンが典型例。`,
+  d30: `以下のカスケードドロップダウンを実装してください。\n\n【スタイル名】Cascading\n【外観】トリガーは標準スタイル。第1階層メニューのサブメニュー付き項目は右端に「›」表示。クリックで第2階層メニューが右側に出現(position:absolute・left:100%)。\n【動作】第1階層クリックでメニュー開閉。サブメニュー付き項目クリックでサブメニュー表示。第2階層の値選択でトリガーに反映・全閉。\n【用途】地域>国、カテゴリ>サブカテゴリなど階層構造の選択。`,
+  d31: `以下のアコーディオン内包ドロップダウンを実装してください。\n\n【スタイル名】Accordion in Dropdown\n【外観】トリガーは標準スタイル。メニュー内はセクションヘッダー(font-weight 500)+折りたたみ可能な本文エリア。ヘッダー右端に▾(開閉で回転)。\n【動作】クリックでメニュー開閉。各アコーディオンヘッダークリックで本文をtoggle。複数同時展開可。\n【用途】設定パネル・ヘルプメニュー・詳細オプション。`,
+  d32: `以下のドロップダウン内セグメントコントロールを実装してください。\n\n【スタイル名】Segment Control\n【外観】トリガーは標準スタイル。メニュー内に複数のセグメントグループ(グレー背景のcontainer、各ボタンはflex:1)。選択ボタンは白背景+影でアクティブ表示。\n【動作】クリックでメニュー開閉(メニューは閉じない)。セグメントボタンクリックでアクティブ切替。\n【用途】表示レイアウト・密度・テーマなど複数軸の設定をまとめて操作。`,
+  d33: `以下のアクションメニューを実装してください。\n\n【スタイル名】Action Menu (⋯)\n【外観】32x32pxの丸角ボタンに「⋯」アイコン。メニューは右揃え(left:auto; right:0)。削除オプションは赤色テキスト+赤ホバー背景。\n【動作】クリックで開閉。外部クリックで閉じる。各アクションはクリックで実行。\n【用途】リスト・テーブル行末の操作メニュー。編集/複製/削除などCRUD操作の標準パターン。`,
+  d34: `以下の国際電話入力UIを実装してください。\n\n【スタイル名】Phone Code Selector\n【外観】国コード選択部分(国旗絵文字+コード+▾、左ボーダー・border-radius 6px 0 0 6px)と電話番号input(border-radius 0 6px 6px 0)を横並び。コードのドロップダウンは国旗+国名+コードを表示。\n【動作】コード部クリックでドロップダウン開閉。国選択で旗とコードを反映。\n【用途】国際対応フォームの電話番号入力。`,
+  d35: `以下の絵文字ピッカーを実装してください。\n\n【スタイル名】Emoji Lite\n【外観】トリガーに現在選択中の絵文字+テキスト。メニューは絵文字ボタンのグリッド(7列、各ボタン18px・hover時グレー背景・border-radius 4px)。\n【動作】クリックで開閉。絵文字クリックでトリガーに反映・閉じる。\n【用途】リアクション・アイコン・ムード選択。軽量なピッカーが必要な場面に。`,
+  d36: `以下のカラーピッカーを実装してください。\n\n【スタイル名】Color Picker\n【外観】トリガーにカラープレビュー四角+HEXコード。メニューはカラースウォッチグリッド(7列・各24px・border-radius 4px・選択時に濃いボーダー)+HEX入力フィールド。\n【動作】スウォッチクリックでトリガーのプレビューとHEX値を更新。HEX直接入力にも対応(#xxxxxx形式バリデーション)。\n【用途】テーマカラー設定・ラベル色選択・デザインツール内の色選択。`,
+  ios1: `以下のiOS風コンテキストメニューを実装してください。\n\n【スタイル名】iOS Context Menu (Dark)\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px)。border-radius 13px。各オプションは高さ44px以上・白文字・border-bottom 0.5px rgba(255,255,255,0.15)。最後の行はborderなし。\n【配置】トリガーボタンの近く(右上か下)にposition:absoluteで出現。\n【動作】クリックで開閉。外部クリックで閉じる。選択でハイライト(rgba(255,255,255,0.1))。\n【用途】iOSアプリのコンテキストメニュー。タップして出てくる操作メニューの定番スタイル。`,
+  ios2: `以下のiOS風ライトコンテキストメニューを実装してください。\n\n【スタイル名】iOS Context Menu (Light)\n【外観】半透明白背景(rgba(242,242,247,0.9)) + backdrop-filter:blur(40px)。border-radius 13px。各オプションは高さ44px以上・黒文字・border-bottom 0.5px rgba(0,0,0,0.1)。\n【配置】トリガーの下または右側にposition:absolute。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】iOS Safariのツールバーメニュー・ライトモードアプリのコンテキストメニュー。`,
+  ios3: `以下のiOS風アクションシートを実装してください。\n\n【スタイル名】iOS Action Sheet\n【外観】半透明白背景(rgba(242,242,247,0.9)) + backdrop-filter:blur(40px)。border-radius 13px・幅広め(min-width 250px)。各オプションは中央揃えテキスト・高さ44px以上・青字(#007aff)。キャンセルは別ブロックで下部に配置(font-weight 600)。\n【配置】画面下部またはトリガー下にposition:absolute。\n【動作】クリックで開閉。キャンセルクリックで閉じる。\n【用途】iOS共有シート・削除確認など重要な操作の選択肢提示。`,
+  ios4: `以下のiOS風デストラクティブアクションメニューを実装してください。\n\n【スタイル名】iOS Destructive Menu\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px)。border-radius 13px。通常オプションは白文字。「削除」などの危険な操作は赤字(#ff453a)。アイコン+テキストの横並び構成。\n【配置】トリガーの近くにposition:absolute。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】写真アプリ・ファイルアプリの長押しメニュー。削除など不可逆操作を含む場合のiOS標準スタイル。`,
+  ios5: `以下のiOS風Safariナビゲーションメニューを実装してください。\n\n【スタイル名】iOS Safari Menu\n【外観】半透明ダーク背景 + backdrop-filter:blur(40px)。border-radius 13px。上部セクション(コピー・共有など)と下部セクション(設定・履歴など)をdivider(rgba(255,255,255,0.15))で区切る。各オプションにシステムアイコン相当の絵文字+テキスト。\n【配置】右上に固定的に出現(right:0またはトリガー右上)。\n【動作】クリックで開閉。外部クリックで閉じる。\n【用途】Safari・ブラウザアプリ風のナビゲーションメニュー。`,
+  ios6: `以下のiOS風グリッドアクションメニューを実装してください。\n\n【スタイル名】iOS Grid Action Menu\n【外観】半透明ダーク背景 + backdrop-filter:blur(40px)。border-radius 13px。上部に3〜4列のアイコングリッド(各アイテムは円形背景アイコン+小さいラベル)。下部にテキストオプション(border-top区切り)。\n【配置】トリガーの下にposition:absolute。\n【動作】クリックで開閉。グリッドアイコンおよびテキストオプションがクリック可能。\n【用途】iOS共有シート上部のアプリアイコン部分を模したアクションメニュー。`
+};
+
+// ── copy Prompt ──
+function copyPrompt(id) {
+  const prompt = PROMPTS[id] || `ドロップダウン(ID: ${id})を実装してください。`;
+  navigator.clipboard.writeText(prompt).then(() => {
+    document.querySelectorAll('.btn-copy').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
+        b.textContent = '✓ コピー済み'; b.classList.add('ok');
+        setTimeout(() => { b.textContent = 'プロンプト'; b.classList.remove('ok'); }, 1800);
+      }
+    });
   });
 }
 
@@ -1401,7 +1662,7 @@ function copyHTML(id) {
 let favs = JSON.parse(localStorage.getItem('dd-favs') || '[]');
 function renderFavs() {
   document.getElementById('favCount').textContent = favs.length;
-  for (let i = 1; i <= 36; i++) {
+  for (let i = 1; i <= 42; i++) {
     const card = document.getElementById('c' + i);
     const btn = card ? card.querySelector('.btn-fav') : null;
     if (!card || !btn) continue;
