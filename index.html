@@ -420,11 +420,11 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </style>
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js';
-  import { getAuth, signInAnonymously, onAuthStateChanged }
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged }
     from 'https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js';
   import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
     from 'https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js';
-  window.__ddFb = { initializeApp, getAuth, signInAnonymously, onAuthStateChanged,
+  window.__ddFb = { initializeApp, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged,
                     getFirestore, doc, getDoc, setDoc, serverTimestamp };
   window.dispatchEvent(new Event('ddFbReady'));
 </script>
@@ -440,11 +440,11 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
       <input class="search-inp" id="searchInp" type="text" placeholder="名前・説明で検索…" oninput="searchCards(this.value)">
     </div>
     <button class="fav-badge" id="favBtn" onclick="toggleFavMode()">♡ お気に入り <span id="favCount">0</span></button>
-    <div id="uidBadge" style="display:none;align-items:center;gap:6px;font-size:11px;color:#6b7280;white-space:nowrap">
-      <span>ID: <code id="uidText" style="font-size:10px;background:#f3f4f6;padding:2px 5px;border-radius:4px"></code></span>
-      <button onclick="copyUid(event)" style="font-size:11px;padding:3px 8px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer">コピー</button>
-      <button onclick="showExportModal()" style="font-size:11px;padding:3px 8px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer">引き継ぎ</button>
+    <div id="authBadge" style="display:none;align-items:center;gap:6px;font-size:11px;color:#6b7280;white-space:nowrap">
+      <span id="authEmail" style="max-width:140px;overflow:hidden;text-overflow:ellipsis"></span>
+      <button onclick="doLogout()" style="font-size:11px;padding:3px 8px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer">ログアウト</button>
     </div>
+    <button id="loginBtn" onclick="showLoginModal()" style="font-size:11px;padding:3px 10px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer;color:#374151">ログイン</button>
   </div>
   <div class="header-nav-wrap">
     <div class="header-nav" id="catNav">
@@ -2719,7 +2719,7 @@ function iosRadio(groupId, clickedCell) {
 }
 
 // ── Firebase Sync ──
-let fbDb = null, fbUid = null, fbReady = false;
+let fbDb = null, fbUid = null, fbReady = false, fbAuth = null;
 let savePromise = Promise.resolve();
 
 window.toggleFav = function(n) {
@@ -2741,7 +2741,7 @@ function saveFavsToCloud() {
 
 async function initFirebase() {
   if (!window.__ddFb) return;
-  const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore } = window.__ddFb;
+  const { initializeApp, getAuth, onAuthStateChanged, getFirestore } = window.__ddFb;
   const app = initializeApp({
     apiKey: "AIzaSyAaGcuZZG4IoRb87T8BcM3dQIWhbZi14bc",
     authDomain: "dropdown-gallery-favs.firebaseapp.com",
@@ -2749,74 +2749,79 @@ async function initFirebase() {
     appId: "1:826559786283:web:2783b976f6387f2d78e96e"
   });
   fbDb = getFirestore(app);
-  const auth = getAuth(app);
+  fbAuth = getAuth(app);
 
-  onAuthStateChanged(auth, async (user) => {
-    if (fbReady) return; // 初回のみ実行（トークンリフレッシュ等の再発火を無視）
-    if (!user) return;
-    fbUid = user.uid;
-
-    const { doc, getDoc } = window.__ddFb;
-    const snap = await getDoc(doc(fbDb, 'favs', fbUid));
-    if (snap.exists()) {
-      const cloudData = snap.data();
-      favs = cloudData.favs || [];
-      localStorage.setItem('dd-favs', JSON.stringify(favs));
-    } else if (favs.length > 0) {
-      await saveFavsToCloud();
-    }
-    fbReady = true;
-    renderFavs();
-
-    const badge = document.getElementById('uidBadge');
-    if (badge) {
-      document.getElementById('uidText').textContent = fbUid.slice(0, 8) + '…';
-      badge.style.display = 'flex';
+  onAuthStateChanged(fbAuth, async (user) => {
+    if (user) {
+      fbUid = user.uid;
+      const { doc, getDoc } = window.__ddFb;
+      const snap = await getDoc(doc(fbDb, 'favs', fbUid));
+      if (snap.exists()) {
+        favs = snap.data().favs || [];
+        localStorage.setItem('dd-favs', JSON.stringify(favs));
+      } else if (favs.length > 0) {
+        await saveFavsToCloud();
+      }
+      fbReady = true;
+      renderFavs();
+      document.getElementById('authEmail').textContent = user.email;
+      document.getElementById('authBadge').style.display = 'flex';
+      document.getElementById('loginBtn').style.display = 'none';
+      closeLoginModal();
+    } else {
+      fbUid = null;
+      fbReady = false;
+      document.getElementById('authBadge').style.display = 'none';
+      document.getElementById('loginBtn').style.display = '';
     }
   });
-
-  await signInAnonymously(auth);
 }
 
-function copyUid(ev) {
-  navigator.clipboard?.writeText(fbUid).then(() => {
-    const btn = ev.currentTarget;
-    btn.textContent = '✓'; setTimeout(() => btn.textContent = 'コピー', 1500);
-  }).catch(() => alert('コピーに失敗しました。手動でコピーしてください: ' + fbUid));
+function showLoginModal() {
+  document.getElementById('loginModal').style.display = 'flex';
+  document.getElementById('loginError').textContent = '';
+}
+function closeLoginModal() {
+  document.getElementById('loginModal').style.display = 'none';
 }
 
-function showExportModal() {
-  document.getElementById('exportModal').style.display = 'flex';
-}
-function closeExportModal() {
-  document.getElementById('exportModal').style.display = 'none';
-}
-
-function exportFavs(ev) {
-  const data = JSON.stringify({ favs, exportedAt: new Date().toISOString() });
-  navigator.clipboard?.writeText(data).then(() => {
-    const btn = ev.currentTarget;
-    btn.textContent = '✓ コピー完了！'; setTimeout(() => btn.textContent = '📤 JSON をコピー（このデバイス）', 2000);
-  }).catch(() => alert('コピーに失敗しました。手動でコピーしてください'));
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  if (!email || !pass) { errEl.textContent = 'メールアドレスとパスワードを入力してください'; return; }
+  try {
+    await window.__ddFb.signInWithEmailAndPassword(fbAuth, email, pass);
+  } catch(e) { errEl.textContent = getAuthErrorMsg(e.code); }
 }
 
-async function importFavs() {
-  const raw = document.getElementById('importInput').value.trim();
-  if (!raw) return;
-  let parsed;
-  try { parsed = JSON.parse(raw); } catch(e) { alert('JSON の形式が正しくありません'); return; }
-  if (!Array.isArray(parsed.favs)) { alert('favs データが見つかりません'); return; }
-  const validFavs = parsed.favs.filter(n => Number.isInteger(n) && n >= 1);
-  if (favs.length > 0 && !confirm(`現在の ${favs.length} 件のお気に入りを上書きします。よろしいですか？`)) return;
-  favs = validFavs;
-  localStorage.setItem('dd-favs', JSON.stringify(favs));
-  if (fbReady) await saveFavsToCloud();
-  renderFavs();
-  closeExportModal();
-  alert('引き継ぎ完了！');
+async function doRegister() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  if (!email || !pass) { errEl.textContent = 'メールアドレスとパスワードを入力してください'; return; }
+  if (pass.length < 6) { errEl.textContent = 'パスワードは6文字以上で入力してください'; return; }
+  try {
+    await window.__ddFb.createUserWithEmailAndPassword(fbAuth, email, pass);
+  } catch(e) { errEl.textContent = getAuthErrorMsg(e.code); }
 }
 
-// ESM module script が window.__ddFb をセットしてから initFirebase を呼ぶ（イベント駆動）
+async function doLogout() {
+  await window.__ddFb.signOut(fbAuth);
+}
+
+function getAuthErrorMsg(code) {
+  return ({
+    'auth/invalid-credential':    'メールアドレスまたはパスワードが正しくありません',
+    'auth/user-not-found':        'メールアドレスが登録されていません',
+    'auth/wrong-password':        'パスワードが正しくありません',
+    'auth/invalid-email':         'メールアドレスの形式が正しくありません',
+    'auth/email-already-in-use':  'このメールアドレスは既に登録されています',
+    'auth/weak-password':         'パスワードは6文字以上で入力してください',
+    'auth/too-many-requests':     'しばらくしてからお試しください',
+  })[code] || 'エラーが発生しました (' + code + ')';
+}
+
 if (window.__ddFb) {
   initFirebase().catch(console.error);
 } else {
@@ -2824,17 +2829,21 @@ if (window.__ddFb) {
 }
 </script>
 
-<!-- Firebase Handover Modal -->
-<div id="exportModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:24px;width:340px;display:flex;flex-direction:column;gap:12px">
-    <h3 style="margin:0;font-size:15px">デバイス引き継ぎ</h3>
-    <p style="margin:0;font-size:13px;color:#6b7280">現在のお気に入りを JSON でエクスポートし、新しいデバイスでインポートします。</p>
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <button onclick="exportFavs(event)" style="padding:8px 14px;border:1px solid #d1d5db;border-radius:6px;background:#f9fafb;cursor:pointer;font-size:13px;text-align:left">📤 JSON をコピー（このデバイス）</button>
-      <textarea id="importInput" placeholder='他のデバイスでコピーした JSON を貼り付け...' style="border:1px solid #d1d5db;border-radius:6px;padding:8px 10px;font-size:12px;outline:none;height:80px;resize:vertical;font-family:monospace"></textarea>
-      <button onclick="importFavs()" style="padding:8px 14px;border:none;border-radius:6px;background:#111827;color:#fff;cursor:pointer;font-size:13px">📥 インポートして引き継ぐ</button>
+<!-- Login Modal -->
+<div id="loginModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:14px;padding:28px 24px;width:320px;display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <h3 style="margin:0;font-size:16px;font-weight:600">お気に入りのクラウド同期</h3>
+    <p style="margin:0;font-size:13px;color:#6b7280">ログインするとどのデバイスからでもお気に入りを引き継げます。</p>
+    <input id="loginEmail" type="email" placeholder="メールアドレス" autocomplete="email"
+      style="border:1px solid #d1d5db;border-radius:8px;padding:9px 12px;font-size:13px;outline:none;width:100%;box-sizing:border-box">
+    <input id="loginPass" type="password" placeholder="パスワード（6文字以上）" autocomplete="current-password"
+      style="border:1px solid #d1d5db;border-radius:8px;padding:9px 12px;font-size:13px;outline:none;width:100%;box-sizing:border-box">
+    <p id="loginError" style="margin:0;font-size:12px;color:#ef4444;min-height:16px"></p>
+    <div style="display:flex;gap:8px">
+      <button onclick="doLogin()" style="flex:1;padding:9px;border:none;border-radius:8px;background:#111827;color:#fff;cursor:pointer;font-size:13px;font-weight:500">ログイン</button>
+      <button onclick="doRegister()" style="flex:1;padding:9px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer;font-size:13px">新規登録</button>
     </div>
-    <button onclick="closeExportModal()" style="padding:7px 14px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;align-self:flex-end">閉じる</button>
+    <button onclick="closeLoginModal()" style="padding:6px;border:none;background:none;cursor:pointer;font-size:12px;color:#9ca3af">キャンセル</button>
   </div>
 </div>
 </body>
