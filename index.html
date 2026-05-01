@@ -10,23 +10,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 button,input,select{font-family:inherit}
 
 /* Header */
-header{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 24px 0;position:sticky;top:0;z-index:300}
-.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:12px;padding-bottom:10px}
-.header-left{flex-shrink:0}
-.header-left h1{font-size:17px;font-weight:700;color:#111827}
-.search-wrap{flex:1;max-width:300px}
-.search-inp{width:100%;padding:7px 12px 7px 30px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:13px;outline:none;background:#f8f9fa;font-family:inherit}
-.search-inp:focus{border-color:#3b82f6;background:#fff}
+header{background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);position:sticky;top:0;z-index:300}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;align-items:center;flex-wrap:wrap}
+.header-brand{flex-shrink:0;padding:14px 0}
+.header-brand h1{font-size:17px;font-weight:700;color:#1d1d1f;letter-spacing:-.3px}
+.header-search{flex:1;max-width:340px;min-width:0;margin:0 20px;padding:10px 0}
 .search-wrap{position:relative}
-.search-wrap::before{content:'🔍';position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none}
-.fav-badge{background:#3b82f6;color:#fff;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;border:none;flex-shrink:0;white-space:nowrap}
-.fav-badge.fav-active{background:#ef4444}
-.header-nav-wrap{max-width:1400px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+.search-inp{width:100%;padding:7px 14px 7px 32px;border:none;border-radius:10px;font-size:14px;outline:none;background:#f2f2f7;color:#1d1d1f;transition:background .15s;font-family:inherit}
+.search-inp::placeholder{color:#8e8e93}
+.search-inp:focus{background:#e5e5ea}
+.search-wrap::before{content:'';position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") center/contain no-repeat;pointer-events:none}
+.header-actions{display:flex;align-items:center;gap:2px;margin-left:auto;padding:8px 0}
+.hdr-icon-btn{position:relative;width:36px;height:36px;border:none;background:none;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1d1d1f;transition:background .1s;-webkit-tap-highlight-color:transparent}
+.hdr-icon-btn:hover{background:rgba(0,0,0,.06)}
+.hdr-icon-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon-btn.fav-active svg{fill:#ff3b30;stroke:#ff3b30}
+.hdr-fav-count{position:absolute;top:1px;right:1px;background:#ff3b30;color:#fff;font-size:9px;font-weight:700;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px;line-height:1;pointer-events:none}
+.hdr-fav-count[hidden]{display:none}
+.hdr-login-btn{padding:6px 14px;border:none;border-radius:980px;background:#0071e3;color:#fff;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;margin-left:6px;-webkit-tap-highlight-color:transparent;transition:opacity .1s}
+.hdr-login-btn:hover{opacity:.85}
+.hdr-account-wrap{position:relative}
+.hdr-account-menu{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.15),0 0 0 1px rgba(0,0,0,.06);padding:16px;min-width:200px;display:none;z-index:400}
+.hdr-account-menu.open{display:block}
+.hdr-account-email{font-size:12px;color:#8e8e93;margin-bottom:12px;word-break:break-all;line-height:1.5}
+.hdr-account-logout{width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;color:#1d1d1f;font-family:inherit;transition:background .1s}
+.hdr-account-logout:hover{background:#f2f2f7}
+.header-nav-wrap{max-width:1400px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 24px 10px}
 .header-nav-wrap::-webkit-scrollbar{display:none}
 .header-nav{display:flex;gap:6px;min-width:max-content}
-.cat-btn{flex-shrink:0;padding:5px 14px;border:1.5px solid #e5e7eb;border-radius:999px;background:#fff;font-size:12px;cursor:pointer;white-space:nowrap;color:#374151;font-family:inherit;font-weight:500}
+.cat-btn{flex-shrink:0;padding:5px 14px;border:1.5px solid #e5e7eb;border-radius:999px;background:#fff;font-size:12px;cursor:pointer;white-space:nowrap;color:#374151;font-family:inherit;font-weight:500;-webkit-tap-highlight-color:transparent;transition:border-color .1s,background .1s,color .1s}
 .cat-btn:hover{border-color:#9ca3af}
-.cat-btn.on{background:#111827;color:#fff;border-color:#111827}
+.cat-btn.on{background:#1d1d1f;color:#fff;border-color:#1d1d1f}
 .fav-only-bar{display:none;background:#fff1f2;border-bottom:1px solid #fca5a5;padding:8px 24px;font-size:13px;color:#ef4444;font-weight:500;position:sticky;top:var(--header-h,108px);z-index:298}
 .fav-only-bar button{background:none;border:none;color:#ef4444;cursor:pointer;font-size:13px;font-weight:600;text-decoration:underline;padding:0;margin-left:8px}
 
@@ -419,14 +433,12 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 .ios-info-card-btn-sep{width:0.5px;background:#e5e5ea}
 
 @media (max-width:640px){
-  header{padding:8px 12px 0}
-  .header-inner{gap:6px;padding-bottom:8px}
-  .header-left h1{font-size:14px}
-  .search-wrap{max-width:110px}
-  .fav-badge{padding:5px 10px;font-size:12px}
-  #authEmail{display:none!important}
-  #authBadge button{font-size:10px;padding:2px 6px}
-  #loginBtn{font-size:10px;padding:2px 7px}
+  .header-inner{padding:0 16px}
+  .header-brand{order:1}
+  .header-actions{order:2;margin-left:auto}
+  .header-search{order:3;flex-basis:100%;max-width:100%;margin:0;padding:0 0 10px}
+  .header-nav-wrap{padding:0 16px 10px}
+  .hdr-login-btn{font-size:12px;padding:5px 10px;margin-left:2px}
 }
 </style>
 <script type="module">
@@ -444,18 +456,28 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 
 <header id="siteHeader">
   <div class="header-inner">
-    <div class="header-left">
+    <div class="header-brand">
       <h1>UI Gallery</h1>
     </div>
-    <div class="search-wrap">
-      <input class="search-inp" id="searchInp" type="text" placeholder="名前・説明で検索…" oninput="searchCards(this.value)">
+    <div class="header-search search-wrap">
+      <input class="search-inp" id="searchInp" type="text" placeholder="検索…" oninput="searchCards(this.value)">
     </div>
-    <button class="fav-badge" id="favBtn" onclick="toggleFavMode()">♡ お気に入り <span id="favCount">0</span></button>
-    <div id="authBadge" style="display:none;align-items:center;gap:6px;font-size:11px;color:#6b7280;white-space:nowrap">
-      <span id="authEmail" style="max-width:140px;overflow:hidden;text-overflow:ellipsis"></span>
-      <button onclick="doLogout()" style="font-size:11px;padding:3px 8px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer">ログアウト</button>
+    <div class="header-actions">
+      <button class="hdr-icon-btn" id="favBtn" onclick="toggleFavMode()" aria-label="お気に入り">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="favCount" class="hdr-fav-count" hidden>0</span>
+      </button>
+      <div id="authBadge" class="hdr-account-wrap" style="display:none">
+        <button class="hdr-icon-btn" onclick="toggleAccountMenu()" aria-label="アカウント">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div id="accountMenu" class="hdr-account-menu">
+          <p id="authEmail" class="hdr-account-email"></p>
+          <button class="hdr-account-logout" onclick="doLogout()">ログアウト</button>
+        </div>
+      </div>
+      <button id="loginBtn" class="hdr-login-btn" onclick="showLoginModal()">ログイン</button>
     </div>
-    <button id="loginBtn" onclick="showLoginModal()" style="font-size:11px;padding:3px 10px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer;color:#374151">ログイン</button>
   </div>
   <div class="header-nav-wrap">
     <div class="header-nav" id="catNav">
@@ -2593,7 +2615,9 @@ let currentSearch = '';
 
 // ── Favorites render ──
 function renderFavs() {
-  document.getElementById('favCount').textContent = favs.length;
+  const countEl = document.getElementById('favCount');
+  countEl.textContent = favs.length;
+  if (favs.length > 0) countEl.removeAttribute('hidden'); else countEl.setAttribute('hidden', '');
   for (let i = 1; i <= 72; i++) {
     const card = document.getElementById('c' + i);
     const btn = card ? card.querySelector('.btn-fav') : null;
@@ -2610,14 +2634,11 @@ function toggleFavMode() {
   const bar = document.getElementById('favOnlyBar');
   if (favMode) {
     btn.classList.add('fav-active');
-    btn.innerHTML = '♥ お気に入り <span id="favCount">' + favs.length + '</span>';
     bar.style.display = 'block';
-    // Exit cat filter when entering fav mode
     currentCat = 'all';
     document.querySelectorAll('.cat-btn').forEach((b,i) => b.classList.toggle('on', i === 0));
   } else {
     btn.classList.remove('fav-active');
-    btn.innerHTML = '♡ お気に入り <span id="favCount">' + favs.length + '</span>';
     bar.style.display = 'none';
   }
   applyFilters();
@@ -2630,7 +2651,6 @@ function filterCat(sec, clickedBtn) {
   if (favMode) {
     favMode = false;
     document.getElementById('favBtn').classList.remove('fav-active');
-    document.getElementById('favBtn').innerHTML = '♡ お気に入り <span id="favCount">' + favs.length + '</span>';
     document.getElementById('favOnlyBar').style.display = 'none';
   }
   // Update tab highlight
@@ -2650,7 +2670,6 @@ function searchCards(q) {
     currentCat = 'all';
     favMode = false;
     document.getElementById('favBtn').classList.remove('fav-active');
-    document.getElementById('favBtn').innerHTML = '♡ お気に入り <span id="favCount">' + favs.length + '</span>';
     document.getElementById('favOnlyBar').style.display = 'none';
     document.querySelectorAll('.cat-btn').forEach((b,i) => b.classList.toggle('on', i === 0));
   }
@@ -2776,7 +2795,7 @@ async function initFirebase() {
       fbReady = true;
       renderFavs();
       document.getElementById('authEmail').textContent = user.email;
-      document.getElementById('authBadge').style.display = 'flex';
+      document.getElementById('authBadge').style.display = 'block';
       document.getElementById('loginBtn').style.display = 'none';
       closeLoginModal();
     } else {
@@ -2817,7 +2836,18 @@ async function doRegister() {
   } catch(e) { errEl.textContent = getAuthErrorMsg(e.code); }
 }
 
+function toggleAccountMenu() {
+  document.getElementById('accountMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('accountMenu');
+  if (menu && menu.classList.contains('open') && !e.target.closest('.hdr-account-wrap')) {
+    menu.classList.remove('open');
+  }
+});
+
 async function doLogout() {
+  document.getElementById('accountMenu').classList.remove('open');
   await window.__ddFb.signOut(fbAuth);
 }
 
