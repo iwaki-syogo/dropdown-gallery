@@ -362,6 +362,24 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 .ios-page-dot{width:8px;height:8px;border-radius:50%;background:#c7c7cc;cursor:pointer}
 .ios-page-dot.on{background:#3c3c43;width:10px;height:10px}
 
+/* ── iOS Inline Wheel Picker ── */
+.ios-wheel-container{width:100%;max-width:340px;background:#fff;border-radius:13px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif}
+.ios-wheel-trig{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;cursor:pointer;min-height:44px}
+.ios-wheel-trig:hover{background:#f7f7fa}
+.ios-wheel-container.open .ios-wheel-trig{border-bottom:0.5px solid rgba(60,60,67,.18)}
+.ios-wheel-lbl{font-size:17px;color:#000}
+.ios-wheel-val{display:flex;align-items:center;font-size:17px;color:#8e8e93}
+.ios-wheel-chev{color:#c7c7cc;font-size:18px;line-height:1;margin-left:4px;transition:transform .2s}
+.ios-wheel-container.open .ios-wheel-chev{transform:rotate(90deg)}
+.ios-wheel-box{position:relative;height:200px;overflow:hidden;background:#fff;display:none}
+.ios-wheel-container.open .ios-wheel-box{display:block}
+.ios-wheel-list{height:200px;overflow-y:auto;scroll-snap-type:y mandatory;padding:80px 0;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.ios-wheel-list::-webkit-scrollbar{display:none}
+.ios-wheel-row{height:40px;line-height:40px;text-align:center;scroll-snap-align:center;font-size:22px;color:#000;cursor:pointer}
+.ios-wheel-ind{position:absolute;left:8px;right:8px;top:50%;transform:translateY(-50%);height:40px;background:rgba(120,120,128,.12);pointer-events:none;border-radius:8px}
+.ios-wheel-fade-t{position:absolute;left:0;right:0;top:0;height:80px;background:linear-gradient(to bottom,#fff 0%,rgba(255,255,255,0) 100%);pointer-events:none}
+.ios-wheel-fade-b{position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(to top,#fff 0%,rgba(255,255,255,0) 100%);pointer-events:none}
+
 /* ── iOS Cells ── */
 .ios-cell-group{background:#fff;border-radius:10px;overflow:hidden}
 .ios-cell{display:flex;align-items:center;gap:12px;padding:11px 16px;min-height:44px;cursor:pointer;background:#fff}
@@ -481,14 +499,14 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
   </div>
   <div class="header-nav-wrap">
     <div class="header-nav" id="catNav">
-      <button class="cat-btn on" onclick="filterCat('all',this)">すべて (72)</button>
+      <button class="cat-btn on" onclick="filterCat('all',this)">すべて (73)</button>
       <button class="cat-btn" onclick="filterCat('s1',this)">フォーム選択 (14)</button>
       <button class="cat-btn" onclick="filterCat('s2',this)">フィルター (8)</button>
       <button class="cat-btn" onclick="filterCat('s3',this)">タグ・チップ (5)</button>
       <button class="cat-btn" onclick="filterCat('s4',this)">特殊 (9)</button>
       <button class="cat-btn" onclick="filterCat('s5',this)">コンテキストメニュー (8)</button>
       <button class="cat-btn" onclick="filterCat('s6',this)">iOS ボタン (6)</button>
-      <button class="cat-btn" onclick="filterCat('s7',this)">iOS コントロール (6)</button>
+      <button class="cat-btn" onclick="filterCat('s7',this)">iOS コントロール (7)</button>
       <button class="cat-btn" onclick="filterCat('s8',this)">iOS セル (6)</button>
       <button class="cat-btn" onclick="filterCat('s9',this)">iOS 通知 (6)</button>
       <button class="cat-btn" onclick="filterCat('s10',this)">iOS カード (4)</button>
@@ -1762,7 +1780,7 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 
 <!-- ======= S7: iOS コントロール ======= -->
 <section class="section" id="s7">
-  <div class="section-title"><h2>iOS コントロール</h2><span class="cnt">6 種</span></div>
+  <div class="section-title"><h2>iOS コントロール</h2><span class="cnt">7 種</span></div>
   <div class="grid">
 
     <!-- 49. Toggle Switch -->
@@ -1893,6 +1911,37 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
         <div class="card-info"><div class="card-name">iOS Radio Selection</div><div class="card-desc">チェックマーク式単一選択。プラン・座席クラス・配送方法の選択に</div></div>
         <button class="btn-fav" onclick="toggleFav(54)">♡</button>
         <button class="btn-copy" onclick="copyPrompt('ctrl6')">プロンプト</button>
+      </div>
+    </div>
+
+    <!-- 73. iOS Inline Wheel Picker -->
+    <div class="card" id="c73">
+      <div class="preview" style="background:#f2f2f7;padding:16px;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:300px">
+        <div class="ios-wheel-container open" id="wheelC73">
+          <div class="ios-wheel-trig" onclick="toggleWheel(73)">
+            <span class="ios-wheel-lbl">言語</span>
+            <span class="ios-wheel-val"><span id="wheelVal73">English</span><span class="ios-wheel-chev">›</span></span>
+          </div>
+          <div class="ios-wheel-box">
+            <div class="ios-wheel-list">
+              <div class="ios-wheel-row">日本語</div>
+              <div class="ios-wheel-row">English</div>
+              <div class="ios-wheel-row">Español</div>
+              <div class="ios-wheel-row">Français</div>
+              <div class="ios-wheel-row">Deutsch</div>
+              <div class="ios-wheel-row">한국어</div>
+              <div class="ios-wheel-row">中文</div>
+            </div>
+            <div class="ios-wheel-ind"></div>
+            <div class="ios-wheel-fade-t"></div>
+            <div class="ios-wheel-fade-b"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div class="card-info"><div class="card-name">iOS Inline Wheel Picker</div><div class="card-desc">scroll-snap-yで実装するUIPickerView風インラインホイール選択</div></div>
+        <button class="btn-fav" onclick="toggleFav(73)">♡</button>
+        <button class="btn-copy" onclick="copyPrompt('ctrl7')">プロンプト</button>
       </div>
     </div>
 
@@ -2325,6 +2374,49 @@ main{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
 </main>
 
 <script>
+// ── iOS Wheel Picker ──
+function bindWheel(id) {
+  const c = document.getElementById('wheelC' + id);
+  if (!c) return null;
+  const list = c.querySelector('.ios-wheel-list');
+  if (list.dataset.bound) return list;
+  list.dataset.bound = '1';
+  const rows = list.querySelectorAll('.ios-wheel-row');
+  const valEl = document.getElementById('wheelVal' + id);
+  let t;
+  list.addEventListener('scroll', () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const idx = Math.round(list.scrollTop / 40);
+      if (rows[idx]) valEl.textContent = rows[idx].textContent;
+    }, 80);
+  });
+  rows.forEach((r, i) => {
+    r.addEventListener('click', () => list.scrollTo({top: i * 40, behavior: 'smooth'}));
+  });
+  return list;
+}
+function syncWheel(id) {
+  const list = bindWheel(id);
+  if (!list) return;
+  const valEl = document.getElementById('wheelVal' + id);
+  const rows = list.querySelectorAll('.ios-wheel-row');
+  const current = valEl.textContent.trim();
+  rows.forEach((r, i) => {
+    if (r.textContent.trim() === current) list.scrollTop = i * 40;
+  });
+}
+function toggleWheel(id) {
+  const c = document.getElementById('wheelC' + id);
+  const opened = c.classList.toggle('open');
+  if (opened) syncWheel(id);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.ios-wheel-container.open').forEach(c => {
+    syncWheel(c.id.replace('wheelC', ''));
+  });
+});
+
 // ── Core toggle ──
 function toggle(id) {
   const el = document.getElementById(id);
@@ -2590,7 +2682,8 @@ const PROMPTS = {
   card3: `以下のiOSスタイルのStats Cardを実装してください。\n\n【スタイル名】iOS Stats Card\n【外観】背景#fff。タイトル行(font-weight:700)の下に数値ボックスをflexで横並べ。各ボックス:background:#f2f2f7・border-radius:10px・padding:12px・text-align:center。大きな数値(font-size:22px・font-weight:700) + ラベル(font-size:11px・グレー)。\n【用途】週次サマリー・完了/進行/遅延の集計など複数指標を並列表示するカード。`,
   card4: `以下のiOSスタイルのInfo Card(App Clip風)を実装してください。\n\n【スタイル名】iOS App Clip / Info Card\n【外観】background:#fff + border-radius:12px + overflow:hidden + box-shadow。上部ヘッダー画像(72-80px高・グラデまたは画像)。本体:padding 12px 16px・タイトル(font-weight:700) + 説明テキスト(font-size:13px・グレー)。下部フッター(border-top:0.5px + flex):「後で」と「始める」を左右に配置、dividerで区切る。\n【用途】アプリ紹介・オンボーディング・プロモーションカード。`,
   ios7: `以下のiOS風ステータスピッカーを実装してください。\n\n【スタイル名】iOS Status Picker\n【外観】半透明黒背景(rgba(28,28,30,0.85)) + backdrop-filter:blur(40px) + -webkit-backdrop-filter:blur(40px)。border-radius:13px。min-width:180px。各オプションは display:flex・align-items:center・padding:11px 16px・min-height:44px・白文字(font-size:15px)・border-bottom:0.5px solid rgba(255,255,255,0.1)。最後の行はborder-bottomなし。\n【チェックマーク列】各行の左端にwidth:18px・flex-shrink:0のspan要素を置く。選択中の行のみ「✓」(font-size:15px・白)を表示し、非選択行は空欄にする。テキストラベルはflex:1でチェックマークの右に配置(gap:10px)。\n【配置】トリガーボタン直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉。外部クリックで閉じる。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット(単一選択・ラジオボタン挙動)。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】ステータス切替・ラベル変更など排他選択が必要な場面。iOS UIMenu の .checkmark アクション属性を再現したWebパターン。`,
-  ios8: `以下のiOS風スクロール可能フォームセレクトを実装してください。\n\n【スタイル名】iOS Scrollable Form Select\n【外観】\n- ページ背景: #1c1c1e（iOS ダークモード基調）\n- トリガー: background:rgba(255,255,255,0.06)・border:1px solid rgba(255,255,255,0.2)・border-radius:10px・padding:12px 14px・display:flex・align-items:center・justify-content:space-between・cursor:pointer・width:230px\n- トリガー内テキスト（未選択時）: font-size:15px・color:rgba(255,255,255,0.45)、選択後は color:#fff\n- 右端に▾アイコン: color:rgba(255,255,255,0.35)・font-size:11px\n- ドロップダウンメニュー: 半透明黒背景 rgba(28,28,30,0.85)・backdrop-filter:blur(40px)・-webkit-backdrop-filter:blur(40px)・border-radius:13px・max-height:210px・overflow-y:auto・width:100%（トリガーと同幅）\n- 各オプション行: display:flex・align-items:center・padding:11px 16px・min-height:44px・border-bottom:0.5px solid rgba(255,255,255,0.1)。最終行はborder-bottomなし\n- チェックマーク列: 左端 width:18px・flex-shrink:0 の span。選択行のみ「✓」(font-size:15px・白)、非選択行は空欄\n- テキストラベル: flex:1・font-size:15px・color:#fff、プレースホルダー行は color:rgba(255,255,255,0.4)\n【配置】トリガー直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉(toggle)。外部クリックで閉じる(closeAll)。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット → トリガーのテキストspanを選択値に更新(color:#fff)・空欄選択時はプレースホルダーテキストに戻し color:rgba(255,255,255,0.45) → メニューを閉じる。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】フォームの発送方法・カテゴリなど10件超の選択肢がある排他セレクト。iOS UIPickerView のリスト表示を Web で再現したパターン。スクロールバーは細め(scrollbar-width:thin / ::-webkit-scrollbar width:4px)が望ましい。`
+  ios8: `以下のiOS風スクロール可能フォームセレクトを実装してください。\n\n【スタイル名】iOS Scrollable Form Select\n【外観】\n- ページ背景: #1c1c1e（iOS ダークモード基調）\n- トリガー: background:rgba(255,255,255,0.06)・border:1px solid rgba(255,255,255,0.2)・border-radius:10px・padding:12px 14px・display:flex・align-items:center・justify-content:space-between・cursor:pointer・width:230px\n- トリガー内テキスト（未選択時）: font-size:15px・color:rgba(255,255,255,0.45)、選択後は color:#fff\n- 右端に▾アイコン: color:rgba(255,255,255,0.35)・font-size:11px\n- ドロップダウンメニュー: 半透明黒背景 rgba(28,28,30,0.85)・backdrop-filter:blur(40px)・-webkit-backdrop-filter:blur(40px)・border-radius:13px・max-height:210px・overflow-y:auto・width:100%（トリガーと同幅）\n- 各オプション行: display:flex・align-items:center・padding:11px 16px・min-height:44px・border-bottom:0.5px solid rgba(255,255,255,0.1)。最終行はborder-bottomなし\n- チェックマーク列: 左端 width:18px・flex-shrink:0 の span。選択行のみ「✓」(font-size:15px・白)、非選択行は空欄\n- テキストラベル: flex:1・font-size:15px・color:#fff、プレースホルダー行は color:rgba(255,255,255,0.4)\n【配置】トリガー直下にposition:absolute(top:calc(100% + 8px)・left:0)で出現。z-index:200。\n【動作】トリガークリックで開閉(toggle)。外部クリックで閉じる(closeAll)。オプションクリック時: 全行のチェックマークspanをクリア → クリックした行のspanに「✓」をセット → トリガーのテキストspanを選択値に更新(color:#fff)・空欄選択時はプレースホルダーテキストに戻し color:rgba(255,255,255,0.45) → メニューを閉じる。ホバー時はbackground:rgba(255,255,255,0.08)。\n【用途】フォームの発送方法・カテゴリなど10件超の選択肢がある排他セレクト。iOS UIPickerView のリスト表示を Web で再現したパターン。スクロールバーは細め(scrollbar-width:thin / ::-webkit-scrollbar width:4px)が望ましい。`,
+  ctrl7: `以下のiOS風インラインホイールピッカーを実装してください。\n\n【スタイル名】iOS Inline Wheel Picker\n【外観 - コンテナ】width:100%・max-width:340px・background:#fff・border-radius:13px・overflow:hidden・font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif。\n【外観 - トリガー行】padding:11px 16px・min-height:44px・display:flex・align-items:center・justify-content:space-between・cursor:pointer。左にラベル(font-size:17px・color:#000)、右に値(font-size:17px・color:#8e8e93)+右シェブロン「›」(color:#c7c7cc・font-size:18px・margin-left:4px・transition:transform .2s)。展開時(.openクラス)はトリガー下端に0.5px solid rgba(60,60,67,.18)のdivider、シェブロンはtransform:rotate(90deg)で下向きに。\n【外観 - ホイール枠】.openクラスのときのみdisplay:block(非展開時はdisplay:none)。position:relative・height:200px・overflow:hidden・background:#fff。\n【ホイール構造】ホイール枠内に4レイヤーを重ねる(マークアップ順):\n  (1) スクロールリスト: height:200px・overflow-y:auto・scroll-snap-type:y mandatory・padding:80px 0(上下に80pxパディングを取ることで最初と最後の項目を中央に揃えられる)・scrollbar-width:none + ::-webkit-scrollbar{display:none}でスクロールバー非表示・overscroll-behavior:contain。\n  (2) 中央選択インジケーター(.ios-wheel-ind): position:absolute・left:8px・right:8px・top:50% transform:translateY(-50%)・height:40px・background:rgba(120,120,128,.12)・border-radius:8px・pointer-events:none。\n  (3) 上部フェード(.ios-wheel-fade-t): position:absolute・top:0・left:0・right:0・height:80px・background:linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 100%)・pointer-events:none。\n  (4) 下部フェード(.ios-wheel-fade-b): position:absolute・bottom:0・left:0・right:0・height:80px・background:linear-gradient(to top, #fff 0%, rgba(255,255,255,0) 100%)・pointer-events:none。\n【行】各オプションは height:40px・line-height:40px・text-align:center・scroll-snap-align:center・font-size:22px・color:#000・cursor:pointer。\n【動作】(1) トリガークリックでコンテナの.openクラスをtoggle → ホイール枠の表示/非表示が切り替わる(シェブロンもrotate)。(2) 展開時に現在の値テキストと一致する行のindex i を求め、list.scrollTop = i * 40 を即時セットして中央に揃える。(3) スクロール中のscrollイベントを80msデバウンスし、Math.round(list.scrollTop / 40)で中央に来た行indexを算出 → トリガーの値テキストを更新する。(4) 行クリックでlist.scrollTo({top: i*40, behavior:'smooth'})で滑らかに該当行を中央へ移動。(5) scroll-snapにより指を離した瞬間に最も近い行に自動スナップ、半端な位置で止まらない。\n【オプションデータ例】日本語・English・Español・Français・Deutsch・한국어・中文 など5件以上の選択肢で本領を発揮。\n【用途】言語・タイムゾーン・通貨・カテゴリ・年月日など、選択肢が多くフォーム内に常時表示したい設定値。iOS Settings.app の Date & Time / 言語選択で使われる UIPickerView をWebで再現したパターン。`
 };
 
 // ── copy Prompt ──
@@ -2618,7 +2711,7 @@ function renderFavs() {
   const countEl = document.getElementById('favCount');
   countEl.textContent = favs.length;
   if (favs.length > 0) countEl.removeAttribute('hidden'); else countEl.setAttribute('hidden', '');
-  for (let i = 1; i <= 72; i++) {
+  for (let i = 1; i <= 73; i++) {
     const card = document.getElementById('c' + i);
     const btn = card ? card.querySelector('.btn-fav') : null;
     if (!card || !btn) continue;
